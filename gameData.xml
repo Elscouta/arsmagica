@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding="UTF-8" standalone="yes" ?>
+<gameData>
+	<Events>
+	</Events>
+
+	<CovenantOptions>
+		<CovenantOption id="MinorAura" name="Aura mineure" cost="Mineur" type="Avantage"/>
+		
+		<CovenantOption id="MajorAura" name="Aura majeur" cost="Majeur" type="Avantage"/>
+		
+		<CovenantOption id="Building" name="Bâtiment" cost="Mineur" type="Avantage"/>
+		
+		<CovenantOption id="MinorFortification" name="Fortification mineure" cost="Mineur" type="Avantage"/>
+		
+		<CovenantOption id="MajorFortification" name="Fortification majeure" cost="Majeur" type="Avantage"/>
+		
+		<CovenantOption id="MinorPrestige" name="Prestige mineur" cost="Mineur" type="Avantage"/>
+		
+		<CovenantOption id="MajorPrestige" name="Prestige majeur" cost="Majeur" type="Avantage"/>
+		
+		<CovenantOption id="MinorRegio" name="Regio mineur" cost="Mineur" type="Avantage"/>
+		
+		<CovenantOption id="MajorRegio" name="Regio Majeur" cost="Majeur" type="Avantage"/>
+		
+		<CovenantOption id="Seclusion" name="Isolation" cost="Mineur" type="Avantage"/>
+		
+		<CovenantOption id="Wealth" name="Richesse" cost="Mineur" type="Avantage"/>
+		
+		<CovenantOption id="MinorBeholden" name="Obligation mineure" cost="Mineur" type="Accroche"/>
+		
+		<CovenantOption id="MajorBeholden" name="Obligation majeure" cost="Majeur" type="Accroche"/>
+		
+		<CovenantOption id="ContestedResource" name="Ressource disputée" cost="Mineur" type="Accroche"/>
+		
+		<CovenantOption id="MinorMonster" name="Monstre mineur" cost="Mineur" type="Accroche"/>
+		
+		<CovenantOption id="MajorMonster" name="Monstre majeur" cost="Majeur" type="Accroche"/>
+		
+		<CovenantOption id="HermeticPolitics" name="Politique Hermétique" cost="Mineur" type="Accroche"/>
+		
+		<CovenantOption id="MundanePolitics" name="Politique ordinaire" cost="Majeur" type="Accroche"/>
+		
+		<CovenantOption id="MinorPoverty" name="Pauvreté mineure" cost="Mineur" type="Accroche"/>
+		
+		<CovenantOption id="MajorPoverty" name="Pauvreté majeure" cost="Majeur" type="Accroche"/>
+		
+		<CovenantOption id="Protector" name="Protecteurs" cost="Mineur" type="Accroche"/>
+		
+		<CovenantOption id="MinorRegio" name="Regio mineur" cost="Mineur" type="Accroche"/>
+		
+		<CovenantOption id="MajorRegio" name="Regio majeur" cost="Majeur" type="Accroche"/>
+		
+		<CovenantOption id="MinorRival" name="Rival mineur" cost="Mineur" type="Accroche"/>
+		
+		<CovenantOption id="MajorRival" name="Rival majeur" cost="Majeur" type="Accroche"/>
+		
+		<CovenantOption id="Road" name="Route passante" cost="Mineur" type="Accroche"/>
+		
+		<CovenantOption id="MinorUrban" name="Alliance urbaine" cost="Mineur" type="Accroche"/>
+		
+		<CovenantOption id="MajorUrban" name="Alliance urbaine (cité)" cost="Mineur" type="Accroche"/>
+	</CovenantOptions>
+	
+	<VirtuesFlaws>
+	</VirtuesFlaws>
+	
+	<Actions>
+	</Actions>
+	
+	<Effects>
+	</Effects>
+	
+	<Situations>
+	</Situations>
+
+</gameData>
