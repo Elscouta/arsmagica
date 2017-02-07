@@ -118,7 +118,25 @@ public class XMLBasicLoader
         }
     }
     
-    protected class ArithmeticLoader extends XMLDirectLoader< Expression<Integer> >
+    protected class IObjectLoader 
+            extends XMLDirectLoader< Expression<IObject> >
+    {
+        public IObjectLoader()
+        {
+            super(XMLBasicLoader.this.store);
+        }
+        
+        @Override
+        public Expression<IObject> loadXML(Element e)
+                throws XMLError
+        {
+            final String str = getContent(e);
+            return context -> new Ref.Any(str, context).get();
+        }
+    }
+    
+    protected class ArithmeticLoader 
+            extends XMLDirectLoader< Expression<Integer> >
     {
         public ArithmeticLoader() 
         { 

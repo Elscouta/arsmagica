@@ -119,6 +119,14 @@ public class Ref<T extends IObject>
             super(path, context, p -> p.asObject());
         }
     }
+    
+    public static class Any extends Ref<IObject>
+    {
+        public Any(String path, IObjectStore context)
+        {
+            super(path, context, p -> p);
+        }
+    }
 
     public static class Invalid extends XMLError
     {

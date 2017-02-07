@@ -5,16 +5,33 @@
  */
 package arsmagica.desc.effects;
 
+import arsmagica.model.World;
 import arsmagica.xml.DataStore;
+import arsmagica.xml.Expression;
+import arsmagica.xml.IObjectStore;
+import arsmagica.xml.MethodIntLoader;
 import arsmagica.xml.XMLDirectLoader;
+import arsmagica.xml.XMLError;
 import org.w3c.dom.Element;
 
 /**
- *
+ * The common inteface for all classes that wish to represent an effect.
+ * 
  * @author Elscouta
  */
-public class Effect 
+public abstract class Effect 
 {
+    /**
+     * Applies the effect inside a given context.
+     * @param world The main model class, for events that wish to access it
+     * directly.
+     * @param context The context used to fetch (local) variables.
+     * @throws XMLError The description of the effect was incorrect, most 
+     * likely because of an unbound or mistyped variable.
+     */
+    public abstract void apply(World world, IObjectStore context) 
+            throws XMLError;
+    
     public static class Loader extends XMLDirectLoader<Effect>
     {
         public Loader(DataStore store)
@@ -22,9 +39,23 @@ public class Effect
             super(store);
         }
         
-        @Override public Effect loadXML(Element e)
+        private XMLDirectLoader<? extends Effect> getLoader(String method)
+                throws XMLError
         {
-            return new Effect();
+            switch (method)
+            {
+                case "delta":  return new EffectDelta.Loader(store);
+                default: 
+                    throw new XMLError(String.format("Unknown type: %s", method));
+            }
+        }   
+        
+        @Override public Effect loadXML(Element e)
+                throws XMLError
+        {
+            String method = getAttribute(e, "type");
+            Effect obj = getLoader(method).loadXML(e);
+            return obj;
         }
     }
 }

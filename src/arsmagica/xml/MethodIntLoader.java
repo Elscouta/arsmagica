@@ -9,7 +9,13 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.w3c.dom.Element;
 
 /**
- *
+ * Provides various way to create arirthmetic expressions, when a normal
+ * expression isn't enough. Supported methods are currently:
+ * - const: generate a const expression (can actually be any arithmetic
+ * expression)
+ * - random: generates an integer that is randomly included between
+ * two arithmetic expressions.
+ * 
  * @author Elscouta
  */
 public class MethodIntLoader extends XMLDirectLoader< Expression<Integer> >
@@ -19,6 +25,12 @@ public class MethodIntLoader extends XMLDirectLoader< Expression<Integer> >
         super(store);
     }
 
+    /**
+     * Returns the specialized loader, based on the method.
+     * @param method supported methods are: const, random
+     * @return A loader for the specified method
+     * @throws XMLError Malformed XML.
+     */
     private XMLDirectLoader<? extends Expression<Integer>> getLoader(String method)
             throws XMLError
     {
@@ -39,7 +51,7 @@ public class MethodIntLoader extends XMLDirectLoader< Expression<Integer> >
         return getLoader(method).loadXML(e);
     }
 
-/**
+    /**
      *
      * @author Elscouta
      */
