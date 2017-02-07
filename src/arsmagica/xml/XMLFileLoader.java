@@ -53,7 +53,7 @@ public class XMLFileLoader<T> extends XMLDirectLoader<List<T>>
         try {
             List<T> retList = new ArrayList<>();
             
-            File fDesc = new File(Settings.GAMEDATA_PATH + filepath);
+            File fDesc = new File(store.getGamedataPath() + filepath);
             Document xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(fDesc);
             xmlDoc.getDocumentElement().normalize();
                 

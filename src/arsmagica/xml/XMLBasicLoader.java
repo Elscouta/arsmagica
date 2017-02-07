@@ -32,8 +32,25 @@ public class XMLBasicLoader
     }
     
     protected String getAttribute(Element current_node, String key)
+            throws XMLError
     {
-        return current_node.getAttribute(key);
+        String attr = getAttribute(current_node, key, null);
+        
+        if (attr == null)
+            throw new XMLError(String.format(
+                    "Missing expected attribute %s on %s", 
+                    key, current_node.toString()
+            ));
+        
+        return attr;
+    }
+    
+    protected String getAttribute(Element current_node, String key, String defaultValue)
+    {
+        if (current_node.hasAttribute(key))
+            return current_node.getAttribute(key);
+        else
+            return defaultValue;
     }
     
     protected String getContent(Element current_node)

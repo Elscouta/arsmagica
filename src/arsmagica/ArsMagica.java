@@ -59,7 +59,7 @@ public class ArsMagica
         
     public ArsMagica() 
     {
-        dataStore = new DataStore();
+        dataStore = new DataStore(Settings.GAMEDATA_PATH);
         dataStore.load();
         
         world = new World(dataStore);

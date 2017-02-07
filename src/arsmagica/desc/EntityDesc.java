@@ -67,7 +67,7 @@ public class EntityDesc implements Identifiable
         public void fillObjectFromXML(EntityDesc obj, Element e) 
                 throws XMLError
         {
-            obj.type = getAttribute(e, "type");
+            obj.type = getChild(e, "type", new ContentLoader());
             obj.properties = getChildList(e, "property", 
                                           new PropertyDesc.Loader(store));
 
