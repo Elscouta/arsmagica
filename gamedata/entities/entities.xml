@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<entities>
+    <entity>
+        <type>country</type>
+        
+        <property type="list" id="towns">
+            
+            <var type="town">
+                <init method="new" />
+            </var>
+            
+            <count method="random">
+                <min>2</min>
+                <max>5</max>
+            </count>
+        
+        </property>
+        
+        <property id="wealth" type="int">
+            <init method="random">
+                <min>100</min>
+                <max>200</max>
+            </init>
+        </property>
+        
+        <names>country_names.xml</names>
+                
+        <events>country_events.xml</events>
+    </entity>
+    
+    <entity>
+        <type>town</type>
+        
+        <property id="guilds" type="list">
+            
+            <var type="guild">
+                <init method="new" />
+            </var>
+            <count method="const">
+                <value>2</value>
+            </count>
+                        
+        </property>
+        
+        <property id="leader" type="townleader">
+            <init method="new" />
+        </property>
+        
+        <names>town_names.xml</names>
+        
+        <property id="wealth" type="int">
+            <init method="random">
+                <min>50</min>
+                <max>150</max>
+            </init>
+            <related to="country.wealth">
+                <correlation>20</correlation>
+            </related>
+        </property>
+        
+        <property id="relation">
+            <init method="const">
+                <value>0</value>
+            </init>
+        </property>
+        
+        <events>town_events.xml</events>
+    </entity>
+    
+    <entity>
+        <type>guild</type>
+        <property type="profession" id="profession">
+            <init method="get_random" />
+        </property>
+        
+        <property type="string" id="fullname">
+            Guild of [profession.plural]
+        </property>                
+        
+        <events>guild_events.xml</events>
+    </entity>
+    
+    <entity>
+        <type>profession</type>
+        
+        <names>professionNames</names>
+    </entity>
+    
+    <entity>
+        <type>ressource</type>
+    
+        <names>ressourceNames</names>
+    </entity>
+</entities>

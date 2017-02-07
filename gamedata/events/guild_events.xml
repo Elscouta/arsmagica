@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<events>
+    <event>
+        <property id="probability">
+            <init method="const">
+                <value>0.1 * $source.activity</value>
+            </init>
+        </property>
+        
+        <property id="amount">
+            <init method="random">
+                <min>0.2 * $source.wealth</min>
+                <max>0.3 * $guild.wealth</max>
+            </init>
+        </property>
+                
+        <property id="offer" type="ressource">
+            <init method="get_random" />
+        </property>
+        
+        <text>
+            The [source.fullname] of [source.town.name] is offering you a 
+            good deal! So many free [offer.plural] ($amount to be exact) are 
+            available for a small price!
+        </text>
+        
+        <option>
+            <text>No Way</text>
+        </option>
+        
+        <option>
+            <text>Sure Way</text>
+            
+            <requirement hide='false' type='lower'>
+                    <property>alliance.greed</property>
+                    <than>10</than>
+            </requirement>
+            
+            <effect genreq='1' type='delta'>
+                    <property>alliance.gold</property>
+                    <value>-150</value>
+            </effect>
+            
+            <effect type='delta'>
+                    <property>alliance.ressources[offer]</property>
+                    <value>$amount</value>
+            </effect>
+            
+        </option>        
+    </event>
+</events>

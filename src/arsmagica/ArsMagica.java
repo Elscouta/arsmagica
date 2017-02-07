@@ -5,17 +5,17 @@
  */
 package arsmagica;
 
-import gui.AdminScreen;
-import gui.SetupScreen;
-import gui.TitleScreen;
+import arsmagica.gui.AdminScreen;
+import arsmagica.gui.SetupScreen;
+import arsmagica.gui.TitleScreen;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JFileChooser;
-import model.Ability;
-import model.Art;
+import arsmagica.model.Ability;
+import arsmagica.model.Art;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,18 +23,11 @@ import javax.xml.xpath.XPathFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
-import model.Action;
-import model.CovenantOption;
-import model.Effect;
-import model.Event;
-
-import model.GameData;
-import model.Situation;
-import model.Variable;
-import model.VirtueFlaw;
+import arsmagica.model.CovenantOption;
+import arsmagica.model.GameData;
+import arsmagica.model.Variable;
+import arsmagica.model.VirtueFlaw;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -50,10 +43,6 @@ public class ArsMagica {
     static ArrayList<GameData> gameData;
     public HashSet<CovenantOption> covOpts;
     public HashSet<VirtueFlaw> virtuesFlaws;
-    public HashSet<Event> events;
-    public HashSet<Effect> effects;
-    public HashSet<Action> actions;
-    public HashSet<Situation> situations;
     static AdminScreen adminScreen;
     public DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();;
     public DocumentBuilder builder;
@@ -69,10 +58,6 @@ public class ArsMagica {
         titleScreen = new TitleScreen(this);
         covOpts = new HashSet<>();
         virtuesFlaws = new HashSet<>();
-        events = new HashSet<>();
-        effects = new HashSet<>();
-        actions = new HashSet<>();
-        situations = new HashSet<>();
         try {
             builder = factory.newDocumentBuilder();
             document = builder.parse(dataFile);
@@ -116,28 +101,6 @@ public class ArsMagica {
             for(int i = 0;i<virtuesFlawsNodes.getLength();i++){
                 saveVirtueFlaw(virtuesFlawsNodes.item(i));
             }
-            
-            NodeList effectNodes = ((Node)path.evaluate("Effects", root, XPathConstants.NODE)).getChildNodes();
-            for(int i = 0;i<effectNodes.getLength();i++){
-                saveEffect(effectNodes.item(i));
-            }
-
-            NodeList eventNodes = ((Node)path.evaluate("Events", root, XPathConstants.NODE)).getChildNodes();
-            System.out.print("il y a "+eventNodes.getLength()+" Evenements dans le XML.\n");
-            for(int i = 0;i<eventNodes.getLength();i++){
-                saveEvent(eventNodes.item(i));
-            }
-            
-            NodeList actionNodes = ((Node)path.evaluate("Actions", root, XPathConstants.NODE)).getChildNodes();
-            for(int i = 0;i<actionNodes.getLength();i++){
-                saveAction(actionNodes.item(i));
-            }
-            
-            NodeList situationNodes = ((Node)path.evaluate("Situations", root, XPathConstants.NODE)).getChildNodes();
-            for(int i = 0;i<situationNodes.getLength();i++){
-                saveSituation(situationNodes.item(i));
-            }
-
 
             } catch (XPathExpressionException e){
                 e.printStackTrace();
@@ -162,107 +125,6 @@ public class ArsMagica {
         } catch(XPathExpressionException e){ e.printStackTrace();}
     }
     
-    public void saveEffect(Node element){
-         try{
-            String name = (String)path.evaluate("@name", element);
-            String type = (String)path.evaluate("@type", element);
-            boolean displayed = (Boolean)path.evaluate("@displayed", element,XPathConstants.BOOLEAN);
-            switch(type){
-                case "ActionChoice":
-                    break;
-                case "ChoiceEffect":
-                    break;
-                case "EffectAmongN":
-                    break;
-                case "EffectList":
-                    break;
-                case "EventChange":
-                    break;
-                case "SituationChange":
-                    break;
-                case "TestEffect":
-                    break;
-                case "ValueChange":
-                    break;
-                case "VariableChange":
-                    break;
-            }
-        } catch(XPathExpressionException e){ e.printStackTrace();}
-    }
-    
-    public void saveSituation (Node element){
-        try{
-            String name = (String)path.evaluate("@name", element);
-            Situation situation = new Situation(name);
-            situations.add(situation);
-            NodeList actions = (NodeList)path.evaluate("actions", element, XPathConstants.NODESET);
-            for(int i = 0;i<actions.getLength();i++){
-                situation.possibleActions.add(findAction((String)path.evaluate("@name", actions.item(i), XPathConstants.STRING)));
-            }
-            NodeList freqEvents = (NodeList)path.evaluate("freqEvents", element, XPathConstants.NODESET);
-            for(int i = 0;i<freqEvents.getLength();i++){
-                int meanDayInterval = (Integer)path.evaluate("@frequence", freqEvents.item(i), XPathConstants.NUMBER);
-                Event event = findEvent((String)path.evaluate("@event", freqEvents.item(i), XPathConstants.STRING));
-                situation.addFreqEvent(meanDayInterval, event);
-            }
-            NodeList variables = (NodeList)path.evaluate("variables", element, XPathConstants.NODESET);
-            for(int i = 0;i<variables.getLength();i++){
-                situation.variables.add(new Variable((String)path.evaluate("@name", variables.item(i), XPathConstants.STRING)));
-            }
-        } catch(XPathExpressionException e){ e.printStackTrace();}
-    }
-    
-    public void saveAction (Node element){
-        try{
-            String name = (String)path.evaluate("@name", element);
-            String text = (String)path.evaluate("@text", element);
-            Action action = new Action(name,text);
-            actions.add(action);
-            NodeList consequences = (NodeList)path.evaluate("consequences", element, XPathConstants.NODESET);
-            for(int i = 0;i<consequences.getLength();i++){
-                action.consequences.add(findEffect((String)path.evaluate("@name", consequences.item(i), XPathConstants.STRING)));
-            }
-            NodeList costs = (NodeList)path.evaluate("costs", element, XPathConstants.NODESET);
-            for(int i = 0;i<costs.getLength();i++){
-                action.costs.add(findEffect((String)path.evaluate("@name", costs.item(i), XPathConstants.STRING)));
-            }
-        } catch(XPathExpressionException e){ e.printStackTrace();}
-    }
-    
-    public void saveEvent(Node element){
-        try{
-            String name = (String)path.evaluate("@name", element);
-            String effect = (String)path.evaluate("@effect", element);
-            events.add(new Event(name,findEffect(effect)));
-        } catch(XPathExpressionException e){ e.printStackTrace();}
-    }
-    
-    public Effect findEffect(String name){
-        for(Effect e :effects){
-            if(e.name.equals(name)){
-                return e;
-            }
-        }
-        return null;
-    }
-    
-    public Action findAction(String name){
-        for(Action a : actions){
-            if(a.name.equals(name)){
-                return a;
-            }
-        }
-        return null;
-    }
-    
-    public Event findEvent(String name){
-        for(Event e : events){
-            if(e.name.equals(name)){
-                return e;
-            }
-        }
-        return null;
-    }
     
     public void newGame (){
         GameData currentGameData = new GameData();
