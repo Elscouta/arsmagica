@@ -60,4 +60,20 @@ public class CreateEntities
         Entity e = world.createEntity("test_entity");
         assertEquals("test_entity", e.getType());        
     }
+    
+    @Test
+    public void createEntityPropIntConst() throws Exception
+    {
+        store.loadEntityDescFile("entity_propint_const.xml");
+        Entity e = world.createEntity("test_entity");
+        assertEquals(10, e.get("test_property").asInt().getValue());
+    }
+    
+    @Test
+    public void createEntityPropIntRandom() throws Exception
+    {
+        store.loadEntityDescFile("entity_propint_random.xml");
+        Entity e = world.createEntity("test_entity");
+        assertEquals(8, e.get("test_property").asInt().getValue());
+    }
 }
