@@ -73,6 +73,14 @@ public class LoadEntities
         assertEquals(1, e.getProperties().size());
     }
     
+    @Test
+    public void loadEntityPropIntRandom() throws XMLError
+    {
+        List<EntityDesc> ret = loader.loadXML("entity_propint_random.xml");
+        EntityDesc e = ret.get(0);
+        assertEquals(1, e.getProperties().size());
+    }
+    
     @Test (expected=XMLError.class)
     public void loadEntityPropNoType() throws XMLError
     {
