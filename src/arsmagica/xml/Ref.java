@@ -47,9 +47,9 @@ public class Ref<T extends IObject>
     private final static Pattern REGEX_DIRECT = 
             Pattern.compile("^([a-z_]+)$");
     private final static Pattern REGEX_INDIRECT = 
-            Pattern.compile("^([a-z_]+)[.]([a-z_.])$");
+            Pattern.compile("^([a-z_]+)[.]([a-z_.]+)$");
     private final static Pattern REGEX_ARRAY =
-            Pattern.compile("^([a-z_.]+)\\[([a-z_.])+\\]");
+            Pattern.compile("^([a-z_.]+)\\[([a-z_.]+)\\]$");
 
     private static IObject resolvePart(IObjectStore context, String path)
             throws IObject.Mistyped, IObject.Unknown, Ref.Invalid
@@ -65,14 +65,14 @@ public class Ref<T extends IObject>
             Matcher m2 = REGEX_INDIRECT.matcher(path);
             if (m2.matches())
             {
-                IObjectStore subcontext = resolvePart(context, m1.group(1)).asObject();
+                IObjectStore subcontext = resolvePart(context, m2.group(1)).asObject();
                 return resolvePart(subcontext, m2.group(2));
             }
             
             Matcher m3 = REGEX_ARRAY.matcher(path);
             if (m3.matches())
             {
-                IObjectStore subcontext = resolvePart(context, m1.group(1)).asMap();
+                IObjectStore subcontext = resolvePart(context, m3.group(1)).asMap();
                 return resolvePart(subcontext, m3.group(2));
             }
         }

@@ -32,8 +32,11 @@ public abstract class PropertyContainer implements IObjectStore
             properties.put(p.getID(), p.create(w, this));       
     }
     
-    protected final void addProperty(String key, IObject obj)
+    public final void addProperty(String key, IObject obj)
+            throws XMLError
     {
+        if (properties.containsKey(key))
+            throw new XMLError("Attempting to insert duplicate property");
         properties.put(key, obj);
     }
     

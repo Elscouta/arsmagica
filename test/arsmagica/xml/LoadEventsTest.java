@@ -51,7 +51,7 @@ public class LoadEventsTest
     }
 
     @Test
-    public void loadEntityEmpty() throws XMLError
+    public void loadEventEmpty() throws XMLError
     {
         List<EventDesc> ret = loader.loadXML("event_empty.xml");
         assertEquals(ret.size(), 1);
@@ -59,7 +59,7 @@ public class LoadEventsTest
     }
     
     @Test (expected=XMLError.class)
-    public void loadEntityNoType() throws XMLError
+    public void loadEventNoType() throws XMLError
     {
         loader.loadXML("event_notext.xml");        
     }
