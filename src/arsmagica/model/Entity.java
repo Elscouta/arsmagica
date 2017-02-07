@@ -32,7 +32,8 @@ public class Entity extends PropertyContainer
         this.parent = parent;
         this.type = desc.getType();
 
-        addProperty(parent.getType(), parent);
+        if (parent != null)
+            addProperty(parent.getType(), parent);
     }
     
 

@@ -56,6 +56,19 @@ public class DataStore
     }
     
     /**
+     * Loads a specific file to feed the entity description store.
+     * FIXME: Generalize the idea.
+     * 
+     * @param path The path to the file, relative to the gamedata directory
+     * @throws XMLError Error while loading XML file.
+     */
+    public void loadEntityDescFile(String path)
+            throws XMLError
+    {
+        entityDescs.load(path, "entity", this);                
+    }
+    
+    /**
      * Returns the entity description associated to the given type
      * @param key The type of the entity
      * @return The description of the entity

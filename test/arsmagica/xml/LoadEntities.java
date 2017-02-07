@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package xml;
+package arsmagica.xml;
 
 import arsmagica.desc.EntityDesc;
-import arsmagica.xml.DataStore;
-import arsmagica.xml.XMLError;
-import arsmagica.xml.XMLFileLoader;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -42,7 +39,7 @@ public class LoadEntities
     @Before
     public void setUp() 
     {
-        DataStore store = new DataStore("test/xml/testdata/");
+        DataStore store = new DataStore("test/arsmagica/xml/testdata/");
         loader = new XMLFileLoader<>(store, "entity", 
                 new EntityDesc.Loader(store));
     }

@@ -6,6 +6,7 @@
 package arsmagica.model;
 
 import arsmagica.xml.DataStore;
+import arsmagica.xml.XMLError;
 
 /**
  *
@@ -23,6 +24,12 @@ public class World
     public EntityMgr getEntityMgr()
     {
         return entityMgr;
+    }
+    
+    public Entity createEntity(String type)
+            throws XMLError
+    {
+        return entityMgr.createNew(type, null);
     }
     
 }
