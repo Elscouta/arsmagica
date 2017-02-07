@@ -86,4 +86,12 @@ public class LoadEntities
     {
         loader.loadXML("entity_prop_notype.xml");
     }
+    
+    @Test
+    public void loadEntityEvents() throws XMLError
+    {
+        List<EntityDesc> ret = loader.loadXML("entity_events.xml");
+        EntityDesc e = ret.get(0);
+        assertEquals(1, e.getEvents().size());
+    }
 }

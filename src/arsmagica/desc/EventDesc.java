@@ -48,6 +48,11 @@ public class EventDesc
         }
     }
     
+    public List<PropertyDesc> getProperties()
+    {
+        return properties;
+    }
+        
     public static class Loader extends XMLLoader<EventDesc>
     {
         public Loader(DataStore store)
