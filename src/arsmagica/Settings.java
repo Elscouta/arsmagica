@@ -12,4 +12,7 @@ package arsmagica;
 public class Settings 
 {
     public static double FLOAT_PRECISION = 0.000001;
+    
+    public static String GAMEDATA_PATH = "gamedata/";
+    public static String ENTITIES_DESCS_PATH = "entities/entities.xml";
 }

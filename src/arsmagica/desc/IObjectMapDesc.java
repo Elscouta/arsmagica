@@ -7,6 +7,7 @@ package arsmagica.desc;
 
 import arsmagica.model.Entity;
 import arsmagica.model.EntityMgr;
+import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.XMLNullLoader;
 import arsmagica.xml.IObjectStore;
@@ -17,7 +18,7 @@ import arsmagica.xml.IObjectStore;
  */
 public class IObjectMapDesc extends IObjectDesc
 {
-    @Override public IObjectStore create(EntityMgr eMgr, Entity parent)
+    @Override public IObjectStore create(World w, IObjectStore context)
     {
         return null;
     }

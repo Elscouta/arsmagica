@@ -11,39 +11,29 @@ import java.util.HashMap;
 import java.util.Map;
 import arsmagica.xml.IObject;
 import arsmagica.xml.IObjectStore;
+import arsmagica.xml.PropertyContainer;
 
 
 /**
  *
  * @author Elscouta
  */
-public class Entity implements IObjectStore
+public class Entity extends PropertyContainer
 {
-    @Override public IObjectStore getContext() { return parent; }
     @Override public String getType() { return type; }
-    @Override public IObjectStore asObject() { return this; }
     
-    private final Map<String, IObject> properties;
-    private final Entity parent;
+    private final IObjectStore parent;
     private final String type;
     
-    public Entity(EntityMgr eMgr, Entity parent, EntityDesc desc)
+    public Entity(World w, IObjectStore parent, EntityDesc desc)
             throws XMLError
     {
+        super(w, desc.getProperties());
         this.parent = parent;
-        this.properties = new HashMap<>();
-        this.properties.put(parent.getType(), parent);
-        desc.initProperties(eMgr, this, properties);
         this.type = desc.getType();
+
+        addProperty(parent.getType(), parent);
     }
     
-    @Override
-    public IObject get(String key)
-            throws IObject.Unknown
-    {
-        if (!properties.containsKey(key))
-            throw new IObject.Unknown(key, this);
-        
-        return properties.get(key);
-    }
+
 }

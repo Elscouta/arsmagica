@@ -6,7 +6,9 @@
 package arsmagica.desc;
 
 import arsmagica.model.Entity;
-import arsmagica.model.EntityMgr;
+import arsmagica.model.World;
+import arsmagica.xml.IObjectStore;
+import arsmagica.xml.XMLError;
 
 /**
  *
@@ -14,5 +16,5 @@ import arsmagica.model.EntityMgr;
  */
 public interface EntitySupplierDesc 
 {
-    Entity get(EntityMgr mgr);
+    Entity get(World w, IObjectStore parent) throws XMLError;
 }

@@ -31,7 +31,15 @@ public abstract class XMLLoader<T>
     public T loadXML(Element e) throws XMLError
     {
         T obj = factory.get();
-        fillObjectFromXML(obj, e);
-        return obj;
+        
+        try
+        {
+            fillObjectFromXML(obj, e);
+            return obj;
+        }
+        catch (XMLError exception)
+        {
+            throw new Failure(e, obj.getClass().getName(), exception);
+        }
     }
 }

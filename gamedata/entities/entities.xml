@@ -32,7 +32,7 @@ and open the template in the editor.
         
         <names>country_names.xml</names>
                 
-        <events>country_events.xml</events>
+        <events>events/country_events.xml</events>
     </entity>
     
     <entity>
@@ -65,13 +65,13 @@ and open the template in the editor.
             </related>
         </property>
         
-        <property id="relation">
+        <property id="relation" type="int">
             <init method="const">
                 <value>0</value>
             </init>
         </property>
         
-        <events>town_events.xml</events>
+        <events>events/town_events.xml</events>
     </entity>
     
     <entity>
@@ -84,7 +84,7 @@ and open the template in the editor.
             Guild of [profession.plural]
         </property>                
         
-        <events>guild_events.xml</events>
+        <events>events/guild_events.xml</events>
     </entity>
     
     <entity>

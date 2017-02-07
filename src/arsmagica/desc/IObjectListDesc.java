@@ -5,11 +5,11 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.Entity;
-import arsmagica.model.EntityMgr;
+import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
 import arsmagica.xml.IObjectList;
+import arsmagica.xml.IObjectStore;
 import arsmagica.xml.MethodIntLoader;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
@@ -24,9 +24,9 @@ public class IObjectListDesc extends IObjectDesc
     private IObjectDesc type;
     private Expression<Integer> count;
     
-    @Override public IObjectList create(EntityMgr eMgr, Entity parent)
+    @Override public IObjectList create(World w, IObjectStore context)
     {
-        return new IObjectList(parent, this);
+        return new IObjectList(context, this);
     }
 
     public static class Loader extends XMLLoader<IObjectListDesc>

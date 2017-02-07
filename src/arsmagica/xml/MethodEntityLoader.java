@@ -8,6 +8,7 @@ package arsmagica.xml;
 import arsmagica.desc.EntitySupplierDesc;
 import arsmagica.model.Entity;
 import arsmagica.model.EntityMgr;
+import arsmagica.model.World;
 import org.w3c.dom.Element;
 
 /**
@@ -20,17 +21,18 @@ public class MethodEntityLoader extends XMLDirectLoader< EntitySupplierDesc >
     
     private class New implements EntitySupplierDesc
     {
-        @Override public Entity get(EntityMgr eMgr)
+        @Override public Entity get(World w, IObjectStore parent)
+                throws XMLError
         {
-            return eMgr.createNew(type);
+            return w.getEntityMgr().createNew(type, parent);
         }
     }
     
     private class GetRandom implements EntitySupplierDesc
     {
-        @Override public Entity get(EntityMgr eMgr)
+        @Override public Entity get(World w, IObjectStore parent)
         {
-            return eMgr.getRandom(type);
+            return w.getEntityMgr().getRandom(type);
         }
     }
     

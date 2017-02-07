@@ -15,4 +15,5 @@ public class XMLError extends Exception
     public XMLError() { super(); }
     public XMLError(String msg) { super(msg); }
     public XMLError(Exception e) { super(e); }
+    public XMLError(String msg, Exception e) { super(msg, e); }
 }

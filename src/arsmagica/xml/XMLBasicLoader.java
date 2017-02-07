@@ -7,6 +7,7 @@ package arsmagica.xml;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -40,12 +41,32 @@ public class XMLBasicLoader
         return current_node.getTextContent();
     }
 
-    protected <U> U getChild(Element current_node, String key, XMLDirectLoader<U> l)
+    protected <U> U getChild(Element current_node, String key, 
+            XMLDirectLoader<U> l)
+            throws XMLError
+    {
+        U obj = getChild(current_node, key, l, null);
+
+        if (obj == null)
+            throw new XMLError(String.format(
+                               "Unable to find required child %s of node %s",
+                               key, current_node
+        ));
+        
+        return obj;
+    }
+                
+    protected <U> U getChild(Element current_node, String key, 
+            XMLDirectLoader<U> l, U defaultValue)
             throws XMLError
     {
         try
         {
             Node n = (Node) xpath.evaluate(key, current_node, XPathConstants.NODE);
+            
+            if (n == null)
+                return defaultValue;
+                        
             assert(n.getNodeType() == Node.ELEMENT_NODE);
             
             return l.loadXML((Element) n);
@@ -103,6 +124,16 @@ public class XMLBasicLoader
         @Override public String loadXML(Element e) throws XMLError
         {
             return getContent(e);
+        }
+    }
+
+    protected class Failure extends XMLError
+    {
+        Failure(Element e, String classname, XMLError error)
+        {
+            super(String.format("Failed to load %s into a %s", 
+                    e.toString(), classname), 
+                  error);
         }
     }
 }

@@ -5,15 +5,29 @@
  */
 package arsmagica.model;
 
+import arsmagica.xml.DataStore;
+import arsmagica.xml.IObjectStore;
+import arsmagica.xml.XMLError;
+
 /**
  *
  * @author Elscouta
  */
 public class EntityMgr 
 {
-    public Entity createNew(String type)
+    private final DataStore store;
+    private final World world;
+    
+    public EntityMgr(DataStore store, World world)
     {
-        return null;
+        this.store = store;
+        this.world = world;
+    }
+    
+    public Entity createNew(String type, IObjectStore parent)
+            throws XMLError
+    {
+        return store.getEntityDesc(type).create(world, parent);
     }
     
     public Entity getRandom(String type)

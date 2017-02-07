@@ -5,6 +5,7 @@
  */
 package arsmagica.xml;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -19,6 +20,7 @@ public class XMLStore<T extends Identifiable>
     public XMLStore(XMLLoader<T> loader)
     {
         this.loader = loader;
+        this.store = new HashMap<>();
     }
     
     public final void load(String pathname, String nodename, DataStore mainstore) 

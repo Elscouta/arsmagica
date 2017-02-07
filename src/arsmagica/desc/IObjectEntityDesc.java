@@ -7,6 +7,7 @@ package arsmagica.desc;
 
 import arsmagica.model.Entity;
 import arsmagica.model.EntityMgr;
+import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.MethodEntityLoader;
 import arsmagica.xml.XMLError;
@@ -23,9 +24,10 @@ public class IObjectEntityDesc extends IObjectDesc
     private EntitySupplierDesc initializer;
     private String type;
     
-    @Override public IObjectStore create(EntityMgr e, Entity parent)
+    @Override public Entity create(World w, IObjectStore context)
+            throws XMLError
     {
-        return initializer.get(e);
+        return initializer.get(w, context);
     }
     
     public static class Loader extends XMLLoader<IObjectEntityDesc>

@@ -7,8 +7,10 @@ package arsmagica.desc;
 
 import arsmagica.model.Entity;
 import arsmagica.model.EntityMgr;
+import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.IObject;
+import arsmagica.xml.IObjectStore;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
@@ -37,17 +39,17 @@ public class PropertyDesc
      * Instantiates the associated based on the description. This simply
      * defers the call to the object description.
      * 
-     * @param eMgr The entity management module, to allow creation of
+     * @param w The world module, to allow creation of
      * entities as-required.
-     * @param parent The entity that owns the property.
+     * @param parent The current context.
      * 
      * @return A concrete object.
      * @throws XMLError The XML that generated the description was ill-formed.
      */
-    public IObject create(EntityMgr eMgr, Entity parent)
+    public IObject create(World w, IObjectStore parent)
             throws XMLError
     {
-        return obj.create(eMgr, parent);
+        return obj.create(w, parent);
     }
             
     public static class Loader extends XMLLoader<PropertyDesc>

@@ -27,6 +27,8 @@ import arsmagica.model.CovenantOption;
 import arsmagica.model.GameData;
 import arsmagica.model.Variable;
 import arsmagica.model.VirtueFlaw;
+import arsmagica.model.World;
+import arsmagica.xml.DataStore;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -36,7 +38,10 @@ import org.xml.sax.SAXException;
  *
  * @author Chaha
  */
-public class ArsMagica {
+public class ArsMagica 
+{
+    public DataStore dataStore;
+    public World world;
 
     static TitleScreen titleScreen;
     static SetupScreen setupScreen;
@@ -52,9 +57,13 @@ public class ArsMagica {
     XPathFactory xpf = XPathFactory.newInstance();
     XPath path = xpf.newXPath();
         
-    
-
-    public ArsMagica() {
+    public ArsMagica() 
+    {
+        dataStore = new DataStore();
+        dataStore.load();
+        
+        world = new World(dataStore);
+        
         titleScreen = new TitleScreen(this);
         covOpts = new HashSet<>();
         virtuesFlaws = new HashSet<>();

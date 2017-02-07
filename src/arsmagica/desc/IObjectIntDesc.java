@@ -7,6 +7,7 @@ package arsmagica.desc;
 
 import arsmagica.model.Entity;
 import arsmagica.model.EntityMgr;
+import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.IObjectInt;
 import arsmagica.xml.Expression;
@@ -78,10 +79,10 @@ public class IObjectIntDesc extends IObjectDesc
     }
     
     @Override
-    public IObjectInt create(EntityMgr eMgr, Entity parent)
+    public IObjectInt create(World w, IObjectStore context)
             throws XMLError
     {
-        return new IObjectInt(parent, this);
+        return new IObjectInt(context, this);
     }
     
     public static final class Loader extends XMLLoader<IObjectIntDesc>

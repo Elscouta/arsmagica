@@ -5,6 +5,7 @@
  */
 package arsmagica.xml;
 
+import arsmagica.Settings;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,8 +29,8 @@ import org.xml.sax.SAXException;
  */
 public class XMLFileLoader<T> extends XMLDirectLoader<List<T>>
 {
-    private String tagname;
-    private XMLDirectLoader<T> subLoader;
+    private final String tagname;
+    private final XMLDirectLoader<T> subLoader;
     
     public XMLFileLoader(DataStore store, 
                          String tagname, XMLDirectLoader<T> loader)
@@ -52,7 +53,7 @@ public class XMLFileLoader<T> extends XMLDirectLoader<List<T>>
         try {
             List<T> retList = new ArrayList<>();
             
-            File fDesc = new File(filepath);
+            File fDesc = new File(Settings.GAMEDATA_PATH + filepath);
             Document xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(fDesc);
             xmlDoc.getDocumentElement().normalize();
                 

@@ -8,13 +8,13 @@ and open the template in the editor.
 
 <events>
     <event>
-        <property id="probability">
+        <property id="probability" type="int">
             <init method="const">
                 <value>0.1 * $source.activity</value>
             </init>
         </property>
         
-        <property id="amount">
+        <property id="amount" type="int">
             <init method="random">
                 <min>0.2 * $source.wealth</min>
                 <max>0.3 * $guild.wealth</max>
@@ -45,7 +45,7 @@ and open the template in the editor.
             
             <effect genreq='1' type='delta'>
                     <property>alliance.gold</property>
-                    <value>-150</value>
+                    <value>-150</value>s
             </effect>
             
             <effect type='delta'>

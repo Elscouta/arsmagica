@@ -5,7 +5,8 @@
  */
 package arsmagica.xml;
 
-import java.io.IOException;
+import arsmagica.Settings;
+import arsmagica.desc.EntityDesc;
 /**
  * The main data stores. Stores all the gamedata associated to their keys.
  * 
@@ -13,24 +14,28 @@ import java.io.IOException;
  */
 public class DataStore 
 {
-    private DataStore()
-    {
-//        try
-        {
-        }
-//        catch (IOException e)
-//        {
-//            e.printStackTrace();
-//            System.exit(1);
-//        }
-    }
+    private final XMLStore<EntityDesc> entityDescs;
     
-    /**
-     * Instantiates a new data store
-     * @return the newly created store.
-     */
-    static public DataStore create()
+    public DataStore()
     {
-        return new DataStore();
+        entityDescs = new XMLStore<>(new EntityDesc.Loader(this));
+    }
+
+    public void load()
+    {
+        try
+        {
+            entityDescs.load(Settings.ENTITIES_DESCS_PATH, "entity", this);
+        }
+        catch (XMLError e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }    
+    
+    public EntityDesc getEntityDesc(String key)
+    {
+        return entityDescs.get(key);
     }
 }

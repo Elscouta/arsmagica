@@ -7,7 +7,9 @@ package arsmagica.desc;
 
 import arsmagica.model.Entity;
 import arsmagica.model.EntityMgr;
+import arsmagica.model.World;
 import arsmagica.xml.DataStore;
+import arsmagica.xml.IObjectStore;
 import arsmagica.xml.IObjectString;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
@@ -21,9 +23,9 @@ public class IObjectStringDesc extends IObjectDesc
     private String str;
     
     @Override 
-    public IObjectString create(EntityMgr eMgr, Entity parent)
+    public IObjectString create(World w, IObjectStore context)
     {
-        return new IObjectString(parent, this);
+        return new IObjectString(context, this);
     }
     
     public static class Loader extends XMLLoader<IObjectStringDesc>

@@ -7,6 +7,7 @@ package arsmagica.desc;
 
 import arsmagica.model.Entity;
 import arsmagica.model.EntityMgr;
+import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.XMLDirectLoader;
 import arsmagica.xml.XMLError;
@@ -14,6 +15,7 @@ import arsmagica.xml.XMLLoader;
 import arsmagica.xml.XMLSubLoader;
 import org.w3c.dom.Element;
 import arsmagica.xml.IObject;
+import arsmagica.xml.IObjectStore;
 
 /**
  *
@@ -24,14 +26,14 @@ public abstract class IObjectDesc
     /**
      * Instantiates a property based on the description.
      * 
-     * @param eMgr The entity management module, to allow creation of
+     * @param w The world module, to allow creation of
      * entities as-required.
-     * @param parent The entity that owns the property.
+     * @param context The context in which the object is created.
      * 
      * @return A concrete property.
      * @throws XMLError The XML that generated the description was ill-formed.
      */
-    public abstract IObject create(EntityMgr eMgr, Entity parent)
+    public abstract IObject create(World w, IObjectStore context)
             throws XMLError;
     
     
