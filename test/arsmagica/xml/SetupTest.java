@@ -18,9 +18,9 @@ import static org.junit.Assert.*;
  *
  * @author Elscouta
  */
-public class Setup {
+public class SetupTest {
     
-    public Setup() {
+    public SetupTest() {
     }
     
     @BeforeClass

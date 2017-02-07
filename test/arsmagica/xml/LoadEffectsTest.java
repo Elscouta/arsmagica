@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  *
  * @author Elscouta
  */
-public class LoadEffects 
+public class LoadEffectsTest 
 {
     private XMLFileLoader<EntityDesc> entityLoader;
     private XMLFileLoader<Effect> effectLoader;

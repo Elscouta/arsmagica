@@ -19,13 +19,13 @@ import org.junit.Test;
  *
  * @author Elscouta
  */
-public class CreateEntities 
+public class CreateEntitiesTest 
 {    
     private XMLFileLoader<EntityDesc> loader;
     private World world;
     private DataStore store;
     
-    public CreateEntities() 
+    public CreateEntitiesTest() 
     {
     }
     

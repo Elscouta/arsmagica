@@ -19,11 +19,11 @@ import org.junit.Test;
  *
  * @author Elscouta
  */
-public class LoadEvents 
+public class LoadEventsTest 
 {
     private XMLFileLoader<EventDesc> loader;
     
-    public LoadEvents() 
+    public LoadEventsTest() 
     {
     }
     
