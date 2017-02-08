@@ -38,6 +38,7 @@ public class MethodIntLoader extends XMLDirectLoader< Expression<Integer> >
         {
             case "const":  return new Const.Loader(store);
             case "random": return new Random.Loader(store);
+            case "get_random": return new GetRandom.IntLoader(store);
             default: 
                 throw new XMLError(String.format("Unknown method: %s", method));
         }

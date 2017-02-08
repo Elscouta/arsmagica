@@ -96,4 +96,10 @@ public class LoadEntitiesTest
         List<EntityDesc> ret = loader.loadXML("entity_events.xml");
         EntityDesc e = ret.get(0);
     }
+    
+    @Test
+    public void loadEntityProplist() throws XMLError
+    {
+        List<EntityDesc> ret = loader.loadXML("entity_proplist.xml");        
+    }
 }

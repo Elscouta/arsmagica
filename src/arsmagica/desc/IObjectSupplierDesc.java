@@ -7,6 +7,7 @@ package arsmagica.desc;
 
 import arsmagica.model.Entity;
 import arsmagica.model.World;
+import arsmagica.xml.IObject;
 import arsmagica.xml.IObjectStore;
 import arsmagica.xml.XMLError;
 
@@ -14,7 +15,7 @@ import arsmagica.xml.XMLError;
  *
  * @author Elscouta
  */
-public interface EntitySupplierDesc 
+public interface IObjectSupplierDesc 
 {
-    Entity get(World w, IObjectStore parent) throws XMLError;
+    IObject get(World w, IObjectStore parent) throws XMLError;
 }

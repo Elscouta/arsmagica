@@ -22,6 +22,12 @@ public class IObjectStringDesc extends IObjectDesc
 {
     private String str;
     
+    @Override
+    public String getType()
+    {
+        return "string";
+    }
+    
     @Override 
     public IObjectString create(World w, IObjectStore context)
     {

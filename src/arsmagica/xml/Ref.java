@@ -120,6 +120,14 @@ public class Ref<T extends IObject>
         }
     }
     
+    public static class List extends Ref<IObjectList>
+    {
+        public List(String path, IObjectStore context)
+        {
+            super(path, context, p -> p.asList());
+        }
+    }
+    
     public static class Any extends Ref<IObject>
     {
         public Any(String path, IObjectStore context)

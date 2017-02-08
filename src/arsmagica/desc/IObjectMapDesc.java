@@ -18,6 +18,11 @@ import arsmagica.xml.IObjectStore;
  */
 public class IObjectMapDesc extends IObjectDesc
 {
+    @Override public String getType()
+    {
+        return "map";
+    }
+    
     @Override public IObjectStore create(World w, IObjectStore context)
     {
         return null;

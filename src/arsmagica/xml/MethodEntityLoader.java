@@ -5,34 +5,26 @@
  */
 package arsmagica.xml;
 
-import arsmagica.desc.EntitySupplierDesc;
 import arsmagica.model.Entity;
 import arsmagica.model.EntityMgr;
 import arsmagica.model.World;
 import org.w3c.dom.Element;
+import arsmagica.desc.IObjectSupplierDesc;
 
 /**
  *
  * @author Elscouta
  */
-public class MethodEntityLoader extends XMLDirectLoader< EntitySupplierDesc >
+public class MethodEntityLoader extends XMLDirectLoader< IObjectSupplierDesc >
 {
     private final String type;
     
-    private class New implements EntitySupplierDesc
+    private class New implements IObjectSupplierDesc
     {
         @Override public Entity get(World w, IObjectStore parent)
                 throws XMLError
         {
             return w.getEntityMgr().createNew(type, parent);
-        }
-    }
-    
-    private class GetRandom implements EntitySupplierDesc
-    {
-        @Override public Entity get(World w, IObjectStore parent)
-        {
-            return w.getEntityMgr().getRandom(type);
         }
     }
     
@@ -42,7 +34,7 @@ public class MethodEntityLoader extends XMLDirectLoader< EntitySupplierDesc >
         this.type = type;
     }
 
-    private XMLDirectLoader<? extends EntitySupplierDesc> getLoader(String method)
+    private XMLDirectLoader<? extends IObjectSupplierDesc> getLoader(String method)
             throws XMLError
     {
         switch (method)
@@ -50,14 +42,14 @@ public class MethodEntityLoader extends XMLDirectLoader< EntitySupplierDesc >
             case "new":         
                 return new XMLNullLoader<>(() -> new New());
             case "get_random":  
-                return new XMLNullLoader<>(() -> new GetRandom());
+                return new GetRandom.Loader(store, type);
             default: 
                 throw new XMLError(String.format("Unknown method: %s", method));
         }
     }
     
     @Override
-    public EntitySupplierDesc loadXML(Element e) 
+    public IObjectSupplierDesc loadXML(Element e) 
             throws XMLError 
     {
         String method = getAttribute(e, "method");

@@ -9,6 +9,7 @@ import arsmagica.model.Entity;
 import arsmagica.model.EntityMgr;
 import arsmagica.model.World;
 import arsmagica.xml.DataStore;
+import arsmagica.xml.IObject;
 import arsmagica.xml.MethodEntityLoader;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
@@ -21,10 +22,15 @@ import arsmagica.xml.IObjectStore;
  */
 public class IObjectEntityDesc extends IObjectDesc
 {
-    private EntitySupplierDesc initializer;
+    private IObjectSupplierDesc initializer;
     private String type;
     
-    @Override public Entity create(World w, IObjectStore context)
+    @Override public String getType() 
+    {
+        return type;
+    }
+    
+    @Override public IObject create(World w, IObjectStore context)
             throws XMLError
     {
         return initializer.get(w, context);

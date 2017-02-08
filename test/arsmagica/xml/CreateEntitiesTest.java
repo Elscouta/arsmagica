@@ -105,4 +105,13 @@ public class CreateEntitiesTest
         assertEquals(10, child.get("test_prop2").asInt().getValue());
         assertEquals(20, parent.get("test_prop2").asInt().getValue());
     }
+    
+    @Test
+    public void createEntityPropList() throws Exception
+    {
+        store.loadEntityDescFile("entity_proplist.xml");
+        Entity e = world.createEntity("test_entity");
+        
+        assertEquals(10, e.get("test_random_access").asInt().getValue());
+    }
 }

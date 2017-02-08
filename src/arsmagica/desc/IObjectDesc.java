@@ -36,6 +36,12 @@ public abstract class IObjectDesc
     public abstract IObject create(World w, IObjectStore context)
             throws XMLError;
     
+    /**
+     * Returns the type of the object description. This must be the same
+     * type as the one of the object created by the create method.
+     * @return The type of created objects.
+     */
+    public abstract String getType();
     
     public static class Loader extends XMLDirectLoader<IObjectDesc>
     {

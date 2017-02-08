@@ -118,7 +118,7 @@ public class XMLBasicLoader
         }
     }
     
-    protected class IObjectLoader 
+    protected class IObjectLoader
             extends XMLDirectLoader< Expression<IObject> >
     {
         public IObjectLoader()
@@ -132,6 +132,23 @@ public class XMLBasicLoader
         {
             final String str = getContent(e);
             return context -> new Ref.Any(str, context).get();
+        }
+    }
+
+    protected class IObjectListLoader
+            extends XMLDirectLoader< Expression<IObjectList> >
+    {
+        public IObjectListLoader()
+        {
+            super(XMLBasicLoader.this.store);
+        }
+        
+        @Override
+        public Expression<IObjectList> loadXML(Element e)
+                throws XMLError
+        {
+            final String str = getContent(e);
+            return context -> new Ref.List(str, context).get();
         }
     }
     

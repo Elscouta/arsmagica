@@ -79,6 +79,12 @@ public class IObjectIntDesc extends IObjectDesc
     }
     
     @Override
+    public String getType()
+    {
+        return "int";
+    }
+    
+    @Override
     public IObjectInt create(World w, IObjectStore context)
             throws XMLError
     {

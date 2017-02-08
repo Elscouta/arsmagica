@@ -16,7 +16,22 @@ import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
 
 /**
- *
+ * The description of a list. A list definition follows the following
+ * structure:
+ * 
+ * <pre>
+ * {@code
+ * <... type='list'>
+ *   <var type='elementType'>
+ *     (initialization of elementType)
+ *   </var>
+ *   <count method='intMethod'>
+ *     (parameters of intMethod)
+ *   </count>
+ * </...>
+ * }
+ * </pre>
+ * 
  * @author Elscouta
  */
 public class IObjectListDesc extends IObjectDesc
@@ -24,9 +39,21 @@ public class IObjectListDesc extends IObjectDesc
     private IObjectDesc type;
     private Expression<Integer> count;
     
-    @Override public IObjectList create(World w, IObjectStore context)
+    @Override public String getType()
     {
-        return new IObjectList(context, this);
+        return "list";
+    }
+    
+    @Override public IObjectList create(World w, IObjectStore context)
+            throws XMLError
+    {
+        IObjectList l = new IObjectList(context, type.getType());
+        int rCount = count.resolve(context);
+        
+        for (int i = 0; i < rCount; i++)
+            l.addElement(type.create(w, context));
+            
+        return l;
     }
 
     public static class Loader extends XMLLoader<IObjectListDesc>
