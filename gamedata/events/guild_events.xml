@@ -26,8 +26,8 @@ and open the template in the editor.
         </property>
         
         <text>
-            The [source.fullname] of [source.town.name] is offering you a 
-            good deal! So many free [offer.plural] ($amount to be exact) are 
+            The $source.fullname of $source.town.name is offering you a 
+            good deal! So many free $offer.plural ($amount to be exact) are 
             available for a small price!
         </text>
         
@@ -45,7 +45,7 @@ and open the template in the editor.
             
             <effect genreq='1' type='delta'>
                     <property>alliance.gold</property>
-                    <value>-150</value>s
+                    <value>-150</value>
             </effect>
             
             <effect type='delta'>

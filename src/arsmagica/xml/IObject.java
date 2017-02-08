@@ -98,6 +98,19 @@ public interface IObject
     }
     
     /**
+     * Converts the object into a contextual string. The context of the
+     * string should be the store owner of this object.
+     * 
+     * @return A string that includes some references to other variables.
+     * @throws Mistyped The object was not convertible to a string. Only int and
+     * string are convertible.
+     */
+    default Expression<String> toStringTemplate() throws Mistyped
+    {
+        throw new Mistyped("string-convertible", this);
+    }
+    
+    /**
      * Thrown when a property is called, but the type of property doesn't 
      * match the expected type.
      */

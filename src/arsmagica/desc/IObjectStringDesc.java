@@ -5,12 +5,12 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.Entity;
-import arsmagica.model.EntityMgr;
 import arsmagica.model.World;
 import arsmagica.xml.DataStore;
+import arsmagica.xml.Expression;
 import arsmagica.xml.IObjectStore;
 import arsmagica.xml.IObjectString;
+import arsmagica.xml.StringParser;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
 
@@ -20,7 +20,7 @@ import org.w3c.dom.Element;
  */
 public class IObjectStringDesc extends IObjectDesc
 {
-    private String str;
+    private Expression<String> str;
     
     @Override
     public String getType()
@@ -31,7 +31,7 @@ public class IObjectStringDesc extends IObjectDesc
     @Override 
     public IObjectString create(World w, IObjectStore context)
     {
-        return new IObjectString(context, this);
+        return new IObjectString(context, str);
     }
     
     public static class Loader extends XMLLoader<IObjectStringDesc>
@@ -44,7 +44,7 @@ public class IObjectStringDesc extends IObjectDesc
         @Override
         public void fillObjectFromXML(IObjectStringDesc obj, Element e)
         {
-            obj.str = getContent(e);
+            obj.str = StringParser.eval(getContent(e));
         }
     }
 }

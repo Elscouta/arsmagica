@@ -102,4 +102,10 @@ public class LoadEntitiesTest
     {
         List<EntityDesc> ret = loader.loadXML("entity_proplist.xml");        
     }
+    
+    @Test
+    public void loadEntityPropString() throws XMLError
+    {
+        loader.loadXML("entity_propstring.xml");
+    }
 }

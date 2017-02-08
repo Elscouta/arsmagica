@@ -24,11 +24,27 @@ public final class IObjectString implements IObject
     @Override public IObjectString asString() { return this; }
 
     private final IObjectStore context;
-    private final IObjectStringDesc desc;
+    private final Expression<String> str; 
     
-    public IObjectString(IObjectStore context, IObjectStringDesc desc)
+    public IObjectString(IObjectStore context, Expression<String> str)
     {
         this.context = context;
-        this.desc = desc;
+        this.str = str;
+    }
+    
+    @Override
+    public String toString()
+    {
+        try {
+            return str.resolve(context);
+        } catch (XMLError e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    @Override
+    public Expression<String> toStringTemplate()
+    {
+        return str;
     }
 }

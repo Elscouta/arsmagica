@@ -45,11 +45,11 @@ public class Ref<T extends IObject>
     }
     
     private final static Pattern REGEX_DIRECT = 
-            Pattern.compile("^([A-Za-z_][A-Za-z_0-9]+)$");
+            Pattern.compile("^([A-Za-z_][A-Za-z_0-9]*)$");
     private final static Pattern REGEX_INDIRECT = 
-            Pattern.compile("^([A-Za-z_][A-Za-z_0-9]+)[.]([A-Za-z_][A-Za-z_0-9]+)$");
+            Pattern.compile("^([A-Za-z_][A-Za-z_0-9]*)[.]([A-Za-z_][A-Za-z_0-9]*)$");
     private final static Pattern REGEX_ARRAY =
-            Pattern.compile("^([A-Za-z_][A-Za-z_0-9.]+)\\[([A-Za-z_][A-Za-z_0-9.]+)\\]$");
+            Pattern.compile("^([A-Za-z_][A-Za-z_0-9.]*)\\[([A-Za-z_][A-Za-z_0-9.]*)\\]$");
 
     private static IObject resolvePart(IObjectStore context, String path)
             throws IObject.Mistyped, IObject.Unknown, Ref.Invalid
@@ -158,7 +158,7 @@ public class Ref<T extends IObject>
         @Override public String toString()
         {
             return String.format("Invalid property: \n" +
-                                 "Complete string: %s" +
+                                 "Complete string: %s\n" +
                                  "Invalid subexpression: %s",
                                  fullString, partString);
         }

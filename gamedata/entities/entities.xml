@@ -81,7 +81,7 @@ and open the template in the editor.
         </property>
         
         <property type="string" id="fullname">
-            Guild of [profession.plural]
+            Guild of $profession.plural
         </property>                
         
         <events>events/guild_events.xml</events>

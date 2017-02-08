@@ -28,7 +28,9 @@ public abstract class IObjectDesc
      * 
      * @param w The world module, to allow creation of
      * entities as-required.
-     * @param context The context in which the object is created.
+     * @param context The context in which the object is created. This might
+     * not be the direct parent: it is the context in which the object
+     * look for variables.
      * 
      * @return A concrete property.
      * @throws XMLError The XML that generated the description was ill-formed.

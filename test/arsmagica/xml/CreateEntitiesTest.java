@@ -8,13 +8,12 @@ package arsmagica.xml;
 import arsmagica.desc.EntityDesc;
 import arsmagica.model.Entity;
 import arsmagica.model.World;
-import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 
 /**
  *
@@ -26,20 +25,9 @@ public class CreateEntitiesTest
     private World world;
     private DataStore store;
     
-    public CreateEntitiesTest() 
-    {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() 
-    {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() 
-    {
-    }
-    
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(10);
+
     @Before
     public void setUp() 
     {
@@ -49,14 +37,6 @@ public class CreateEntitiesTest
         world = new World(store);
     }
     
-    @After
-    public void tearDown() 
-    {
-        store = null;
-        loader = null;
-        world = null;
-    }
-
     @Test
     public void createEntityEmpty() throws Exception
     {
@@ -113,5 +93,16 @@ public class CreateEntitiesTest
         Entity e = world.createEntity("test_entity");
         
         assertEquals(10, e.get("test_random_access").asInt().getValue());
+    }
+    
+    @Test
+    public void createEntityPropString() throws Exception
+    {
+        store.loadEntityDescFile("entity_propstring.xml");
+        Entity e = world.createEntity("test_entity");
+        
+        assertEquals(10, e.get("i").asInt().getValue());
+        assertEquals("Hello: 10", e.get("s1").toString());
+        assertEquals("Hello: 10 is love", e.get("s2").toString());
     }
 }

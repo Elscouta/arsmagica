@@ -56,4 +56,10 @@ public class IObjectList implements IObject
     {
         return list.size();
     }
+    
+    @Override
+    public String toString()
+    {
+        return String.format("List[%s] : size = %d", elementType, list.size());
+    }
 }

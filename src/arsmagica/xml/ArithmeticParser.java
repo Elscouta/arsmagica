@@ -38,12 +38,12 @@ public class ArithmeticParser
             {
                 nextChar();
             
-                Expression<Integer> x = parseExpression();
+                Expression<Double> x = parseExpression();
                 
                 if (pos < str.length()) 
                     throw new RuntimeException("Unexpected: " + (char)ch);
                 
-                return x;
+                return c -> (int) x.resolve(c).intValue();
             }
 
             // Grammar:
@@ -52,7 +52,7 @@ public class ArithmeticParser
             // factor = `+` factor | `-` factor | `(` expression `)`
             //        | number | functionName factor | factor `^` factor
 
-            Expression<Integer> parseExpression() 
+            Expression<Double> parseExpression() 
             {
                 Expression<Double> x = parseTerm();
                 while (true)
@@ -71,8 +71,7 @@ public class ArithmeticParser
                     } 
                     else 
                     {
-                        Expression<Double> x1 = x;
-                        return c -> x1.resolve(c).intValue();
+                        return x;
                     }
                 }
             }
@@ -115,8 +114,7 @@ public class ArithmeticParser
                 int startPos = this.pos;
                 if (eat('(')) 
                 { // parentheses
-                    Expression<Integer> x1 = parseExpression();
-                    x = (c -> (double) x1.resolve(c));
+                    x = parseExpression();
                     if (!eat(')'))
                         throw new RuntimeException("Failed to find closing parenthesis in expression.");
                 } 

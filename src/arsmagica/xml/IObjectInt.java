@@ -53,4 +53,16 @@ public final class IObjectInt implements IObject
     {
         value = value + delta;
     }
+    
+    @Override
+    public String toString()
+    {
+        return String.valueOf(value);
+    }
+    
+    @Override
+    public Expression<String> toStringTemplate()
+    {
+        return c -> String.valueOf(value);
+    }
 }
