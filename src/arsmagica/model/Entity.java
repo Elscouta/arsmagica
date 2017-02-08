@@ -22,18 +22,13 @@ public class Entity extends PropertyContainer
 {
     @Override public String getType() { return type; }
     
-    private final IObjectStore parent;
     private final String type;
     
-    public Entity(World w, IObjectStore parent, EntityDesc desc)
+    public Entity(World w, String type)
             throws XMLError
     {
-        super(w, desc.getProperties());
-        this.parent = parent;
-        this.type = desc.getType();
-
-        if (parent != null)
-            addProperty(parent.getType(), parent);
+        super(w);
+        this.type = type;
     }
     
 

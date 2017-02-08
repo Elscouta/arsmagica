@@ -124,19 +124,28 @@ public class ArithmeticParser
                 { // numbers
                     while ((ch >= '0' && ch <= '9') || ch == '.') 
                         nextChar();
+                    
+                    final double fixedValue = Double.parseDouble(str.substring(startPos, this.pos));
                 
-                    x = (c -> Double.parseDouble(str.substring(startPos, this.pos)));
+                    x = (c -> fixedValue);
                 }
                 else if (eat('$'))
                 {
                     while (ch >= 'a' && ch <= 'z' ||
                            ch >= 'A' && ch <= 'Z' ||
+                           ch == '_')
+                        nextChar();
+
+                    while (ch >= 'a' && ch <= 'z' ||
+                           ch >= 'A' && ch <= 'Z' ||
+                           ch >= '0' && ch <= '9' ||
+                           ch == '[' || ch == ']' ||
                            ch == '.' || ch == '_')
                         nextChar();
                     
-                    String var = str.substring(startPos+1, this.pos);
+                    final String var = str.substring(startPos+1, this.pos);
                     
-                    x = (IObjectStore c) -> (double) c.get(var).asInt().getValue();                    
+                    x = (IObjectStore c) -> (double) (new Ref.Int(var, c)).get().getValue();                    
                 }   
                 else if (ch >= 'a' && ch <= 'z') 
                 { // functions

@@ -55,7 +55,6 @@ public class LoadEventsTest
     {
         List<EventDesc> ret = loader.loadXML("event_empty.xml");
         assertEquals(ret.size(), 1);
-        assertEquals(0, ret.get(0).getProperties().size());
     }
     
     @Test (expected=XMLError.class)

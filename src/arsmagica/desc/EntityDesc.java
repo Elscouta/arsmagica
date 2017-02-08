@@ -39,21 +39,22 @@ public class EntityDesc implements Identifiable
     {
         return type;
     }
-    
-    public List<PropertyDesc> getProperties()
-    {
-        return properties;
-    }
-    
-    public List<EventDesc> getEvents()
-    {
-        return events;
-    }
-    
+        
     public Entity create(World w, IObjectStore parent)
             throws XMLError
     {
-        return new Entity(w, parent, this);
+        Entity e = new Entity(w, type);
+        
+        if (parent != null)
+        {
+            e.addProperty("parent", parent);
+            e.addProperty(parent.getType(), parent);
+        }
+            
+        for (PropertyDesc p : properties)
+            e.addProperty(p.getID(), p.create(w, e));
+        
+        return e;
     }
     
     public static class Loader extends XMLLoader<EntityDesc>

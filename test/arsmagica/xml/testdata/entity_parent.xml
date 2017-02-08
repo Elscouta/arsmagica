@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<entities>
+    <entity>
+        <type>test_parent</type>
+        <property id='test_prop1' type='int'>
+            <init method='const'>
+                <value>10</value>
+            </init>
+        </property>
+        
+        <property id='child' type='test_child'>
+            <init method='new' />
+        </property>
+        
+        <property id='test_prop2' type='int'>
+            <init method='const'>
+                <value>2 * $child.test_prop1</value>
+            </init>
+        </property>
+    </entity>
+    <entity>
+        <type>test_child</type>
+        <property id='test_prop1' type='int'>
+            <init method='const'>
+                <value>$test_parent.test_prop1</value>
+            </init>
+        </property>
+        
+        <property id='test_prop2' type='int'>
+            <init method='const'>
+                <value>$parent.test_prop1</value>
+            </init>
+        </property>
+    </entity>
+</entities>

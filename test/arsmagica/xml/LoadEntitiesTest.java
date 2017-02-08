@@ -55,8 +55,6 @@ public class LoadEntitiesTest
         List<EntityDesc> ret = loader.loadXML("entity_empty.xml");
         assertEquals(ret.size(), 1);
         assertEquals("test_entity", ret.get(0).getType());
-        assertEquals(0, ret.get(0).getEvents().size());
-        assertEquals(0, ret.get(0).getProperties().size());
     }
     
     @Test (expected=XMLError.class)
@@ -70,7 +68,6 @@ public class LoadEntitiesTest
     {
         List<EntityDesc> ret = loader.loadXML("entity_propint_const.xml");
         EntityDesc e = ret.get(0);
-        assertEquals(1, e.getProperties().size());
     }
     
     @Test
@@ -78,7 +75,6 @@ public class LoadEntitiesTest
     {
         List<EntityDesc> ret = loader.loadXML("entity_propint_random.xml");
         EntityDesc e = ret.get(0);
-        assertEquals(1, e.getProperties().size());
     }
     
     @Test (expected=XMLError.class)
@@ -88,10 +84,16 @@ public class LoadEntitiesTest
     }
     
     @Test
+    public void loadEntityPropIntArithSame() throws XMLError
+    {
+        List<EntityDesc> ret = loader.loadXML("entity_propint_arithsame.xml");
+        EntityDesc e = ret.get(0);
+    }
+    
+    @Test
     public void loadEntityEvents() throws XMLError
     {
         List<EntityDesc> ret = loader.loadXML("entity_events.xml");
         EntityDesc e = ret.get(0);
-        assertEquals(1, e.getEvents().size());
     }
 }

@@ -57,10 +57,10 @@ public class Event extends PropertyContainer
         }
     }
     
-    public Event(World world, String text, List<PropertyDesc> propertyDescs)
+    public Event(World world, String text)
             throws XMLError
     {
-        super(world, propertyDescs);
+        super(world);
         this.text = text;
         this.world = world;
         this.options = new ArrayList<>();

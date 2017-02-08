@@ -45,11 +45,11 @@ public class Ref<T extends IObject>
     }
     
     private final static Pattern REGEX_DIRECT = 
-            Pattern.compile("^([a-z_]+)$");
+            Pattern.compile("^([A-Za-z_][A-Za-z_0-9]+)$");
     private final static Pattern REGEX_INDIRECT = 
-            Pattern.compile("^([a-z_]+)[.]([a-z_.]+)$");
+            Pattern.compile("^([A-Za-z_][A-Za-z_0-9]+)[.]([A-Za-z_][A-Za-z_0-9]+)$");
     private final static Pattern REGEX_ARRAY =
-            Pattern.compile("^([a-z_.]+)\\[([a-z_.]+)\\]$");
+            Pattern.compile("^([A-Za-z_][A-Za-z_0-9.]+)\\[([A-Za-z_][A-Za-z_0-9.]+)\\]$");
 
     private static IObject resolvePart(IObjectStore context, String path)
             throws IObject.Mistyped, IObject.Unknown, Ref.Invalid

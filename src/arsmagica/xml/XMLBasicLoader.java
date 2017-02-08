@@ -104,7 +104,7 @@ public class XMLBasicLoader
             
             for (int i = 0; i < nl.getLength(); i++)
             {
-                Node n = (Node) xpath.evaluate(key, current_node, XPathConstants.NODE);
+                Node n = nl.item(i);
                 assert(n.getNodeType() == Node.ELEMENT_NODE);
             
                 ret.add(l.loadXML((Element) n));

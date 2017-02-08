@@ -84,21 +84,19 @@ public class EventDesc
         }
     }
     
-    public List<PropertyDesc> getProperties()
-    {
-        return properties;
-    }
-    
     public Event create(World world, IObjectStore source)
             throws XMLError
     {
-        Event e = new Event(world, text, properties);
+        Event e = new Event(world, text);
         
         if (source != null)
         {
             e.addProperty("source", source);
             e.addProperty(source.getType(), source);
         }
+        
+        for (PropertyDesc p : properties)
+            e.addProperty(p.getID(), p.create(world, e));
         
         for (OptionDesc o : options)
             e.addOption(o.text, new EffectList(o.effects), o.requirements);

@@ -24,12 +24,9 @@ public abstract class PropertyContainer implements IObjectStore
 
     private final Map<String, IObject> properties;
     
-    public PropertyContainer(World w, List<PropertyDesc> propertyDescs)
-            throws XMLError
+    public PropertyContainer(World w)
     {
-        properties = new HashMap<>();
-        for (PropertyDesc p : propertyDescs)
-            properties.put(p.getID(), p.create(w, this));       
+        properties = new HashMap<>();     
     }
     
     public final void addProperty(String key, IObject obj)

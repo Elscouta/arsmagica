@@ -72,10 +72,10 @@ public class XMLFileLoader<T> extends XMLDirectLoader<List<T>>
             throw new XMLError(e);
         }
         catch (ParserConfigurationException e) {
-            throw new XMLError("Could not configure XML parser");
+            throw new XMLError("Could not configure XML parser", e);
         }
         catch (SAXException e) {
-            throw new XMLError("Could not parse XML File");
+            throw new XMLError("Could not parse XML File", e);
         }        
 
     }
