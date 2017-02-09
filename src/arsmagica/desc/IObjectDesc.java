@@ -31,7 +31,7 @@ public abstract class IObjectDesc
      * look for variables.
      * 
      * @return A concrete property.
-     * @throws XMLError The XML that generated the description was ill-formed.
+     * @throws Ref.Error The XML that generated the description was ill-formed.
      */
     public abstract IObject create(World w, IObjectStore context)
             throws Ref.Error;

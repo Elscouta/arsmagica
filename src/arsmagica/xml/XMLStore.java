@@ -9,7 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @param T the class to..
+ * A class to hold a set of Identifiable objects, with basic loading / query
+ * features.
+ * 
+ * @param <T> The class of the objects that will be stored inside the store.
  * @author Elscouta
  */
 public class XMLStore<T extends Identifiable>

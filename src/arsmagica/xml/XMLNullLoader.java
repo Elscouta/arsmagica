@@ -9,7 +9,10 @@ import java.util.function.Supplier;
 import org.w3c.dom.Element;
 
 /**
- *
+ * A loader for empty nodes, where the tag itself provides all the
+ * required information.
+ * 
+ * @param <T> The type that is loaded.
  * @author Elscouta
  */
 public class XMLNullLoader<T> extends XMLLoader<T>

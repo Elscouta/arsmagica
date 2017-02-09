@@ -5,7 +5,6 @@
  */
 package arsmagica.xml;
 
-import arsmagica.desc.IObjectListDesc;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

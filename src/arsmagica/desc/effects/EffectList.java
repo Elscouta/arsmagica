@@ -8,7 +8,6 @@ package arsmagica.desc.effects;
 import arsmagica.model.World;
 import arsmagica.xml.IObjectStore;
 import arsmagica.xml.Ref;
-import arsmagica.xml.XMLError;
 import java.util.List;
 
 /**

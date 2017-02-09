@@ -6,16 +6,13 @@
 package arsmagica.desc;
 
 import arsmagica.model.Entity;
-import arsmagica.model.EntityMgr;
 import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLFileLoader;
 import arsmagica.xml.XMLLoader;
 import java.util.List;
-import java.util.Map;
 import org.w3c.dom.Element;
-import arsmagica.xml.IObject;
 import arsmagica.xml.IObjectStore;
 import arsmagica.xml.Identifiable;
 import arsmagica.xml.Ref;

@@ -10,7 +10,6 @@ import arsmagica.desc.effects.Effect;
 import arsmagica.model.Entity;
 import arsmagica.model.World;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

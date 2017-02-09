@@ -153,16 +153,23 @@ public class ArithmeticParser
                     String func = str.substring(startPos, this.pos);
                     Expression<Double> x1 = parseFactor();
                     
-                    if (func.equals("sqrt")) 
-                        x = c -> Math.sqrt(x1.resolve(c));
-                    else if (func.equals("sin")) 
-                        x = c -> Math.sin(Math.toRadians(x1.resolve(c)));
-                    else if (func.equals("cos")) 
-                        x = c -> Math.cos(Math.toRadians(x1.resolve(c)));
-                    else if (func.equals("tan")) 
-                        x = c -> Math.tan(Math.toRadians(x1.resolve(c)));
-                    else 
-                        throw new RuntimeException("Unknown function: " + func);
+                    switch (func) 
+                    {
+                        case "sqrt":
+                            x = c -> Math.sqrt(x1.resolve(c));
+                            break;
+                        case "sin":
+                            x = c -> Math.sin(Math.toRadians(x1.resolve(c)));
+                            break;
+                        case "cos":
+                            x = c -> Math.cos(Math.toRadians(x1.resolve(c)));
+                            break;
+                        case "tan":
+                            x = c -> Math.tan(Math.toRadians(x1.resolve(c)));
+                            break;
+                        default:
+                            throw new RuntimeException("Unknown function: " + func);
+                    }
                 } 
                 else 
                 {

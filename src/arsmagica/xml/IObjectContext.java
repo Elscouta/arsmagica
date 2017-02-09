@@ -16,8 +16,8 @@ public class IObjectContext implements IObjectStore
     @Override public String getType() { return "context"; }
     @Override public IObjectStore getContext() { return this; }
     
-    private String key;
-    private IObject value;
+    private final String key;
+    private final IObject value;
 
     private IObjectContext(String key, IObject value)
     {

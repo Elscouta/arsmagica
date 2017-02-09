@@ -5,8 +5,6 @@
  */
 package arsmagica.xml;
 
-import arsmagica.desc.IObjectStringDesc;
-
 /**
  * Represents a string property.
  * Type of strings is "string".

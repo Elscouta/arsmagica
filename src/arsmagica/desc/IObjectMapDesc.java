@@ -5,8 +5,6 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.Entity;
-import arsmagica.model.EntityMgr;
 import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.XMLNullLoader;

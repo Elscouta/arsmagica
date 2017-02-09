@@ -8,7 +8,6 @@ package arsmagica.desc.effects;
 import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObject;
 import arsmagica.xml.IObjectInt;
 import arsmagica.xml.IObjectStore;
 import arsmagica.xml.Ref;

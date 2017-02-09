@@ -5,17 +5,15 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.Entity;
-import arsmagica.model.EntityMgr;
 import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.IObject;
+import arsmagica.xml.IObjectStore;
 import arsmagica.xml.MethodEntityLoader;
+import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
-import arsmagica.xml.IObjectStore;
-import arsmagica.xml.Ref;
 
 /**
  *
