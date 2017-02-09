@@ -8,7 +8,7 @@ and open the template in the editor.
 
 <events>
     <event>
-        <probability>0</probability>
+        <probability>1</probability>
         <text></text>
     </event>
 </events>

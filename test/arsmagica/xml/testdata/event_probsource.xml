@@ -8,6 +8,7 @@ and open the template in the editor.
 
 <events>
     <event>
-        <probability>0</probability>
+        <probability>0.05 * $source.test_property</probability>
+        <text></text>
     </event>
 </events>
