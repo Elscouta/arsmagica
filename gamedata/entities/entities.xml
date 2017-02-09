@@ -65,7 +65,11 @@ and open the template in the editor.
             </related>
         </property>
         
-        <property id="relation" type="int" init="0" />
+        <property id="relation" type="int">
+            <init method="const">
+                <value>0</value>
+            </init>
+        </property>
         
         <events>events/town_events.xml</events>
     </entity>
