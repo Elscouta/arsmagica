@@ -48,8 +48,8 @@ public class EffectCreate extends Effect {
         public void fillObjectFromXML(EffectCreate obj, Element e)
                 throws XMLError
         {
-            obj.type = getChild(e, "entity", new ContentLoader());
-            obj.destination = getChild(e,"destination", new IObjectListLoader());
+            obj.type = getAttributeOrChild(e, "entity", new ContentLoader());
+            obj.destination = getAttributeOrChild(e,"destination", new IObjectListLoader());
         }
     }
     

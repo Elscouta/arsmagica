@@ -53,10 +53,51 @@ public class XMLBasicLoader
     }
     
     protected String getContent(Element current_node)
+            throws XMLError
     {
+        if (current_node.getElementsByTagName("*").getLength() > 0)
+            throw new XMLError(String.format(
+                    "[line %s] : Unexpected child %s in node %s, "
+                    + "expected leaf node.", 
+                    current_node.getUserData("lineNumber"),
+                    ((Element) current_node.getElementsByTagName("*").item(0)).getTagName(),
+                    current_node.getTagName()));
         return current_node.getTextContent().trim();
     }
-
+    
+    protected <U> U getAttributeOrChild(Element current_node, String key,
+            StringLoader<? extends U> attributeLoader, 
+            XMLDirectLoader<? extends U> childLoader)
+            throws XMLError
+    {
+        String attrStr = getAttribute(current_node, key, null);
+        U childOpt = getChild(current_node, key, childLoader, null);
+        
+        if (childOpt != null && attrStr != null)
+            throw new XMLError(String.format(
+                    "[line %s] : Multiple definition of %s, both"
+                    + "as direct child and as attribute", 
+                    current_node.getUserData("lineNumber"), key));
+        
+        if (childOpt == null && attrStr == null)
+            throw new XMLError(String.format(
+                    "[line %s] : Unable to find %s, not a child"
+                    + "and not an attribute", 
+                    current_node.getUserData("lineNumber"), key));
+        
+        if (childOpt != null)
+            return childOpt;
+        else
+            return attributeLoader.loadString(attrStr);
+    }
+    
+    protected <U> U getAttributeOrChild(Element current_node, String key,
+            XMLStringLoader<U> loader)
+            throws XMLError
+    {
+        return getAttributeOrChild(current_node, key, loader, loader);
+    }
+    
     protected <U> U getChild(Element current_node, String key, 
             XMLDirectLoader<U> l)
             throws XMLError
@@ -65,8 +106,8 @@ public class XMLBasicLoader
 
         if (obj == null)
             throw new XMLError(String.format(
-                               "Unable to find required child %s of node %s",
-                               key, current_node
+                               "[line %s] : Unable to find required child %s of node %s",
+                               current_node.getUserData("lineNumber"), key, current_node.getTagName()
         ));
         
         return obj;
@@ -152,7 +193,7 @@ public class XMLBasicLoader
     }
     
     protected class IObjectIntLoader
-            extends XMLDirectLoader< Expression<IObjectInt> >
+            extends XMLStringLoader< Expression<IObjectInt> >
     {
         public IObjectIntLoader()
         {
@@ -160,16 +201,15 @@ public class XMLBasicLoader
         }
         
         @Override
-        public Expression<IObjectInt> loadXML(Element e)
+        public Expression<IObjectInt> loadString(String str)
                 throws XMLError
         {
-            final String str = getContent(e);
             return context -> new Ref.Int(str, context).get();
         }
     }
         
     protected class IObjectListLoader
-            extends XMLDirectLoader< Expression<IObjectList> >
+            extends XMLStringLoader< Expression<IObjectList> >
     {
         public IObjectListLoader()
         {
@@ -177,25 +217,31 @@ public class XMLBasicLoader
         }
         
         @Override
-        public Expression<IObjectList> loadXML(Element e)
+        public Expression<IObjectList> loadString(String str)
                 throws XMLError
         {
-            final String str = getContent(e);
             return context -> new Ref.List(str, context).get();
         }
     }
     
     protected class ArithmeticLoader 
-            extends XMLDirectLoader< Expression<Integer> >
+            extends XMLStringLoader< Expression<Integer> >
     {
         public ArithmeticLoader() 
         { 
             super(XMLBasicLoader.this.store); 
         }
         
-        @Override public Expression<Integer> loadXML(Element e) throws XMLError
+        @Override 
+        public Expression<Integer> loadString(String str)
+                throws XMLError
         {
-            return c -> ArithmeticParser.eval(getContent(e)).resolve(c).intValue();
+            try {
+                Expression<Double> expr = ArithmeticParser.eval(str);
+                return c -> expr.resolve(c).intValue();
+            } catch (ArithmeticParser.ParseException ex) {
+                throw new XMLError("Unable to parse arithmetic expression", ex);
+            }
         }
     }
     
@@ -209,20 +255,25 @@ public class XMLBasicLoader
         
         @Override public Expression<Double> loadXML(Element e) throws XMLError
         {
-            return ArithmeticParser.eval(getContent(e));
+            try {
+                return ArithmeticParser.eval(getContent(e));
+            } catch (ArithmeticParser.ParseException ex) {
+                throw new XMLError("Unable to parse arithmetic expression", ex);
+            }
+  
         }
     }
     
-    protected class ContentLoader extends XMLDirectLoader<String>
+    protected class ContentLoader extends XMLStringLoader<String>
     {
         public ContentLoader()
         {
             super(XMLBasicLoader.this.store);
         }
         
-        @Override public String loadXML(Element e) throws XMLError
+        @Override public String loadString(String str) throws XMLError
         {
-            return getContent(e);
+            return str;
         }
     }
 
@@ -230,8 +281,8 @@ public class XMLBasicLoader
     {
         Failure(Element e, String classname, XMLError error)
         {
-            super(String.format("Failed to load %s into a %s", 
-                    e.toString(), classname), 
+            super(String.format("[line %s] : Failed to load node %s into a %s", 
+                  e.getUserData("lineNumber"), e.getTagName(), classname), 
                   error);
         }
     }

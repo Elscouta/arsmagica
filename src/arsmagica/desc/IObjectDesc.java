@@ -53,22 +53,26 @@ public abstract class IObjectDesc
             super(store);
         }
         
+        public XMLDirectLoader<? extends IObjectDesc> getLoader(String type)
+                throws XMLError
+        {
+            switch (type)
+            {
+                case "int":     return new IObjectIntDesc.Loader(store);      
+                case "string":  return new IObjectStringDesc.Loader(store);   
+                case "list":    return new IObjectListDesc.Loader(store);     
+                case "map":     throw new XMLError("Map type is not supported.");
+                default:        return new IObjectEntityDesc.Loader(store, type); 
+            }            
+        }
+        
         @Override
         public IObjectDesc loadXML(Element e)
                 throws XMLError
         {
             String type = getAttribute(e, "type");
-            XMLLoader<? extends IObjectDesc> l;
-            
-            switch (type)
-            {
-                case "int":     l = new IObjectIntDesc.Loader(store);      break;
-                case "string":  l = new IObjectStringDesc.Loader(store);   break;
-                case "list":    l = new IObjectListDesc.Loader(store);     break;
-                case "map":     throw new XMLError("Map type is not supported.");
-                default:        l = new IObjectEntityDesc.Loader(store, type); 
-            }
-            
+            XMLDirectLoader<? extends IObjectDesc> l = getLoader(type);
+                        
             return l.loadXML(e);
         }
     }    

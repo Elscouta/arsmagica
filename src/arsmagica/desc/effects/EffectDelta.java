@@ -45,8 +45,8 @@ public class EffectDelta extends Effect
         public void fillObjectFromXML(EffectDelta obj, Element e)
                 throws XMLError
         {
-            obj.value = getChild(e, "value", new ArithmeticLoader());
-            obj.affectedObject = getChild(e, "property", new IObjectIntLoader());
+            obj.value = getAttributeOrChild(e, "value", new ArithmeticLoader());
+            obj.affectedObject = getAttributeOrChild(e, "property", new IObjectIntLoader());
         }
     }
 }

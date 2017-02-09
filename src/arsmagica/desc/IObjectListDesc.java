@@ -74,8 +74,15 @@ public class IObjectListDesc extends IObjectDesc
         public void fillObjectFromXML(IObjectListDesc obj, Element e) 
                 throws XMLError
         {
-            obj.type = getChild(e, "var", new IObjectDesc.Loader(store));
-            obj.count = getChild(e, "count", new MethodIntLoader(store));
+            IObjectDesc.Loader typeLoader = new IObjectDesc.Loader(store);
+            String member_type = getAttribute(e, "member_type", null);
+            
+            if (member_type != null)
+                obj.type = typeLoader.getLoader(member_type).loadXML(e);
+            else
+                obj.type = getChild(e, "var", new IObjectDesc.Loader(store));
+            
+            obj.count = getAttributeOrChild(e, "count", new MethodIntLoader(store));
         }
     }
 }

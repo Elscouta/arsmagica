@@ -14,7 +14,7 @@ and open the template in the editor.
                 <init method='new' />
             </var>
             <count method='const'>
-                <value>5</value>
+                5
             </count>
         </property>
     </entity>

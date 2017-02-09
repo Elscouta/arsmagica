@@ -11,7 +11,7 @@ and open the template in the editor.
         <type>test_parent</type>
         <property id='test_prop1' type='int'>
             <init method='const'>
-                <value>10</value>
+                10
             </init>
         </property>
         
@@ -21,7 +21,7 @@ and open the template in the editor.
         
         <property id='test_prop2' type='int'>
             <init method='const'>
-                <value>2 * $child.test_prop1</value>
+                2 * $child.test_prop1
             </init>
         </property>
     </entity>
@@ -29,13 +29,13 @@ and open the template in the editor.
         <type>test_child</type>
         <property id='test_prop1' type='int'>
             <init method='const'>
-                <value>$test_parent.test_prop1</value>
+                $test_parent.test_prop1
             </init>
         </property>
         
         <property id='test_prop2' type='int'>
             <init method='const'>
-                <value>$parent.test_prop1</value>
+                $parent.test_prop1                
             </init>
         </property>
     </entity>

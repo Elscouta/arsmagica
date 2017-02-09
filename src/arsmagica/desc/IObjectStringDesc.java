@@ -15,6 +15,7 @@ import arsmagica.xml.StringParser;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
 import arsmagica.xml.PropertyContext;
+import arsmagica.xml.XMLError;
 
 /**
  *
@@ -45,6 +46,7 @@ public class IObjectStringDesc extends IObjectDesc
         
         @Override
         public void fillObjectFromXML(IObjectStringDesc obj, Element e)
+                throws XMLError
         {
             obj.str = StringParser.eval(getContent(e));
         }

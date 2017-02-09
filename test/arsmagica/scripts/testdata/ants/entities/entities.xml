@@ -15,13 +15,13 @@ and open the template in the editor.
                 <init method='new' />
             </var>
             <count method='const'>
-                <value>2</value>
+                2
             </count>
         </property>
         
         <property id='food' type='int'>
             <init method='const'>
-                <value>0</value>
+                0
             </init>
         </property>
         
@@ -33,7 +33,7 @@ and open the template in the editor.
         
         <property id='level' type='int'>
             <init method='const'>
-                <value>1</value>
+                1
             </init>
         </property>
         

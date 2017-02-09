@@ -11,13 +11,13 @@ and open the template in the editor.
         <type>test_entity</type>
         <property id='test_prop1' type='int'>
             <init method='const'>
-                <value>10</value>
+                10
             </init>
         </property>
         
         <property id='test_prop2' type='int'>
             <init method='const'>
-                <value>2 * $test_prop1</value>
+                2 * $test_prop1
             </init>
         </property>
     </entity>

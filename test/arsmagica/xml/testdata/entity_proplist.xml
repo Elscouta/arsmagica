@@ -12,11 +12,11 @@ and open the template in the editor.
         <property id='test_list' type='list'>
             <var type='int'>
                 <init method='const'>
-                    <value>10</value>
+                    10
                 </init>
             </var>
             <count method='const'>
-                <value>5</value>
+                5
             </count>
         </property>
         

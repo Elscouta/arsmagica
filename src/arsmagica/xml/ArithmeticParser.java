@@ -12,6 +12,7 @@ package arsmagica.xml;
 public class ArithmeticParser 
 {
     public static Expression<Double> eval(final String str) 
+            throws ParseException
     {
         return new Object() 
         {
@@ -35,6 +36,7 @@ public class ArithmeticParser
             }
 
             Expression<Double> parse() 
+                    throws ParseException
             {
                 nextChar();
             
@@ -53,6 +55,7 @@ public class ArithmeticParser
             //        | number | functionName factor | factor `^` factor
 
             Expression<Double> parseExpression() 
+                    throws ParseException
             {
                 Expression<Double> x = parseTerm();
                 while (true)
@@ -77,6 +80,7 @@ public class ArithmeticParser
             }
 
             Expression<Double> parseTerm() 
+                    throws ParseException
             {
                 Expression<Double> x = parseFactor();
 
@@ -100,6 +104,7 @@ public class ArithmeticParser
             }
 
             Expression<Double> parseFactor() 
+                    throws ParseException
             {
                 if (eat('+')) 
                     return parseFactor(); // unary plus
@@ -118,7 +123,7 @@ public class ArithmeticParser
                     if (!eat(')'))
                         throw new RuntimeException("Failed to find closing parenthesis in expression.");
                 } 
-                else if ((ch >= '0' && ch <= '9') || ch == '.') 
+                else if ((ch >= '0' && ch <= '9')) 
                 { // numbers
                     while ((ch >= '0' && ch <= '9') || ch == '.') 
                         nextChar();
@@ -173,7 +178,7 @@ public class ArithmeticParser
                 } 
                 else 
                 {
-                    throw new RuntimeException("Unexpected: " + (char)ch);
+                    throw new ParseException("Unexpected: " + (char)ch);
                 }
 
                 if (eat('^'))
@@ -184,7 +189,12 @@ public class ArithmeticParser
                 }
 
                 return x;
-        }
-    }.parse();
-}
+            }
+        }.parse();
+    }
+    
+    public static class ParseException extends Exception
+    {
+        public ParseException(String msg) { super(msg); }
+    }
 }

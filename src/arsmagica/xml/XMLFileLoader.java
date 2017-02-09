@@ -6,7 +6,9 @@
 package arsmagica.xml;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -52,7 +54,8 @@ public class XMLFileLoader<T> extends XMLDirectLoader<List<T>>
             List<T> retList = new ArrayList<>();
             
             File fDesc = new File(store.getGamedataPath() + filepath);
-            Document xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(fDesc);
+            InputStream is = new FileInputStream(fDesc);
+            Document xmlDoc = PositionalXMLReader.readXML(is);
             xmlDoc.getDocumentElement().normalize();
                 
             NodeList nodeList = xmlDoc.getElementsByTagName(tagname);
@@ -68,9 +71,6 @@ public class XMLFileLoader<T> extends XMLDirectLoader<List<T>>
         }
         catch (IOException e) {
             throw new XMLError(e);
-        }
-        catch (ParserConfigurationException e) {
-            throw new XMLError("Could not configure XML parser", e);
         }
         catch (SAXException e) {
             throw new XMLError("Could not parse XML File", e);

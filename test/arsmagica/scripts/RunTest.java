@@ -37,4 +37,25 @@ public class RunTest
         world.nextDay();
         assertEquals(50, e.get("food").asInt().getValue());        
     }
+    
+    @Test
+    public void runAntsShort() throws Exception
+    {
+        DataStore store = new DataStore("test/arsmagica/scripts/testdata/ants_short/");
+        store.load();
+        World world = new World(store);
+        Entity e = world.createEntity("nest");
+        
+        assertEquals(0, e.get("food").asInt().getValue());
+        world.nextDay();
+        assertEquals(2, e.get("food").asInt().getValue());
+        world.nextDay();
+        assertEquals(7, e.get("food").asInt().getValue());
+        world.nextDay();
+        assertEquals(16, e.get("food").asInt().getValue());
+        world.nextDay();
+        assertEquals(30, e.get("food").asInt().getValue());
+        world.nextDay();
+        assertEquals(50, e.get("food").asInt().getValue());        
+    }
 }

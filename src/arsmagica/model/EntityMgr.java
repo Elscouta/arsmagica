@@ -5,6 +5,7 @@
  */
 package arsmagica.model;
 
+import arsmagica.desc.EntityDesc;
 import arsmagica.xml.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.IObject;
@@ -31,7 +32,12 @@ public class EntityMgr
     public Entity createNew(String type, IObject parent, Context context)
             throws Ref.Error
     {
-        Entity e = store.getEntityDesc(type).create(world, parent, context);
+        EntityDesc desc = store.getEntityDesc(type);
+        if (desc == null)
+            throw new Ref.Error(String.format(
+                    "Unknown entity type: %s",
+                    type));
+        Entity e = desc.create(world, parent, context);
         eventMgr.registerEntity(e);
         return e;
     }

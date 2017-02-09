@@ -12,7 +12,7 @@ and open the template in the editor.
         
         <property id='i' type='int'>
             <init method='const'>
-                <value>10</value>
+                10
             </init>
         </property>
         

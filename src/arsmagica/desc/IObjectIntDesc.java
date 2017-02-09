@@ -102,7 +102,8 @@ public class IObjectIntDesc extends IObjectDesc
         public void fillObjectFromXML(IObjectIntDesc obj, Element e)
                 throws XMLError
         {
-            obj.initializer = getChild(e, "init", 
+            obj.initializer = getAttributeOrChild(e, "init", 
+                                       new MethodIntLoader.Const.Loader(store),
                                        new MethodIntLoader(store));
             obj.relations = getChildList(e, "related", 
                                          new RelationDesc.Loader(store));

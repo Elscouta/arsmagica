@@ -108,4 +108,10 @@ public class LoadEntitiesTest
     {
         loader.loadXML("entity_propstring.xml");
     }
+    
+    @Test (expected = XMLError.class)
+    public void loadEntityPropIntEmptyInit() throws XMLError
+    {
+        loader.loadXML("entity_propint_emptyinit.xml");
+    }
 }

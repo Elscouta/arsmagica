@@ -33,7 +33,7 @@ public class MethodEntityLoader extends XMLDirectLoader< IObjectSupplierDesc >
         this.type = type;
     }
 
-    private XMLDirectLoader<? extends IObjectSupplierDesc> getLoader(String method)
+    public XMLDirectLoader<? extends IObjectSupplierDesc> getLoader(String method)
             throws XMLError
     {
         switch (method)
