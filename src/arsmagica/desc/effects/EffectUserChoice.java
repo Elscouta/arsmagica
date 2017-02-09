@@ -5,7 +5,10 @@
  */
 package arsmagica.desc.effects;
 
-import arsmagica.desc.EventDesc;
+import arsmagica.gui.Dialog;
+import arsmagica.gui.DialogMgr;
+import arsmagica.model.World;
+import arsmagica.xml.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.XMLBasicLoader;
 import arsmagica.xml.XMLError;
@@ -19,7 +22,7 @@ import org.w3c.dom.Element;
  * 
  * @author Elscouta
  */
-public class EffectUserChoice 
+public class EffectUserChoice extends Effect
 {
     private boolean blocking;
     
@@ -67,6 +70,42 @@ public class EffectUserChoice
             }
         }
     }
+    
+    @Override
+    public void apply(World w, Context context)
+    {
+        Dialog d = w.getDialogMgr().createDialog(true, text);
+        for (OptionDesc o : options)
+        {
+            Dialog.EnabledOracle oracle = () -> {
+                for (Requirement r : o.requirements)
+                {
+                    if (!true)
+                        return false;
+                }
+                return true;
+            };
+            
+            EffectList effect = new EffectList(o.effects);
+            
+            d.addOption(o.text, effect, context, oracle);
+        }
+    }
 
-
+    public static class Loader extends XMLLoader<EffectUserChoice>
+    {
+        public Loader(DataStore store)
+        {
+            super(store, () -> new EffectUserChoice());
+        }
+        
+        @Override
+        public void fillObjectFromXML(EffectUserChoice obj, Element e)
+                throws XMLError
+        {
+            obj.blocking = true;
+            obj.text = getChild(e, "text", new ContentLoader());
+            obj.options = getChildList(e, "option", new OptionDesc.Loader(store));
+        }
+    }
 }

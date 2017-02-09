@@ -5,6 +5,7 @@
  */
 package arsmagica.model;
 
+import arsmagica.gui.DialogMgr;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.PropertyContext;
 import arsmagica.xml.Ref;
@@ -16,15 +17,22 @@ import arsmagica.xml.Ref;
 public class World 
 {
     private final EntityMgr entityMgr;
+    private final DialogMgr dialogMgr;
     
     public World(DataStore store)
     {
         entityMgr = new EntityMgr(store, this);
+        dialogMgr = new DialogMgr(this);
     }
     
     public EntityMgr getEntityMgr()
     {
         return entityMgr;
+    }
+    
+    public DialogMgr getDialogMgr()
+    {
+        return dialogMgr;
     }
     
     public Entity createEntity(String type)
