@@ -5,17 +5,15 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.Entity;
-import arsmagica.model.EntityMgr;
 import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.XMLDirectLoader;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
-import arsmagica.xml.XMLSubLoader;
 import org.w3c.dom.Element;
 import arsmagica.xml.IObject;
 import arsmagica.xml.IObjectStore;
+import arsmagica.xml.Ref;
 
 /**
  *
@@ -36,7 +34,7 @@ public abstract class IObjectDesc
      * @throws XMLError The XML that generated the description was ill-formed.
      */
     public abstract IObject create(World w, IObjectStore context)
-            throws XMLError;
+            throws Ref.Error;
     
     /**
      * Returns the type of the object description. This must be the same
@@ -64,7 +62,7 @@ public abstract class IObjectDesc
                 case "int":     l = new IObjectIntDesc.Loader(store);      break;
                 case "string":  l = new IObjectStringDesc.Loader(store);   break;
                 case "list":    l = new IObjectListDesc.Loader(store);     break;
-                case "map":     l = new IObjectMapDesc.Loader(store);      break;
+                case "map":     throw new XMLError("Map type is not supported.");
                 default:        l = new IObjectEntityDesc.Loader(store, type); 
             }
             

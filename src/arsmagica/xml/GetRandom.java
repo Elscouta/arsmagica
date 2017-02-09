@@ -23,7 +23,8 @@ class GetRandom implements IObjectSupplierDesc
     }
     
     @Override
-    public IObject get(World w, IObjectStore parent) throws XMLError 
+    public IObject get(World w, IObjectStore parent) 
+            throws Ref.Error 
     {
         if (container == null) 
         {
@@ -58,11 +59,18 @@ class GetRandom implements IObjectSupplierDesc
         }
         
         @Override 
-        public Expression<Integer> loadXML(Element e) throws XMLError
+        public Expression<Integer> loadXML(Element e) 
+                throws XMLError
         {
             final Expression<IObjectList> container = 
                     getChild(e, "list", new XMLBasicLoader.IObjectListLoader(), null);
-            return c -> container.resolve(c).getRandom().asInt().getValue();
+            return (IObjectStore c) -> {
+                try {
+                    return container.resolve(c).getRandom().asInt().getValue();
+                } catch (IObject.Mistyped err) {
+                    throw new Ref.Error("Getting random integer from list failed: not an integer.", err);
+                }
+            };
         }
     }
 }

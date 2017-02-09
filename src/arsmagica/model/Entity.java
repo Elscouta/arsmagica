@@ -5,13 +5,8 @@
  */
 package arsmagica.model;
 
-import arsmagica.desc.EntityDesc;
-import arsmagica.xml.XMLError;
-import java.util.HashMap;
-import java.util.Map;
-import arsmagica.xml.IObject;
-import arsmagica.xml.IObjectStore;
 import arsmagica.xml.PropertyContainer;
+import arsmagica.xml.Ref;
 
 
 /**
@@ -25,7 +20,7 @@ public class Entity extends PropertyContainer
     private final String type;
     
     public Entity(World w, String type)
-            throws XMLError
+            throws Ref.Error
     {
         super(w);
         this.type = type;

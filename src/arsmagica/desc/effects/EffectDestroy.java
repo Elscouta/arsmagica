@@ -10,6 +10,7 @@ import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
 import arsmagica.xml.IObject;
 import arsmagica.xml.IObjectStore;
+import arsmagica.xml.PropertyContainer;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLDirectLoader;
 import arsmagica.xml.XMLError;
@@ -25,12 +26,13 @@ import org.w3c.dom.Element;
  */
 public class EffectDestroy extends Effect
 {
-    Expression<IObject> ref;
+    Expression<PropertyContainer> ref;
     
     @Override
-    public void apply(World world, IObjectStore context) throws XMLError 
+    public void apply(World world, IObjectStore context) 
+            throws Ref.Error 
     {
-        ref.resolve(context).asObject().destroy();
+        ref.resolve(context).destroy();
     }
     
     public static class Loader extends XMLLoader<EffectDestroy>
@@ -44,7 +46,7 @@ public class EffectDestroy extends Effect
         public void fillObjectFromXML(EffectDestroy obj, Element e)
                 throws XMLError
         {
-            obj.ref = (new IObjectLoader()).loadXML(e);
+            obj.ref = (new PropertyContainerLoader()).loadXML(e);
         }
     }
 }

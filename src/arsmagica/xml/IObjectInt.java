@@ -36,7 +36,7 @@ public final class IObjectInt implements IObject
     private final List<Relation> relations;
 
     public IObjectInt(IObjectStore c, IObjectIntDesc desc) 
-            throws XMLError
+            throws Ref.Error
     {
         this.context = c;
         this.desc = desc;

@@ -26,7 +26,7 @@ public class LoadEffectsTest
     private DataStore store;
     
     @Before
-    public void setUp() throws XMLError
+    public void setUp() throws Exception
     {
         store = new DataStore("test/arsmagica/xml/testdata/");
         effectLoader = new XMLFileLoader<>(store, "effect", 
@@ -41,7 +41,7 @@ public class LoadEffectsTest
     }
     
     @Test
-    public void loadEffectDeltaPosConst() throws XMLError
+    public void loadEffectDeltaPosConst() throws Exception
     {
         Effect e = effectLoader.loadXML("effect_delta_posconst.xml").get(0);
         e.apply(world, testEntity);
@@ -50,7 +50,7 @@ public class LoadEffectsTest
     }
     
     @Test
-    public void loadEffectDestroy() throws XMLError
+    public void loadEffectDestroy() throws Exception
     {
         effectLoader.loadXML("effect_destroy.xml");
     }

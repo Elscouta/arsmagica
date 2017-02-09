@@ -36,7 +36,7 @@ public class Ref<T extends IObject>
     }
     
     public T get() 
-            throws IObject.Mistyped, IObject.Unknown, Ref.Invalid
+            throws Error
     {
         if (prop == null)
             resolve();
@@ -52,42 +52,43 @@ public class Ref<T extends IObject>
             Pattern.compile("^([A-Za-z_][A-Za-z_0-9.]*)\\[([A-Za-z_][A-Za-z_0-9.]*)\\]$");
 
     private static IObject resolvePart(IObjectStore context, String path)
-            throws IObject.Mistyped, IObject.Unknown, Ref.Invalid
+            throws MisformedError, IObject.Mistyped, IObject.Unknown
     {
-        try 
+        Matcher m1 = REGEX_DIRECT.matcher(path);
+        if (m1.matches())
         {
-            Matcher m1 = REGEX_DIRECT.matcher(path);
-            if (m1.matches())
-            {
-                return context.get(path);
-            }
-        
-            Matcher m2 = REGEX_INDIRECT.matcher(path);
-            if (m2.matches())
-            {
-                IObjectStore subcontext = resolvePart(context, m2.group(1)).asObject();
-                return resolvePart(subcontext, m2.group(2));
-            }
-            
-            Matcher m3 = REGEX_ARRAY.matcher(path);
-            if (m3.matches())
-            {
-                IObjectStore subcontext = resolvePart(context, m3.group(1)).asMap();
-                return resolvePart(subcontext, m3.group(2));
-            }
+            return context.get(path);
         }
-        catch (Invalid e)
+
+        Matcher m2 = REGEX_INDIRECT.matcher(path);
+        if (m2.matches())
         {
-            throw new Invalid(e, path);
+            IObjectStore subcontext = resolvePart(context, m2.group(1)).asObject();
+            return resolvePart(subcontext, m2.group(2));
+        }
+
+        Matcher m3 = REGEX_ARRAY.matcher(path);
+        if (m3.matches())
+        {
+            IObjectStore subcontext = resolvePart(context, m3.group(1)).asMap();
+            return resolvePart(subcontext, m3.group(2));
         }
         
-        throw new Invalid(path);        
+        throw new MisformedError(path);        
     }
     
     public void resolve() 
-            throws IObject.Mistyped, IObject.Unknown, Ref.Invalid
+            throws Error
     {
-        prop = cast.apply(resolvePart(context, path));
+        try {
+            prop = cast.apply(resolvePart(context, path));
+        } catch (MisformedError e) {
+            throw new Error("Misformed expression:", e);
+        } catch (IObject.Mistyped e) {
+            throw new Error("Wrong type of object when resolving.", e);
+        } catch (IObject.Unknown e) {
+            throw new Error("Unknown property when resolving.", e);
+        }
     }
     
     @FunctionalInterface
@@ -112,7 +113,7 @@ public class Ref<T extends IObject>
         }
     }
     
-    public static class Obj extends Ref<IObjectStore>
+    public static class Obj extends Ref<PropertyContainer>
     {
         public Obj(String path, IObjectStore context)
         {
@@ -136,31 +137,17 @@ public class Ref<T extends IObject>
         }
     }
 
-    public static class Invalid extends XMLError
+    public static class MisformedError extends Error
     {
-        String partString;
-        String fullString;
-        
-        public Invalid(String str)
+        public MisformedError(String str)
         {
-            super();
-            partString = str;
-            fullString = str;
+            super(String.format("Invalid subexpression: %s", str));
         }
-        
-        public Invalid(Invalid e, String str)
-        {
-            super(e);
-            partString = e.partString;
-            fullString = str;
-        }
-        
-        @Override public String toString()
-        {
-            return String.format("Invalid property: \n" +
-                                 "Complete string: %s\n" +
-                                 "Invalid subexpression: %s",
-                                 fullString, partString);
-        }
+    }
+    
+    public static class Error extends Exception
+    {
+        public Error(String str) { super(str); }
+        public Error(String str, Exception e) { super(str, e); }                
     }
 }

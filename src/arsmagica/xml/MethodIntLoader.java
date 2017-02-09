@@ -56,23 +56,27 @@ public class MethodIntLoader extends XMLDirectLoader< Expression<Integer> >
      *
      * @author Elscouta
      */
-    public static class Const implements Expression<Integer> {
-
-        Expression<Integer> v;
+    public static class Const implements Expression<Integer> 
+    {
+        private Expression<Integer> v;
 
         @Override
-        public Integer resolve(IObjectStore c) throws XMLError {
+        public Integer resolve(IObjectStore c) throws Ref.Error 
+        {
             return v.resolve(c);
         }
 
-        public static class Loader extends XMLLoader<Const> {
-
-            public Loader(DataStore s) {
+        public static class Loader extends XMLLoader<Const> 
+        {
+            public Loader(DataStore s) 
+            {
                 super(s, () -> new Const());
             }
 
             @Override
-            public void fillObjectFromXML(Const obj, Element e) throws XMLError {
+            public void fillObjectFromXML(Const obj, Element e) 
+                    throws XMLError 
+            {
                 obj.v = getChild(e, "value", new ArithmeticLoader());
             }
         }
@@ -88,7 +92,9 @@ public class MethodIntLoader extends XMLDirectLoader< Expression<Integer> >
         private Expression<Integer> max;
 
         @Override
-        public Integer resolve(IObjectStore c) throws XMLError {
+        public Integer resolve(IObjectStore c) 
+                throws Ref.Error 
+        {
             int iMin = min.resolve(c);
             int iMax = max.resolve(c);
             return ThreadLocalRandom.current().nextInt(iMin, iMax + 1);

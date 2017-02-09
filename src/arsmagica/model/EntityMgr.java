@@ -7,6 +7,7 @@ package arsmagica.model;
 
 import arsmagica.xml.DataStore;
 import arsmagica.xml.IObjectStore;
+import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 
 /**
@@ -25,7 +26,7 @@ public class EntityMgr
     }
     
     public Entity createNew(String type, IObjectStore parent)
-            throws XMLError
+            throws Ref.Error
     {
         return store.getEntityDesc(type).create(world, parent);
     }

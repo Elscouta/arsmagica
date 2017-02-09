@@ -18,6 +18,7 @@ import org.w3c.dom.Element;
 import arsmagica.xml.IObject;
 import arsmagica.xml.IObjectStore;
 import arsmagica.xml.Identifiable;
+import arsmagica.xml.Ref;
 import java.util.ArrayList;
 
 /**
@@ -41,7 +42,7 @@ public class EntityDesc implements Identifiable
     }
         
     public Entity create(World w, IObjectStore parent)
-            throws XMLError
+            throws Ref.Error
     {
         Entity e = new Entity(w, type);
         

@@ -10,6 +10,7 @@ import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
 import arsmagica.xml.IObjectStore;
 import arsmagica.xml.MethodIntLoader;
+import arsmagica.xml.Ref;
 import arsmagica.xml.XMLDirectLoader;
 import arsmagica.xml.XMLError;
 import org.w3c.dom.Element;
@@ -30,7 +31,7 @@ public abstract class Effect
      * likely because of an unbound or mistyped variable.
      */
     public abstract void apply(World world, IObjectStore context) 
-            throws XMLError;
+            throws Ref.Error;
     
     public static class Loader extends XMLDirectLoader<Effect>
     {

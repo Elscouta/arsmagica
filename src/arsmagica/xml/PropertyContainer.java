@@ -30,10 +30,9 @@ public abstract class PropertyContainer implements IObjectStore
     }
     
     public final void addProperty(String key, IObject obj)
-            throws XMLError
     {
         if (properties.containsKey(key))
-            throw new XMLError("Attempting to insert duplicate property");
+            throw new RuntimeException("Attempting to insert duplicate property");
         
         obj.registerOwner(this);
         properties.put(key, obj);

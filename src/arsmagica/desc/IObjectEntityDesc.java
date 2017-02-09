@@ -15,6 +15,7 @@ import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
 import arsmagica.xml.IObjectStore;
+import arsmagica.xml.Ref;
 
 /**
  *
@@ -25,13 +26,15 @@ public class IObjectEntityDesc extends IObjectDesc
     private IObjectSupplierDesc initializer;
     private String type;
     
-    @Override public String getType() 
+    @Override 
+    public String getType() 
     {
         return type;
     }
     
-    @Override public IObject create(World w, IObjectStore context)
-            throws XMLError
+    @Override 
+    public IObject create(World w, IObjectStore context)
+            throws Ref.Error
     {
         return initializer.get(w, context);
     }

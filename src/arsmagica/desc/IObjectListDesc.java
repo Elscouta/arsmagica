@@ -11,6 +11,7 @@ import arsmagica.xml.Expression;
 import arsmagica.xml.IObjectList;
 import arsmagica.xml.IObjectStore;
 import arsmagica.xml.MethodIntLoader;
+import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
@@ -39,13 +40,15 @@ public class IObjectListDesc extends IObjectDesc
     private IObjectDesc type;
     private Expression<Integer> count;
     
-    @Override public String getType()
+    @Override 
+    public String getType()
     {
         return "list";
     }
     
-    @Override public IObjectList create(World w, IObjectStore context)
-            throws XMLError
+    @Override 
+    public IObjectList create(World w, IObjectStore context)
+            throws Ref.Error
     {
         IObjectList l = new IObjectList(context);
         int rCount = count.resolve(context);

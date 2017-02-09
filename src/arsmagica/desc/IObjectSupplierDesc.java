@@ -5,11 +5,10 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.Entity;
 import arsmagica.model.World;
 import arsmagica.xml.IObject;
 import arsmagica.xml.IObjectStore;
-import arsmagica.xml.XMLError;
+import arsmagica.xml.Ref;
 
 /**
  *
@@ -17,5 +16,6 @@ import arsmagica.xml.XMLError;
  */
 public interface IObjectSupplierDesc 
 {
-    IObject get(World w, IObjectStore parent) throws XMLError;
+    IObject get(World w, IObjectStore parent) 
+            throws Ref.Error;
 }

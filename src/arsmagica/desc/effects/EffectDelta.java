@@ -11,6 +11,7 @@ import arsmagica.xml.Expression;
 import arsmagica.xml.IObject;
 import arsmagica.xml.IObjectInt;
 import arsmagica.xml.IObjectStore;
+import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
@@ -23,13 +24,13 @@ import org.w3c.dom.Element;
 public class EffectDelta extends Effect
 {
     private Expression<Integer> value;
-    private Expression<IObject> affectedObject;
+    private Expression<IObjectInt> affectedObject;
     
     @Override
     public void apply(World world, IObjectStore context)
-            throws XMLError
+            throws Ref.Error
     {
-        IObjectInt obj = affectedObject.resolve(context).asInt();
+        IObjectInt obj = affectedObject.resolve(context);
         obj.applyDelta(value.resolve(context));
     }
     
@@ -45,7 +46,7 @@ public class EffectDelta extends Effect
                 throws XMLError
         {
             obj.value = getChild(e, "value", new ArithmeticLoader());
-            obj.affectedObject = getChild(e, "property", new IObjectLoader());
+            obj.affectedObject = getChild(e, "property", new IObjectIntLoader());
         }
     }
 }

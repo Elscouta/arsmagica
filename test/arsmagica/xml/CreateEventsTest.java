@@ -28,7 +28,7 @@ public class CreateEventsTest
 
 
     @Before
-    public void setUp() throws XMLError
+    public void setUp() throws Exception
     {
         store = new DataStore("test/arsmagica/xml/testdata/");
         world = new World(store);
@@ -41,7 +41,7 @@ public class CreateEventsTest
     }
     
     @Test
-    public void createEventEmpty() throws XMLError
+    public void createEventEmpty() throws Exception
     {
         EventDesc desc = eventLoader.loadXML("event_empty.xml").get(0);
         Event e = desc.create(world, null);
@@ -52,7 +52,7 @@ public class CreateEventsTest
     }
     
     @Test
-    public void createEventEmptyWithSource() throws XMLError
+    public void createEventEmptyWithSource() throws Exception
     {
         EventDesc desc = eventLoader.loadXML("event_empty.xml").get(0);
         Event e = desc.create(world, testEntity);
@@ -62,7 +62,7 @@ public class CreateEventsTest
     }
     
     @Test
-    public void createEventDeltaPosConst() throws XMLError
+    public void createEventDeltaPosConst() throws Exception
     {
         EventDesc desc = eventLoader.loadXML("event_delta_posconst.xml").get(0);
         Event e = desc.create(world, testEntity);

@@ -34,7 +34,7 @@ public class IObjectIntDesc extends IObjectDesc
         private Expression<Integer> correlation;
         
         public IObjectInt.Relation resolve(IObjectStore c)
-                throws XMLError
+                throws Ref.Error
         {
             Ref<IObjectInt> rProperty = new Ref.Int(relatedPath, c);
             int rCorrelation = correlation.resolve(c);
@@ -63,13 +63,13 @@ public class IObjectIntDesc extends IObjectDesc
     private List<RelationDesc> relations;
     
     public int getInitialValue(IObjectStore c)
-            throws XMLError
+            throws Ref.Error
     {
         return initializer.resolve(c);
     }
     
     public List<IObjectInt.Relation> getRelations(IObjectStore c)
-            throws XMLError
+            throws Ref.Error
     {
         List<IObjectInt.Relation> ret = new ArrayList<>();
         for (RelationDesc rd : relations)
@@ -86,7 +86,7 @@ public class IObjectIntDesc extends IObjectDesc
     
     @Override
     public IObjectInt create(World w, IObjectStore context)
-            throws XMLError
+            throws Ref.Error
     {
         return new IObjectInt(context, this);
     }

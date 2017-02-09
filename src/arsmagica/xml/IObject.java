@@ -144,7 +144,7 @@ public interface IObject
      * Thrown when a property is called, but the type of property doesn't 
      * match the expected type.
      */
-    public static class Mistyped extends XMLError
+    public static class Mistyped extends Exception
     {
         public Mistyped(String tried, IObject real)
         {
@@ -155,7 +155,7 @@ public interface IObject
     /**
      * Thrown when a property is used, but such a property doesn't exist.
      */
-    public static class Unknown extends XMLError
+    public static class Unknown extends Exception
     {
         public Unknown(String tried, IObjectStore store)
         {

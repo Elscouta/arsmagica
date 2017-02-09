@@ -46,7 +46,7 @@ public class DestructEntitiesTest
     }
     
     @Test
-    public void destructListMember() throws XMLError
+    public void destructListMember() throws Exception
     {
         store.loadEntityDescFile("entity_proplist2.xml");
         
@@ -66,7 +66,7 @@ public class DestructEntitiesTest
     }
     
     @Test
-    public void destructProperty() throws XMLError
+    public void destructProperty() throws Exception
     {
         store.loadEntityDescFile("entity_proplist2.xml");
         
@@ -84,7 +84,7 @@ public class DestructEntitiesTest
     }
     
     @Test
-    public void applyEffect() throws XMLError
+    public void applyEffect() throws Exception
     {
         store.loadEntityDescFile("entity_proplist2.xml");
         

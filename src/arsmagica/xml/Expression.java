@@ -27,7 +27,7 @@ public interface Expression<T>
      * left open in the expression.
      * 
      * @return The promised object
-     * @throws XMLError A variable was not found, or was of the wrong type.
+     * @throws Ref.Error A variable was not found, or was of the wrong type.
      */
-    public T resolve(IObjectStore c) throws XMLError;
+    public T resolve(IObjectStore c) throws Ref.Error;
 }

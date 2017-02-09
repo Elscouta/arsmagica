@@ -37,7 +37,7 @@ public final class IObjectString implements IObject
     {
         try {
             return str.resolve(context);
-        } catch (XMLError e) {
+        } catch (Ref.Error e) {
             throw new RuntimeException(e);
         }
     }

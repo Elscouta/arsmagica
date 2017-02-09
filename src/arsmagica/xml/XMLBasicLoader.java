@@ -7,7 +7,6 @@ package arsmagica.xml;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -134,7 +133,41 @@ public class XMLBasicLoader
             return context -> new Ref.Any(str, context).get();
         }
     }
-
+    
+    protected class PropertyContainerLoader
+            extends XMLDirectLoader< Expression<PropertyContainer> >
+    {
+        public PropertyContainerLoader()
+        {
+            super(XMLBasicLoader.this.store);
+        }
+        
+        @Override
+        public Expression<PropertyContainer> loadXML(Element e)
+                throws XMLError
+        {
+            final String str = getContent(e);
+            return context -> new Ref.Obj(str, context).get();
+        }
+    }
+    
+    protected class IObjectIntLoader
+            extends XMLDirectLoader< Expression<IObjectInt> >
+    {
+        public IObjectIntLoader()
+        {
+            super(XMLBasicLoader.this.store);
+        }
+        
+        @Override
+        public Expression<IObjectInt> loadXML(Element e)
+                throws XMLError
+        {
+            final String str = getContent(e);
+            return context -> new Ref.Int(str, context).get();
+        }
+    }
+        
     protected class IObjectListLoader
             extends XMLDirectLoader< Expression<IObjectList> >
     {
