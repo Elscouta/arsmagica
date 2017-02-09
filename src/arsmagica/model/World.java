@@ -5,7 +5,6 @@
  */
 package arsmagica.model;
 
-import arsmagica.gui.DialogMgr;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.PropertyContext;
 import arsmagica.xml.Ref;
@@ -17,12 +16,19 @@ import arsmagica.xml.Ref;
 public class World 
 {
     private final EntityMgr entityMgr;
-    private final DialogMgr dialogMgr;
+    private final MailMgr mailMgr;
+    private final TimeMgr timeMgr;
+    private final EventMgr eventMgr;
     
     public World(DataStore store)
     {
         entityMgr = new EntityMgr(store, this);
-        dialogMgr = new DialogMgr(this);
+        eventMgr = new EventMgr(this);
+        mailMgr = new MailMgr(this);
+        timeMgr = new TimeMgr();
+        
+        timeMgr.addListener(mailMgr);
+        timeMgr.addListener(eventMgr);
     }
     
     public EntityMgr getEntityMgr()
@@ -30,9 +36,9 @@ public class World
         return entityMgr;
     }
     
-    public DialogMgr getDialogMgr()
+    public MailMgr getMailMgr()
     {
-        return dialogMgr;
+        return mailMgr;
     }
     
     public Entity createEntity(String type)

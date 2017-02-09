@@ -45,12 +45,6 @@ public class LoadEventsTest
     }
     
     @Test (expected=XMLError.class)
-    public void loadEventNoType() throws XMLError
-    {
-        loader.loadXML("event_notext.xml");        
-    }
-    
-    @Test (expected=XMLError.class)
     public void loadEventNoProb() throws XMLError
     {
         loader.loadXML("event_noprob.xml");

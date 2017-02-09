@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package arsmagica.gui;
+package arsmagica.model;
 
 import arsmagica.desc.effects.Effect;
 import arsmagica.xml.Context;
@@ -14,13 +14,13 @@ import arsmagica.xml.Ref;
  * 
  * @author Elscouta
  */
-public class Dialog 
+public class Mail 
 {
     /**
      * Creates a new dialog. This should only be used by the dialog manager.
      * @param text The text of the dialog.
      */
-    protected Dialog(String text) 
+    protected Mail(String text) 
     {
     }
     

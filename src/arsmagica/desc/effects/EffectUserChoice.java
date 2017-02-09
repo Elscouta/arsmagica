@@ -5,8 +5,8 @@
  */
 package arsmagica.desc.effects;
 
-import arsmagica.gui.Dialog;
-import arsmagica.gui.DialogMgr;
+import arsmagica.model.Mail;
+import arsmagica.model.MailMgr;
 import arsmagica.model.World;
 import arsmagica.xml.Context;
 import arsmagica.xml.DataStore;
@@ -74,10 +74,10 @@ public class EffectUserChoice extends Effect
     @Override
     public void apply(World w, Context context)
     {
-        Dialog d = w.getDialogMgr().createDialog(true, text);
+        Mail d = w.getMailMgr().createMail(true, text);
         for (OptionDesc o : options)
         {
-            Dialog.EnabledOracle oracle = () -> {
+            Mail.EnabledOracle oracle = () -> {
                 for (Requirement r : o.requirements)
                 {
                     if (!true)

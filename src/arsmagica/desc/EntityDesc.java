@@ -44,7 +44,7 @@ public class EntityDesc implements Identifiable
     public Entity create(World w, IObject parent, Context context)
             throws Ref.Error
     {
-        Entity e = new Entity(w, type);
+        Entity e = new Entity(w, type, events);
         
         if (parent != null)
         {
