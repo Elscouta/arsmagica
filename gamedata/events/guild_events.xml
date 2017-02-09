@@ -8,11 +8,7 @@ and open the template in the editor.
 
 <events>
     <event>
-        <property id="probability" type="int">
-            <init method="const">
-                <value>0.1 * $source.activity</value>
-            </init>
-        </property>
+        <probability>0.1 * $source.activity</probability>
         
         <property id="amount" type="int">
             <init method="random">

@@ -11,7 +11,7 @@ package arsmagica.xml;
  */
 public class ArithmeticParser 
 {
-    public static Expression<Integer> eval(final String str) 
+    public static Expression<Double> eval(final String str) 
     {
         return new Object() 
         {
@@ -34,7 +34,7 @@ public class ArithmeticParser
                 return false;
             }
 
-            Expression<Integer> parse() 
+            Expression<Double> parse() 
             {
                 nextChar();
             
@@ -43,7 +43,7 @@ public class ArithmeticParser
                 if (pos < str.length()) 
                     throw new RuntimeException("Unexpected: " + (char)ch);
                 
-                return c -> (int) x.resolve(c).intValue();
+                return x;
             }
 
             // Grammar:

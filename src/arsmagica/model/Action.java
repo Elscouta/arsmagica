@@ -8,6 +8,7 @@ package arsmagica.model;
 import arsmagica.desc.effects.Effect;
 import arsmagica.desc.effects.Requirement;
 import arsmagica.xml.IObjectStore;
+import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +52,10 @@ public class Action
      * 
      * @param world The world
      * @param context The context used to fetch local variables.
-     * @throws XMLError The effect was misformed.
+     * @throws Ref.Error The effect was misformed.
      */
     public void execute(World world, IObjectStore context)
-            throws XMLError
+            throws Ref.Error
     {
         effect.apply(world, context);
     }
@@ -66,10 +67,10 @@ public class Action
      * @param world The world
      * @param context The context used to fetch local variables.
      * @return true if all requirements are fulfilled.
-     * @throws XMLError The requirements were misformed.
+     * @throws Ref.Error The requirements were misformed.
      */
     public boolean isAvailable(World world, IObjectStore context)
-            throws XMLError
+            throws Ref.Error
     {
         return true;
     }

@@ -11,7 +11,10 @@ import arsmagica.desc.effects.Requirement;
 import arsmagica.model.Event;
 import arsmagica.model.World;
 import arsmagica.xml.DataStore;
+import arsmagica.xml.Expression;
+import arsmagica.xml.IObjectContext;
 import arsmagica.xml.IObjectStore;
+import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import java.util.List;
@@ -40,6 +43,7 @@ public class EventDesc
 {
     private String text;
     private List<PropertyDesc> properties;
+    private Expression<Double> probability;
     private List<OptionDesc> options;
     
     /**
@@ -84,8 +88,14 @@ public class EventDesc
         }
     }
     
+    public double getProbability(World world, IObjectStore source)
+            throws Ref.Error
+    {
+        return probability.resolve(IObjectContext.createWrapper("source", source));
+    }
+    
     public Event create(World world, IObjectStore source)
-            throws XMLError
+            throws Ref.Error
     {
         Event e = new Event(world, text);
         
@@ -119,6 +129,7 @@ public class EventDesc
             obj.text = getChild(e, "text", new ContentLoader());
             obj.options = getChildList(e, "option", 
                                        new OptionDesc.Loader(store));
+            obj.probability = getChild(e, "probability", new ArithmeticDoubleLoader());
         }
     }
 }

@@ -7,6 +7,7 @@ package arsmagica.desc.effects;
 
 import arsmagica.model.World;
 import arsmagica.xml.IObjectStore;
+import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class EffectList extends Effect
     
     @Override
     public void apply(World world, IObjectStore context)
-            throws XMLError
+            throws Ref.Error
     {
         for (Effect e : effects)
             e.apply(world, context);

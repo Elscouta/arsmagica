@@ -5,11 +5,10 @@
  */
 package arsmagica.model;
 
-import arsmagica.desc.PropertyDesc;
 import arsmagica.desc.effects.Effect;
 import arsmagica.desc.effects.Requirement;
 import arsmagica.xml.PropertyContainer;
-import arsmagica.xml.XMLError;
+import arsmagica.xml.Ref;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class Event extends PropertyContainer
     
     private final World world;
     private final String text;
-    private List<Option> options;
+    private final List<Option> options;
     
     public class Option extends Action
     {
@@ -46,19 +45,21 @@ public class Event extends PropertyContainer
             return text;
         }
         
-        public void execute() throws XMLError
+        public void execute() 
+                throws Ref.Error
         {
             execute(world, Event.this);
         }
         
-        public boolean isAvailable() throws XMLError
+        public boolean isAvailable() 
+                throws Ref.Error
         {
             return isAvailable(world, Event.this);
         }
     }
     
     public Event(World world, String text)
-            throws XMLError
+            throws Ref.Error
     {
         super(world);
         this.text = text;

@@ -195,6 +195,20 @@ public class XMLBasicLoader
         
         @Override public Expression<Integer> loadXML(Element e) throws XMLError
         {
+            return c -> ArithmeticParser.eval(getContent(e)).resolve(c).intValue();
+        }
+    }
+    
+    protected class ArithmeticDoubleLoader 
+            extends XMLDirectLoader< Expression<Double> >
+    {
+        public ArithmeticDoubleLoader() 
+        { 
+            super(XMLBasicLoader.this.store); 
+        }
+        
+        @Override public Expression<Double> loadXML(Element e) throws XMLError
+        {
             return ArithmeticParser.eval(getContent(e));
         }
     }

@@ -6,7 +6,7 @@
 package arsmagica.model;
 
 import arsmagica.xml.DataStore;
-import arsmagica.xml.XMLError;
+import arsmagica.xml.Ref;
 
 /**
  *
@@ -27,7 +27,7 @@ public class World
     }
     
     public Entity createEntity(String type)
-            throws XMLError
+            throws Ref.Error
     {
         return entityMgr.createNew(type, null);
     }
