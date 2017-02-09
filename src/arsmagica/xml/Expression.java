@@ -29,5 +29,5 @@ public interface Expression<T>
      * @return The promised object
      * @throws Ref.Error A variable was not found, or was of the wrong type.
      */
-    public T resolve(IObjectStore c) throws Ref.Error;
+    public T resolve(Context c) throws Ref.Error;
 }

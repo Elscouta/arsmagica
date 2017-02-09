@@ -6,6 +6,7 @@
 package arsmagica.model;
 
 import arsmagica.xml.DataStore;
+import arsmagica.xml.PropertyContext;
 import arsmagica.xml.Ref;
 
 /**
@@ -29,7 +30,7 @@ public class World
     public Entity createEntity(String type)
             throws Ref.Error
     {
-        return entityMgr.createNew(type, null);
+        return entityMgr.createNew(type, null, PropertyContext.create());
     }
     
 }

@@ -21,7 +21,7 @@ public interface IObject
      * 
      * @return The context of the property
      */
-    public IObjectStore getContext();
+    public Context getContext();
     
     /**
      * Provides access to the type of the property. Supported values are:
@@ -95,7 +95,7 @@ public interface IObject
      * @return The value of the property
      * @throws Mistyped The property was not a map
      */
-    default IObjectStore asMap() throws Mistyped
+    default Context asMap() throws Mistyped
     {
         throw new Mistyped("map", this);
     }
@@ -149,17 +149,6 @@ public interface IObject
         public Mistyped(String tried, IObject real)
         {
             super(String.format("Mistyped property: expected %s, got %s", tried, real.getType()));
-        }
-    }
-    
-    /**
-     * Thrown when a property is used, but such a property doesn't exist.
-     */
-    public static class Unknown extends Exception
-    {
-        public Unknown(String tried, IObjectStore store)
-        {
-            super(String.format("Unknown property in %s: %s", store.toString(), tried));
         }
     }
 }

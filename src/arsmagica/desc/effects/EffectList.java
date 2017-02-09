@@ -6,9 +6,10 @@
 package arsmagica.desc.effects;
 
 import arsmagica.model.World;
-import arsmagica.xml.IObjectStore;
+import arsmagica.xml.Context;
 import arsmagica.xml.Ref;
 import java.util.List;
+import arsmagica.xml.PropertyContext;
 
 /**
  * Represents a list of effects. Applying such an effect will simply 
@@ -30,7 +31,7 @@ public class EffectList extends Effect
     }
     
     @Override
-    public void apply(World world, IObjectStore context)
+    public void apply(World world, Context context)
             throws Ref.Error
     {
         for (Effect e : effects)

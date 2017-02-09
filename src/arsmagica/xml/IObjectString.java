@@ -17,14 +17,14 @@ package arsmagica.xml;
  */
 public final class IObjectString implements IObject
 {
-    @Override public IObjectStore getContext() { return context; }
+    @Override public Context getContext() { return context; }
     @Override public String getType() { return "string"; }
     @Override public IObjectString asString() { return this; }
 
-    private final IObjectStore context;
+    private final Context context;
     private final Expression<String> str; 
     
-    public IObjectString(IObjectStore context, Expression<String> str)
+    public IObjectString(Context context, Expression<String> str)
     {
         this.context = context;
         this.str = str;

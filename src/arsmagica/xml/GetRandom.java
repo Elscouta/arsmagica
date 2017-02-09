@@ -23,7 +23,7 @@ class GetRandom implements IObjectSupplierDesc
     }
     
     @Override
-    public IObject get(World w, IObjectStore parent) 
+    public IObject get(World w, IObject parent, Context context) 
             throws Ref.Error 
     {
         if (container == null) 
@@ -32,7 +32,7 @@ class GetRandom implements IObjectSupplierDesc
         } 
         else 
         {
-            return container.resolve(parent).getRandom();
+            return container.resolve(context).getRandom();
         }
     }
             
@@ -64,7 +64,7 @@ class GetRandom implements IObjectSupplierDesc
         {
             final Expression<IObjectList> container = 
                     getChild(e, "list", new XMLBasicLoader.IObjectListLoader(), null);
-            return (IObjectStore c) -> {
+            return (Context c) -> {
                 try {
                     return container.resolve(c).getRandom().asInt().getValue();
                 } catch (IObject.Mistyped err) {

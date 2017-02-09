@@ -6,14 +6,15 @@
 package arsmagica.desc;
 
 import arsmagica.model.World;
+import arsmagica.xml.Context;
 import arsmagica.xml.DataStore;
+import arsmagica.xml.IObject;
+import arsmagica.xml.PropertyContainer;
+import arsmagica.xml.Ref;
 import arsmagica.xml.XMLDirectLoader;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
-import arsmagica.xml.IObject;
-import arsmagica.xml.IObjectStore;
-import arsmagica.xml.Ref;
 
 /**
  *
@@ -26,6 +27,8 @@ public abstract class IObjectDesc
      * 
      * @param w The world module, to allow creation of
      * entities as-required.
+     * @param parent The parent that will store the object. This can be null
+     * if the object is not intended for XML storage.
      * @param context The context in which the object is created. This might
      * not be the direct parent: it is the context in which the object
      * look for variables.
@@ -33,7 +36,7 @@ public abstract class IObjectDesc
      * @return A concrete property.
      * @throws Ref.Error The XML that generated the description was ill-formed.
      */
-    public abstract IObject create(World w, IObjectStore context)
+    public abstract IObject create(World w, IObject parent, Context context)
             throws Ref.Error;
     
     /**

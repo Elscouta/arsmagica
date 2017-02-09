@@ -7,16 +7,19 @@ package arsmagica.desc;
 
 import arsmagica.model.Entity;
 import arsmagica.model.World;
+import arsmagica.xml.Context;
 import arsmagica.xml.DataStore;
+import arsmagica.xml.IObject;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLFileLoader;
 import arsmagica.xml.XMLLoader;
 import java.util.List;
 import org.w3c.dom.Element;
-import arsmagica.xml.IObjectStore;
 import arsmagica.xml.Identifiable;
+import arsmagica.xml.PropertyContainer;
 import arsmagica.xml.Ref;
 import java.util.ArrayList;
+import arsmagica.xml.PropertyContext;
 
 /**
  *
@@ -38,7 +41,7 @@ public class EntityDesc implements Identifiable
         return type;
     }
         
-    public Entity create(World w, IObjectStore parent)
+    public Entity create(World w, IObject parent, Context context)
             throws Ref.Error
     {
         Entity e = new Entity(w, type);
@@ -50,7 +53,7 @@ public class EntityDesc implements Identifiable
         }
             
         for (PropertyDesc p : properties)
-            e.addProperty(p.getID(), p.create(w, e));
+            e.addProperty(p.getID(), p.create(w, e, e));
         
         return e;
     }

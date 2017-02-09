@@ -6,19 +6,17 @@
 package arsmagica.desc;
 
 import arsmagica.desc.effects.Effect;
-import arsmagica.desc.effects.EffectList;
-import arsmagica.desc.effects.Requirement;
-import arsmagica.model.Event;
+import arsmagica.model.Entity;
 import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObjectContext;
-import arsmagica.xml.IObjectStore;
+import arsmagica.xml.IObject;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import java.util.List;
 import org.w3c.dom.Element;
+import arsmagica.xml.PropertyContext;
 
 /**
  * The description of an event, loaded from an event file. An event description
@@ -28,9 +26,8 @@ import org.w3c.dom.Element;
  * {@code
  * <property type=''>...</property>
  * <property type=''>...</property>
- * <text>Event text (to be shown to user)</text>
- * <option>...</option>
- * <option>...</option>
+ * <effect type=''>...</effect>
+ * <effect type=''>...</effect>
  * }
  * </pre>
  * 
@@ -41,77 +38,32 @@ import org.w3c.dom.Element;
  */
 public class EventDesc
 {
-    private String text;
     private List<PropertyDesc> properties;
     private Expression<Double> probability;
-    private List<OptionDesc> options;
-    
-    /**
-     * The description of an option associated to an event. Such an option
-     * follows the following structure.
-     * 
-     * <pre>
-     * {@code
-     * <text>Option text (to be shown to the user)</text>
-     * <requirement type=''>...</requirement>
-     * <requirement type=''>...</requirement>
-     * <effect type=''>...</effect>
-     * <effect type=''>...</effect>
-     * }
-     * </pre>
-     * 
-     * See @class Effect for the format used to describe an effect and @class
-     * Requirement for the format used to describe a requirement.
-     */
-    private static class OptionDesc
-    {
-        String text;
-        List<Requirement> requirements;
-        List<Effect> effects;
-        
-        static class Loader extends XMLLoader<OptionDesc>
-        {
-            Loader(DataStore store)
-            {
-                super(store, () -> new OptionDesc());
-            }
+    private List<Effect> effects;
             
-            @Override public void fillObjectFromXML(OptionDesc obj, Element e)
-                    throws XMLError
-            {
-                obj.text = getChild(e, "text", new ContentLoader());
-                obj.requirements = getChildList(e, "requirement", 
-                        new Requirement.Loader(store));
-                obj.effects = getChildList(e, "effect",
-                        new Effect.Loader(store));
-            }
-        }
-    }
-    
-    public double getProbability(World world, IObjectStore source)
+    public double getProbability(World world, IObject source)
             throws Ref.Error
     {
-        return probability.resolve(IObjectContext.createWrapper("source", source));
+        return probability.resolve(PropertyContext.createWrapper("source", source));
     }
     
-    public Event create(World world, IObjectStore source)
+    public void execute(World world, Entity source)
             throws Ref.Error
     {
-        Event e = new Event(world, text);
+        PropertyContext eventContext = PropertyContext.create();
         
         if (source != null)
         {
-            e.addProperty("source", source);
-            e.addProperty(source.getType(), source);
+            eventContext.addProperty("source", source);
+            eventContext.addProperty(source.getType(), source);
         }
         
         for (PropertyDesc p : properties)
-            e.addProperty(p.getID(), p.create(world, e));
+            eventContext.addProperty(p.getID(), p.create(world, null, eventContext));
         
-        for (OptionDesc o : options)
-            e.addOption(o.text, new EffectList(o.effects), o.requirements);
-        
-        return e;
+        for (Effect effect : effects)
+            effect.apply(world, eventContext);
     }
         
     public static class Loader extends XMLLoader<EventDesc>
@@ -126,10 +78,9 @@ public class EventDesc
         {
             obj.properties = getChildList(e, "property",
                                           new PropertyDesc.Loader(store));
-            obj.text = getChild(e, "text", new ContentLoader());
-            obj.options = getChildList(e, "option", 
-                                       new OptionDesc.Loader(store));
             obj.probability = getChild(e, "probability", new ArithmeticDoubleLoader());
+            obj.effects = getChildList(e, "effect",
+                                       new Effect.Loader(store));
         }
     }
 }

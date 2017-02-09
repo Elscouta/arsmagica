@@ -8,7 +8,6 @@ package arsmagica.xml;
 import arsmagica.desc.EntityDesc;
 import arsmagica.desc.EventDesc;
 import arsmagica.model.Entity;
-import arsmagica.model.Event;
 import arsmagica.model.World;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -44,31 +43,17 @@ public class CreateEventsTest
     public void createEventEmpty() throws Exception
     {
         EventDesc desc = eventLoader.loadXML("event_empty.xml").get(0);
-        Event e = desc.create(world, null);
-        
-        assertEquals("", e.getText());
-        assertEquals("event", e.getType());
-        assertEquals(0, e.getOptions().size());
     }
     
     @Test
     public void createEventEmptyWithSource() throws Exception
     {
         EventDesc desc = eventLoader.loadXML("event_empty.xml").get(0);
-        Event e = desc.create(world, testEntity);
-        
-        assertEquals(testEntity, e.get("source"));
-        assertEquals(testEntity, e.get("test_entity"));
     }
     
     @Test
     public void createEventDeltaPosConst() throws Exception
     {
         EventDesc desc = eventLoader.loadXML("event_delta_posconst.xml").get(0);
-        Event e = desc.create(world, testEntity);
-        
-        e.getOptions().get(0).execute();
-        
-        assertEquals(20, testEntity.get("test_property").asInt().getValue());
     }
 }

@@ -6,13 +6,15 @@
 package arsmagica.desc;
 
 import arsmagica.model.World;
+import arsmagica.xml.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObjectStore;
+import arsmagica.xml.IObject;
 import arsmagica.xml.IObjectString;
 import arsmagica.xml.StringParser;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
+import arsmagica.xml.PropertyContext;
 
 /**
  *
@@ -29,7 +31,7 @@ public class IObjectStringDesc extends IObjectDesc
     }
     
     @Override 
-    public IObjectString create(World w, IObjectStore context)
+    public IObjectString create(World w, IObject parent, Context context)
     {
         return new IObjectString(context, str);
     }

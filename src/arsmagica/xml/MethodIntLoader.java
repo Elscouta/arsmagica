@@ -61,7 +61,7 @@ public class MethodIntLoader extends XMLDirectLoader< Expression<Integer> >
         private Expression<Integer> v;
 
         @Override
-        public Integer resolve(IObjectStore c) throws Ref.Error 
+        public Integer resolve(Context c) throws Ref.Error 
         {
             return v.resolve(c);
         }
@@ -92,7 +92,7 @@ public class MethodIntLoader extends XMLDirectLoader< Expression<Integer> >
         private Expression<Integer> max;
 
         @Override
-        public Integer resolve(IObjectStore c) 
+        public Integer resolve(Context c) 
                 throws Ref.Error 
         {
             int iMin = min.resolve(c);

@@ -6,9 +6,11 @@
 package arsmagica.desc;
 
 import arsmagica.model.World;
+import arsmagica.xml.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.IObjectInt;
 import arsmagica.xml.Expression;
+import arsmagica.xml.IObject;
 import arsmagica.xml.MethodIntLoader;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Element;
-import arsmagica.xml.IObjectStore;
+import arsmagica.xml.PropertyContext;
 
 /**
  *
@@ -31,7 +33,7 @@ public class IObjectIntDesc extends IObjectDesc
         private String relatedPath;
         private Expression<Integer> correlation;
         
-        public IObjectInt.Relation resolve(IObjectStore c)
+        public IObjectInt.Relation resolve(Context c)
                 throws Ref.Error
         {
             Ref<IObjectInt> rProperty = new Ref.Int(relatedPath, c);
@@ -60,13 +62,13 @@ public class IObjectIntDesc extends IObjectDesc
     private Expression<Integer> initializer;
     private List<RelationDesc> relations;
     
-    public int getInitialValue(IObjectStore c)
+    public int getInitialValue(Context c)
             throws Ref.Error
     {
         return initializer.resolve(c);
     }
     
-    public List<IObjectInt.Relation> getRelations(IObjectStore c)
+    public List<IObjectInt.Relation> getRelations(Context c)
             throws Ref.Error
     {
         List<IObjectInt.Relation> ret = new ArrayList<>();
@@ -83,7 +85,7 @@ public class IObjectIntDesc extends IObjectDesc
     }
     
     @Override
-    public IObjectInt create(World w, IObjectStore context)
+    public IObjectInt create(World w, IObject parent, Context context)
             throws Ref.Error
     {
         return new IObjectInt(context, this);

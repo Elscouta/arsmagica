@@ -5,10 +5,11 @@
  */
 package arsmagica.model;
 
+import arsmagica.xml.Context;
 import arsmagica.xml.DataStore;
-import arsmagica.xml.IObjectStore;
+import arsmagica.xml.IObject;
+import arsmagica.xml.PropertyContainer;
 import arsmagica.xml.Ref;
-import arsmagica.xml.XMLError;
 
 /**
  *
@@ -25,10 +26,10 @@ public class EntityMgr
         this.world = world;
     }
     
-    public Entity createNew(String type, IObjectStore parent)
+    public Entity createNew(String type, IObject parent, Context context)
             throws Ref.Error
     {
-        return store.getEntityDesc(type).create(world, parent);
+        return store.getEntityDesc(type).create(world, parent, context);
     }
     
     public Entity getRandom(String type)

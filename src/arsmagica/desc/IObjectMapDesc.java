@@ -8,7 +8,8 @@ package arsmagica.desc;
 import arsmagica.model.World;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.XMLNullLoader;
-import arsmagica.xml.IObjectStore;
+import arsmagica.xml.Context;
+import arsmagica.xml.IObject;
 
 /**
  *
@@ -16,12 +17,14 @@ import arsmagica.xml.IObjectStore;
  */
 public class IObjectMapDesc extends IObjectDesc
 {
-    @Override public String getType()
+    @Override 
+    public String getType()
     {
         return "map";
     }
     
-    @Override public IObjectStore create(World w, IObjectStore context)
+    @Override 
+    public IObject create(World w, IObject parent, Context context)
     {
         return null;
     }

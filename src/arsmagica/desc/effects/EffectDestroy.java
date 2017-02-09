@@ -6,14 +6,15 @@
 package arsmagica.desc.effects;
 
 import arsmagica.model.World;
+import arsmagica.xml.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObjectStore;
 import arsmagica.xml.PropertyContainer;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
+import arsmagica.xml.PropertyContext;
 
 /**
  * This effect destroys a property container (usually an entity). Note that
@@ -27,7 +28,7 @@ public class EffectDestroy extends Effect
     Expression<PropertyContainer> ref;
     
     @Override
-    public void apply(World world, IObjectStore context) 
+    public void apply(World world, Context context) 
             throws Ref.Error 
     {
         ref.resolve(context).destroy();

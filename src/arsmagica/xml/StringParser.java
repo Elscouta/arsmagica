@@ -72,7 +72,7 @@ public class StringParser
                         final Expression<String> x1 = x;
                         final String extraWhitespace = whitespace ? " " : "";                        
                         
-                        x = (IObjectStore c) ->  x1.resolve(c).concat(extraWhitespace).concat(
+                        x = (Context c) ->  x1.resolve(c).concat(extraWhitespace).concat(
                                 (new Ref.Any(var, c)).get().toString()
                         );
                     }
@@ -91,7 +91,7 @@ public class StringParser
                         final Expression<String> x1 = x;
                         final String extraWhitespace = whitespace ? " " : "";
                                                 
-                        x = (IObjectStore c) ->  x1.resolve(c).concat(extraWhitespace).concat(text);
+                        x = (Context c) ->  x1.resolve(c).concat(extraWhitespace).concat(text);
                     }
                 }
                                 

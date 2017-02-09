@@ -20,10 +20,10 @@ public class MethodEntityLoader extends XMLDirectLoader< IObjectSupplierDesc >
     
     private class New implements IObjectSupplierDesc
     {
-        @Override public Entity get(World w, IObjectStore parent)
+        @Override public Entity get(World w, IObject parent, Context context)
                 throws Ref.Error
         {
-            return w.getEntityMgr().createNew(type, parent);
+            return w.getEntityMgr().createNew(type, parent, context);
         }
     }
     

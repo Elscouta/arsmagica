@@ -5,49 +5,31 @@
  */
 package arsmagica.xml;
 
-import arsmagica.model.World;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * An helper class for any object that wish to own a static set of 
  * properties. Provides support for destruction notification.
  * 
+ * FIXME: Way too many dumb casts there.
+ * 
  * @author Elscouta
  */
-public abstract class PropertyContainer implements IObjectStore
+public abstract class PropertyContainer 
+        extends PropertyContext
+        implements IObject, IObjectOwner
 {
-    @Override public IObjectStore getContext() { return this; }
+    @Override public PropertyContext getContext() { return this; }
     @Override public PropertyContainer asObject() { return this; }
 
-    private final Map<String, IObject> properties;
     private IObjectList owners;
     
-    public PropertyContainer(World w)
+    public PropertyContainer()
     {
-        properties = new HashMap<>();
+        super();
+        
         owners = new IObjectList(this);
     }
     
-    public final void addProperty(String key, IObject obj)
-    {
-        if (properties.containsKey(key))
-            throw new RuntimeException("Attempting to insert duplicate property");
-        
-        obj.registerOwner(this);
-        properties.put(key, obj);
-    }
-    
-    @Override
-    public final IObject get(String key)
-            throws IObject.Unknown
-    {
-        if (!properties.containsKey(key))
-            throw new IObject.Unknown(key, this);
-        
-        return properties.get(key);
-    }
-
     /**
      * Destroys the container and notifies owners of the destruction.
      * This function is re-entrant.
@@ -60,12 +42,20 @@ public abstract class PropertyContainer implements IObjectStore
         IObjectList listeners = owners.removeAll();
         owners = null;
         
-        try {
-            for (IObject l : listeners)
-                ((IObjectOwner) l).notifyMemberDestroyed(this);
-        } catch (Mistyped e) {
-            throw new RuntimeException("Non-owner in owner list", e);
-        }
+        for (IObject l : listeners)
+            ((IObjectOwner) l).notifyMemberDestroyed(this);
+    }
+    
+    /**
+     * Adds the property, but also register it for destruction purposes.
+     * @param key The identifier of the property
+     * @param value Value to bind.
+     */
+    @Override
+    public void addProperty(String key, IObject value)
+    {
+        super.addProperty(key, value);
+        value.registerOwner(this);
     }
     
     /**
@@ -83,13 +73,13 @@ public abstract class PropertyContainer implements IObjectStore
     public void registerOwner(IObjectOwner owner)
     {
         if (owners != null)
-            owners.addElement(owner);
+            owners.addElement((IObject) owner);
     }
     
     @Override
     public void unregisterOwner(IObjectOwner owner)
     {
         if (owners != null)
-            owners.removeElement(owner);
+            owners.removeElement((IObject) owner);
     }
 }

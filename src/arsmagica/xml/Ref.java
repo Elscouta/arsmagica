@@ -25,9 +25,9 @@ public class Ref<T extends IObject>
     private T prop;
     private final String path;
     private final Cast<T> cast;
-    private final IObjectStore context;
+    private final Context context;
     
-    private Ref(String path, IObjectStore context, Cast<T> cast)
+    private Ref(String path, Context context, Cast<T> cast)
     {
         this.prop = null;
         this.path = path;
@@ -51,8 +51,8 @@ public class Ref<T extends IObject>
     private final static Pattern REGEX_ARRAY =
             Pattern.compile("^([A-Za-z_][A-Za-z_0-9.]*)\\[([A-Za-z_][A-Za-z_0-9.]*)\\]$");
 
-    private static IObject resolvePart(IObjectStore context, String path)
-            throws MisformedError, IObject.Mistyped, IObject.Unknown
+    private static IObject resolvePart(Context context, String path)
+            throws MisformedError, IObject.Mistyped, Context.Unknown
     {
         Matcher m1 = REGEX_DIRECT.matcher(path);
         if (m1.matches())
@@ -63,14 +63,14 @@ public class Ref<T extends IObject>
         Matcher m2 = REGEX_INDIRECT.matcher(path);
         if (m2.matches())
         {
-            IObjectStore subcontext = resolvePart(context, m2.group(1)).asObject();
+            PropertyContext subcontext = resolvePart(context, m2.group(1)).asObject();
             return resolvePart(subcontext, m2.group(2));
         }
 
         Matcher m3 = REGEX_ARRAY.matcher(path);
         if (m3.matches())
         {
-            IObjectStore subcontext = resolvePart(context, m3.group(1)).asMap();
+            Context subcontext = resolvePart(context, m3.group(1)).asMap();
             return resolvePart(subcontext, m3.group(2));
         }
         
@@ -86,7 +86,7 @@ public class Ref<T extends IObject>
             throw new Error("Misformed expression:", e);
         } catch (IObject.Mistyped e) {
             throw new Error("Wrong type of object when resolving.", e);
-        } catch (IObject.Unknown e) {
+        } catch (Context.Unknown e) {
             throw new Error("Unknown property when resolving.", e);
         }
     }
@@ -99,7 +99,7 @@ public class Ref<T extends IObject>
     
     public static class Int extends Ref<IObjectInt>
     {
-        public Int(String path, IObjectStore context)
+        public Int(String path, Context context)
         {
             super(path, context, p -> p.asInt());
         }
@@ -107,7 +107,7 @@ public class Ref<T extends IObject>
     
     public static class Str extends Ref<IObjectString>
     {
-        public Str(String path, IObjectStore context)
+        public Str(String path, Context context)
         {
             super(path, context, p -> p.asString());
         }
@@ -115,7 +115,7 @@ public class Ref<T extends IObject>
     
     public static class Obj extends Ref<PropertyContainer>
     {
-        public Obj(String path, IObjectStore context)
+        public Obj(String path, Context context)
         {
             super(path, context, p -> p.asObject());
         }
@@ -123,7 +123,7 @@ public class Ref<T extends IObject>
     
     public static class List extends Ref<IObjectList>
     {
-        public List(String path, IObjectStore context)
+        public List(String path, Context context)
         {
             super(path, context, p -> p.asList());
         }
@@ -131,7 +131,7 @@ public class Ref<T extends IObject>
     
     public static class Any extends Ref<IObject>
     {
-        public Any(String path, IObjectStore context)
+        public Any(String path, Context context)
         {
             super(path, context, p -> p);
         }

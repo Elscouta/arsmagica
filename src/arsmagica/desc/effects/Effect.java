@@ -6,8 +6,8 @@
 package arsmagica.desc.effects;
 
 import arsmagica.model.World;
+import arsmagica.xml.Context;
 import arsmagica.xml.DataStore;
-import arsmagica.xml.IObjectStore;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLDirectLoader;
 import arsmagica.xml.XMLError;
@@ -28,7 +28,7 @@ public abstract class Effect
      * @throws Ref.Error The description of the effect was incorrect, most 
      * likely because of an unbound or mistyped variable.
      */
-    public abstract void apply(World world, IObjectStore context) 
+    public abstract void apply(World world, Context context) 
             throws Ref.Error;
     
     public static class Loader extends XMLDirectLoader<Effect>
@@ -43,8 +43,8 @@ public abstract class Effect
         {
             switch (method)
             {
-                case "delta":   return new EffectDelta.Loader(store);
-                case "destroy": return new EffectDestroy.Loader(store);
+                case "delta":       return new EffectDelta.Loader(store);
+                case "destroy":     return new EffectDestroy.Loader(store);
                 default: 
                     throw new XMLError(String.format("Unknown type: %s", method));
             }

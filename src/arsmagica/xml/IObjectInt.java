@@ -14,7 +14,7 @@ import java.util.List;
  */
 public final class IObjectInt implements IObject
 {
-    @Override public IObjectStore getContext() { return context; }
+    @Override public Context getContext() { return context; }
     @Override public String getType() { return "int"; }
     @Override public IObjectInt asInt() { return this; }
     
@@ -30,12 +30,12 @@ public final class IObjectInt implements IObject
         }
     }
     
-    private final IObjectStore context;
+    private final Context context;
     private final IObjectIntDesc desc;
     private int value;
     private final List<Relation> relations;
 
-    public IObjectInt(IObjectStore c, IObjectIntDesc desc) 
+    public IObjectInt(Context c, IObjectIntDesc desc) 
             throws Ref.Error
     {
         this.context = c;

@@ -143,7 +143,7 @@ public class ArithmeticParser
                     
                     final String var = str.substring(startPos+1, this.pos);
                     
-                    x = (IObjectStore c) -> (double) (new Ref.Int(var, c)).get().getValue();                    
+                    x = (Context c) -> (double) (new Ref.Int(var, c)).get().getValue();                    
                 }   
                 else if (ch >= 'a' && ch <= 'z') 
                 { // functions

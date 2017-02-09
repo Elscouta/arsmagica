@@ -19,17 +19,17 @@ import java.util.concurrent.ThreadLocalRandom;
  * 
  * @author Elscouta
  */
-public class IObjectList implements IObjectOwner, Iterable<IObject>
+public class IObjectList implements IObject, IObjectOwner, Iterable<IObject>
 {
-    @Override public IObjectStore getContext() { return context; }
+    @Override public Context getContext() { return context; }
     @Override public String getType() { return "list"; }
     @Override public IObjectList asList() { return this; }
     
-    private final IObjectStore context;
+    private final Context context;
     private final List<IObject> list;
     
 
-    public IObjectList(IObjectStore context)
+    public IObjectList(Context context)
     {
         this.context = context;
         this.list = new ArrayList<>();

@@ -6,13 +6,15 @@
 package arsmagica.desc;
 
 import arsmagica.model.World;
+import arsmagica.xml.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.IObject;
-import arsmagica.xml.IObjectStore;
+import arsmagica.xml.PropertyContainer;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
+import arsmagica.xml.PropertyContext;
 
 /**
  *
@@ -40,15 +42,16 @@ public class PropertyDesc
      * 
      * @param w The world module, to allow creation of
      * entities as-required.
-     * @param parent The current context.
+     * @param parent The object owning that property.
+     * @param context The context in which free variables must be interpreted.
      * 
      * @return A concrete object.
      * @throws Ref.Error The XML that generated the description was ill-formed.
      */
-    public IObject create(World w, IObjectStore parent)
+    public IObject create(World w, IObject parent, Context context)
             throws Ref.Error
     {
-        return obj.create(w, parent);
+        return obj.create(w, parent, context);
     }
             
     public static class Loader extends XMLLoader<PropertyDesc>

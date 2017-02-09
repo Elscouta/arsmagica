@@ -22,7 +22,7 @@ public class Entity extends PropertyContainer
     public Entity(World w, String type)
             throws Ref.Error
     {
-        super(w);
+        super();
         this.type = type;
     }
 }

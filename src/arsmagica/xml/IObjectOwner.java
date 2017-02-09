@@ -6,12 +6,12 @@
 package arsmagica.xml;
 
 /**
- * An extension of IObject for objects that can keep references to other
+ * An interface for objects that can keep references to other
  * objects. Used to send notifications.
  * 
  * @author Elscouta
  */
-public interface IObjectOwner extends IObject
+public interface IObjectOwner
 {
     /**
      * Informs the object that one of its member got destroyed. What happens
@@ -23,11 +23,6 @@ public interface IObjectOwner extends IObject
      * 
      * @param destroyed The destroyed object. Note that this object is only
      * provided for adress reference and should not be used anymore.
-     * @throws Mistyped The receiving class doesn't own members, and should 
-     * not have received such a notification.
      */
-    default void notifyMemberDestroyed(IObject destroyed) throws Mistyped 
-    {
-        throw new Mistyped("member-owner", this);
-    }    
+    void notifyMemberDestroyed(IObject destroyed);
 }
