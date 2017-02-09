@@ -47,7 +47,7 @@ public class IObjectListDesc extends IObjectDesc
     @Override public IObjectList create(World w, IObjectStore context)
             throws XMLError
     {
-        IObjectList l = new IObjectList(context, type.getType());
+        IObjectList l = new IObjectList(context);
         int rCount = count.resolve(context);
         
         for (int i = 0; i < rCount; i++)

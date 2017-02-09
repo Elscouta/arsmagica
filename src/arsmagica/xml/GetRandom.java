@@ -5,10 +5,9 @@
  */
 package arsmagica.xml;
 
-import arsmagica.model.Entity;
+import arsmagica.desc.IObjectSupplierDesc;
 import arsmagica.model.World;
 import org.w3c.dom.Element;
-import arsmagica.desc.IObjectSupplierDesc;
 
 /**
  * FIXME: Remove Entity cast

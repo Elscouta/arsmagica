@@ -6,7 +6,6 @@
 package arsmagica.xml;
 
 import arsmagica.model.Entity;
-import arsmagica.model.EntityMgr;
 import arsmagica.model.World;
 import org.w3c.dom.Element;
 import arsmagica.desc.IObjectSupplierDesc;

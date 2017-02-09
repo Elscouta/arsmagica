@@ -9,7 +9,7 @@ package arsmagica.xml;
  *
  * @author Elscouta
  */
-public interface IObjectStore extends IObject
+public interface IObjectStore extends IObjectOwner
 {
     public IObject get(String key) throws IObject.Unknown;
 }

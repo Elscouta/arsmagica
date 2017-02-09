@@ -48,4 +48,10 @@ public class LoadEffectsTest
         
         assertEquals(20, testEntity.get("test_property").asInt().getValue());
     }
+    
+    @Test
+    public void loadEffectDestroy() throws XMLError
+    {
+        effectLoader.loadXML("effect_destroy.xml");
+    }
 }

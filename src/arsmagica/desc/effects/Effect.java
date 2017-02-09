@@ -44,7 +44,8 @@ public abstract class Effect
         {
             switch (method)
             {
-                case "delta":  return new EffectDelta.Loader(store);
+                case "delta":   return new EffectDelta.Loader(store);
+                case "destroy": return new EffectDestroy.Loader(store);
                 default: 
                     throw new XMLError(String.format("Unknown type: %s", method));
             }

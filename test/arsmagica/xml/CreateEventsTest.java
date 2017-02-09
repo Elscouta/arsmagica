@@ -7,11 +7,9 @@ package arsmagica.xml;
 
 import arsmagica.desc.EntityDesc;
 import arsmagica.desc.EventDesc;
-import arsmagica.desc.effects.Effect;
 import arsmagica.model.Entity;
 import arsmagica.model.Event;
 import arsmagica.model.World;
-import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,8 +34,6 @@ public class CreateEventsTest
         world = new World(store);
         eventLoader = new XMLFileLoader<>(store, "event", 
                   new EventDesc.Loader(store));
-        entityLoader = new XMLFileLoader<>(store, "entity",
-                                           new EntityDesc.Loader(store));
         
         store.loadEntityDescFile("entity_propint_const.xml");
         testEntity = world.createEntity("test_entity");

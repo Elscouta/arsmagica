@@ -55,7 +55,7 @@ public class XMLBasicLoader
     
     protected String getContent(Element current_node)
     {
-        return current_node.getTextContent();
+        return current_node.getTextContent().trim();
     }
 
     protected <U> U getChild(Element current_node, String key, 

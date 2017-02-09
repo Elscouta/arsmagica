@@ -30,6 +30,4 @@ public class Entity extends PropertyContainer
         super(w);
         this.type = type;
     }
-    
-
 }

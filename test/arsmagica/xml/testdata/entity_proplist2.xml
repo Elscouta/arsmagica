@@ -8,23 +8,27 @@ and open the template in the editor.
 
 <entities>
     <entity>
-        <type>test_entity</type>
+        <type>test_parent</type>
         <property id='test_list' type='list'>
-            <var type='int'>
-                <init method='const'>
-                    <value>10</value>
-                </init>
+            <var type='test_child'>
+                <init method='new' />
             </var>
             <count method='const'>
                 <value>5</value>
             </count>
         </property>
+    </entity>
+    
+    <entity>
+        <type>test_child</type>
         
-        <property id='test_random_access' type='init'>
-            <init method='get_random'>
-                <list>test_list</list>
-            </init>
+        <property id='test_child' type='test_child2'>
+            <init method='new' />
         </property>
+    </entity>
+    
+    <entity>
+        <type>test_child2</type>
     </entity>
     
 </entities>

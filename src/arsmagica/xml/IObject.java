@@ -14,7 +14,10 @@ package arsmagica.xml;
 public interface IObject 
 {
     /**
-     * Returns the context of the property (generally the enclosing object)
+     * Returns the context of the property (generally the enclosing object). 
+     * The context is where the object takes its variables from. It may be
+     * different from the direct parent if this one is just a wrapper
+     * object.
      * 
      * @return The context of the property
      */
@@ -78,7 +81,7 @@ public interface IObject
      * @return The real implementation of the property
      * @throws Mistyped The property was not an object
      */
-    default IObjectStore asObject() throws Mistyped
+    default PropertyContainer asObject() throws Mistyped
     {
         throw new Mistyped("object", this);
     }
@@ -108,6 +111,33 @@ public interface IObject
     default Expression<String> toStringTemplate() throws Mistyped
     {
         throw new Mistyped("string-convertible", this);
+    }
+    
+    /**
+     * Registers a owner of an object. Any object that stores a reference to
+     * another object should be registered as an owner to act upon that 
+     * object destruction.
+     * 
+     * That function can be called on any object, but only objects that can
+     * actually be destroyed should take action.
+     * 
+     * Care that object list must not implements these functions, because
+     * they are used internally for ownership management and will generate
+     * endless loop.
+     * 
+     * @param owner The owner to register.
+     */
+    default void registerOwner(IObjectOwner owner)
+    {        
+    }
+    
+    /**
+     * Unregisters the owner of an object.
+     * 
+     * @param owner The owner to remove.
+     */
+    default void unregisterOwner(IObjectOwner owner)
+    {
     }
     
     /**
