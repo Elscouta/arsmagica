@@ -5,6 +5,9 @@
  */
 package arsmagica.xml;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 /**
  * An helper class for any object that wish to own a static set of 
@@ -21,13 +24,13 @@ public abstract class PropertyContainer
     @Override public PropertyContext getContext() { return this; }
     @Override public PropertyContainer asObject() { return this; }
 
-    private IObjectList owners;
+    private Set<IObjectOwner> owners;
     
     public PropertyContainer()
     {
         super();
         
-        owners = new IObjectList(this);
+        owners = new HashSet<>();
     }
     
     /**
@@ -39,11 +42,11 @@ public abstract class PropertyContainer
      */
     public void destroy()
     {
-        IObjectList listeners = owners.removeAll();
+        Set<IObjectOwner> listeners = owners;
         owners = null;
         
-        for (IObject l : listeners)
-            ((IObjectOwner) l).notifyMemberDestroyed(this);
+        for (IObjectOwner l : listeners)
+            l.notifyMemberDestroyed(this);
     }
     
     /**
@@ -73,13 +76,16 @@ public abstract class PropertyContainer
     public void registerOwner(IObjectOwner owner)
     {
         if (owners != null)
-            owners.addElement((IObject) owner);
+            owners.add(owner);
     }
     
     @Override
     public void unregisterOwner(IObjectOwner owner)
     {
         if (owners != null)
-            owners.removeElement((IObject) owner);
+        {
+            assert(owners.contains(owner));
+            owners.remove(owner);
+        }
     }
 }

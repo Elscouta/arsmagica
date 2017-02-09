@@ -19,17 +19,21 @@ public class EntityMgr
 {
     private final DataStore store;
     private final World world;
+    private final EventMgr eventMgr;
     
-    public EntityMgr(DataStore store, World world)
+    public EntityMgr(DataStore store, EventMgr eventMgr, World world)
     {
         this.store = store;
         this.world = world;
+        this.eventMgr = eventMgr;
     }
     
     public Entity createNew(String type, IObject parent, Context context)
             throws Ref.Error
     {
-        return store.getEntityDesc(type).create(world, parent, context);
+        Entity e = store.getEntityDesc(type).create(world, parent, context);
+        eventMgr.registerEntity(e);
+        return e;
     }
     
     public Entity getRandom(String type)

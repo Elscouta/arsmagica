@@ -22,8 +22,8 @@ public class World
     
     public World(DataStore store)
     {
-        entityMgr = new EntityMgr(store, this);
         eventMgr = new EventMgr(this);
+        entityMgr = new EntityMgr(store, eventMgr, this);
         mailMgr = new MailMgr(this);
         timeMgr = new TimeMgr();
         
@@ -47,4 +47,14 @@ public class World
         return entityMgr.createNew(type, null, PropertyContext.create());
     }
     
+    /**
+     * Moves the game to the next day.
+     * 
+     * @throws TimeMgr.NotReady One of the submodules was not ready.
+     */
+    public void nextDay()
+            throws TimeMgr.NotReady
+    {
+        timeMgr.nextDay();
+    }
 }

@@ -40,7 +40,7 @@ public class TimeMgr
      */
     public void nextDay()
             throws NotReady
-    {
+    {        
         for (Listener l : listeners)
             l.closeDay();
         

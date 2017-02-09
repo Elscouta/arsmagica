@@ -8,7 +8,9 @@ package arsmagica.model;
 import arsmagica.xml.IObject;
 import arsmagica.xml.IObjectOwner;
 import arsmagica.xml.Ref;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -48,7 +50,8 @@ public class EventMgr
     @Override
     public void openDay() 
     {
-        for (Entity e : entities)
+        List<Entity> eligibleEntities = new ArrayList<>(entities);
+        for (Entity e : eligibleEntities)
         {
             try {
                 e.fireDailyEvents();

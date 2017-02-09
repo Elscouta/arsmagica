@@ -29,8 +29,12 @@ public class EffectCreate extends Effect {
     public void apply(World world, Context context)
         throws Ref.Error
         {
-            Entity e = world.createEntity(type);
-            destination.resolve(context).addElement(e);
+            IObjectList destinationList = destination.resolve(context);
+            
+            Entity e = world.getEntityMgr().createNew(type, 
+                    destinationList.getParent(), destinationList.getContext());
+
+            destinationList.addElement(e);
         }
     
     public static class Loader extends XMLLoader<EffectCreate>

@@ -21,16 +21,19 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class IObjectList implements IObject, IObjectOwner, Iterable<IObject>
 {
+    public IObject getParent() { return parent; }
     @Override public Context getContext() { return context; }
     @Override public String getType() { return "list"; }
     @Override public IObjectList asList() { return this; }
     
+    private final IObject parent;
     private final Context context;
     private final List<IObject> list;
     
 
-    public IObjectList(Context context)
+    public IObjectList(IObject parent, Context context)
     {
+        this.parent = parent;
         this.context = context;
         this.list = new ArrayList<>();
     }
@@ -92,7 +95,7 @@ public class IObjectList implements IObject, IObjectOwner, Iterable<IObject>
     
     IObjectList removeAll()
     {
-        IObjectList r = new IObjectList(context);
+        IObjectList r = new IObjectList(parent, context);
         
         for (IObject o : list)
         {
