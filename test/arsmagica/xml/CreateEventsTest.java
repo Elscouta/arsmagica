@@ -29,7 +29,7 @@ public class CreateEventsTest
     @Before
     public void setUp() throws Exception
     {
-        store = new DataStore("test/arsmagica/xml/testdata/");
+        store = new DataStore("testdata/units/");
         world = new World(store);
         eventLoader = new XMLFileLoader<>(store, "event", 
                   new EventDesc.Loader(store));

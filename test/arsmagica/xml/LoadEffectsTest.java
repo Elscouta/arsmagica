@@ -28,7 +28,7 @@ public class LoadEffectsTest
     @Before
     public void setUp() throws Exception
     {
-        store = new DataStore("test/arsmagica/xml/testdata/");
+        store = new DataStore("testdata/units/");
         effectLoader = new XMLFileLoader<>(store, "effect", 
                                            new Effect.Loader(store));
         entityLoader = new XMLFileLoader<>(store, "entity",

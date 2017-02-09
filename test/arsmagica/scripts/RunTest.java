@@ -20,7 +20,7 @@ public class RunTest
     @Test
     public void runAnts() throws Exception
     {
-        DataStore store = new DataStore("test/arsmagica/scripts/testdata/ants/");
+        DataStore store = new DataStore("testdata/ants/");
         store.load();
         World world = new World(store);
         Entity e = world.createEntity("nest");
@@ -41,7 +41,7 @@ public class RunTest
     @Test
     public void runAntsShort() throws Exception
     {
-        DataStore store = new DataStore("test/arsmagica/scripts/testdata/ants_short/");
+        DataStore store = new DataStore("testdata/ants_short/");
         store.load();
         World world = new World(store);
         Entity e = world.createEntity("nest");

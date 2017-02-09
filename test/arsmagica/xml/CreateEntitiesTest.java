@@ -31,7 +31,7 @@ public class CreateEntitiesTest
     @Before
     public void setUp() 
     {
-        store = new DataStore("test/arsmagica/xml/testdata/");
+        store = new DataStore("testdata/units/");
         loader = new XMLFileLoader<>(store, "entity", 
                 new EntityDesc.Loader(store));
         world = new World(store);

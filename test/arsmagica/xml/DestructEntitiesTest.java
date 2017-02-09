@@ -33,7 +33,7 @@ public class DestructEntitiesTest
     @Before
     public void setUp() throws XMLError
     {
-        store = new DataStore("test/arsmagica/xml/testdata/");
+        store = new DataStore("testdata/units/");
         
         effectLoader = new XMLFileLoader<>(store, "effect", 
                                            new Effect.Loader(store));

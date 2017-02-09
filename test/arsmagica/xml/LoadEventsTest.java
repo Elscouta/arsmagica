@@ -27,7 +27,7 @@ public class LoadEventsTest
     @Before
     public void setUp() throws Exception
     {
-        DataStore store = new DataStore("test/arsmagica/xml/testdata/");
+        DataStore store = new DataStore("testdata/units/");
         loader = new XMLFileLoader<>(store, "event", 
                 new EventDesc.Loader(store));
         world = new World(store);

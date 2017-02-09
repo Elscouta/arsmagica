@@ -39,7 +39,7 @@ public class LoadEntitiesTest
     @Before
     public void setUp() 
     {
-        DataStore store = new DataStore("test/arsmagica/xml/testdata/");
+        DataStore store = new DataStore("testdata/units/");
         loader = new XMLFileLoader<>(store, "entity", 
                 new EntityDesc.Loader(store));
     }
