@@ -6,6 +6,8 @@
 package arsmagica;
 
 import arsmagica.gui.AdminScreen;
+import arsmagica.gui.InDialog;
+import arsmagica.gui.IngameScreen;
 import arsmagica.gui.SetupScreen;
 import arsmagica.gui.TitleScreen;
 import java.io.File;
@@ -29,6 +31,8 @@ import arsmagica.model.Variable;
 import arsmagica.model.VirtueFlaw;
 import arsmagica.model.World;
 import arsmagica.xml.DataStore;
+import java.awt.Component;
+import javax.swing.JComponent;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -78,11 +82,6 @@ public class ArsMagica
             e.printStackTrace();
         }
         initializeXML();
-        
-        System.out.print("Les options d'Alliance :");
-        for(CovenantOption co : covOpts){
-            System.out.print("\n "+co.toString()+",");
-        } System.out.print("\n");
     }
     
     /**
@@ -90,8 +89,15 @@ public class ArsMagica
      */
     public static void main(String[] args) {
         ArsMagica main = new ArsMagica();
-        titleScreen.setVisible(true);
-        gameData = new ArrayList<>();
+        
+        IngameScreen mainWindow = new IngameScreen();
+        mainWindow.pack();
+        mainWindow.setVisible(true);
+        InDialog inDialTest = new InDialog("Voici les premiers choix !");
+        mainWindow.popDialog(inDialTest);
+        
+//        titleScreen.setVisible(true);
+//        gameData = new ArrayList<>();
         
     }
     
@@ -100,13 +106,11 @@ public class ArsMagica
             Node root = document.getDocumentElement();
             
             NodeList covOptNodes = ((Node)path.evaluate("CovenantOptions", root, XPathConstants.NODE)).getChildNodes();
-            System.out.print("il y a "+covOptNodes.getLength()+" Options d'Alliance dans le XML.\n");
             for(int i = 0;i<covOptNodes.getLength();i++){
                 saveCovOpt(covOptNodes.item(i));
             }
             
             NodeList virtuesFlawsNodes = ((Node)path.evaluate("VirtuesFlaws", root, XPathConstants.NODE)).getChildNodes();
-            System.out.print("il y a "+virtuesFlawsNodes.getLength()+" VertusVices dans le XML.\n");
             for(int i = 0;i<virtuesFlawsNodes.getLength();i++){
                 saveVirtueFlaw(virtuesFlawsNodes.item(i));
             }
