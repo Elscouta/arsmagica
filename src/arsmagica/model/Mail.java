@@ -139,35 +139,10 @@ public class Mail
     {
         public InvalidOption(String msg) { super(msg); }
     }
-    
-    /**
-     * Interface to be used by objects that wish to be informed about changes
-     * to this mail. Messages sent through that interface are forced into 
-     * the event dispatch thread.
-     */
-    @FunctionalInterface
-    public interface Listener 
-    {
-        /**
-         * The content of the mail box changed.
-         */
-        public void onChange();
-    }
-    
-    /**
-     * Use this to register a listener to the mail manager.
-     * 
-     * @param l The listener to add.
-     */
-    public void addListener(Listener l)
-    {
-        listeners.add(l);
-    }
-    
+        
     private final List<Mail> pendingMails = new ArrayList<>();
     private final List<Mail> blockingMails = new ArrayList<>();
-    private final List<Listener> listeners = new ArrayList<>();
-    
+   
     private final MailMgr mgr;
     private final String text;
     private final List<Option> options;
