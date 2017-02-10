@@ -6,17 +6,18 @@
 package arsmagica.desc;
 
 import arsmagica.desc.effects.Effect;
-import arsmagica.model.Entity;
-import arsmagica.model.World;
+import arsmagica.model.objects.Entity;
+import arsmagica.control.WorldMgr;
+import arsmagica.desc.effects.Requirement;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObject;
+import arsmagica.model.objects.IObject;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import java.util.List;
 import org.w3c.dom.Element;
-import arsmagica.xml.PropertyContext;
+import arsmagica.model.objects.PropertyContext;
 
 /**
  * The description of an event, loaded from an event file. An event description
@@ -41,14 +42,25 @@ public class EventDesc
     private List<PropertyDesc> properties;
     private Expression<Double> probability;
     private List<Effect> effects;
+    private List<Requirement> requirements;
             
-    public double getProbability(World world, IObject source)
+    public double getProbability(WorldMgr world, IObject source)
             throws Ref.Error
     {
-        return probability.resolve(PropertyContext.createWrapper("source", source));
+        PropertyContext context = PropertyContext.create();
+        context.addProperty("source", source);
+        context.addProperty(source.getType(), source);
+        
+        for (Requirement r : requirements)
+        {
+            if (r.test(context) == false)
+                return 0d;
+        }
+        
+        return probability.resolve(context);
     }
     
-    public void execute(World world, Entity source)
+    public void execute(WorldMgr world, Entity source)
             throws Ref.Error
     {
         PropertyContext eventContext = PropertyContext.create();
@@ -81,6 +93,8 @@ public class EventDesc
             obj.probability = getChild(e, "probability", new ArithmeticDoubleLoader());
             obj.effects = getChildList(e, "effect",
                                        new Effect.Loader(store));
+            obj.requirements = getChildList(e, "requirement",
+                                            new Requirement.Loader(store));
         }
     }
 }

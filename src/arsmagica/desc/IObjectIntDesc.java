@@ -5,12 +5,12 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
-import arsmagica.xml.IObjectInt;
+import arsmagica.model.objects.IObjectInt;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObject;
+import arsmagica.model.objects.IObject;
 import arsmagica.xml.MethodIntLoader;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Element;
-import arsmagica.xml.PropertyContext;
+import arsmagica.model.objects.PropertyContext;
 
 /**
  *
@@ -85,7 +85,7 @@ public class IObjectIntDesc extends IObjectDesc
     }
     
     @Override
-    public IObjectInt create(World w, IObject parent, Context context)
+    public IObjectInt create(WorldMgr w, IObject parent, Context context)
             throws Ref.Error
     {
         return new IObjectInt(context, this);
@@ -102,7 +102,8 @@ public class IObjectIntDesc extends IObjectDesc
         public void fillObjectFromXML(IObjectIntDesc obj, Element e)
                 throws XMLError
         {
-            obj.initializer = getChild(e, "init", 
+            obj.initializer = getAttributeOrChild(e, "init", 
+                                       new MethodIntLoader.Const.Loader(store),
                                        new MethodIntLoader(store));
             obj.relations = getChildList(e, "related", 
                                          new RelationDesc.Loader(store));

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<events>
+    <event>
+        <probability>1</probability>
+        
+        <!-- An ant produces an amount of food equal to its level -->
+        <effect type='delta' property='ant.nest.food' value='$ant.level' />
+        
+        <!-- Level up every day -->
+        <effect type='delta' property='ant.level' value='1' />
+
+    </event>
+</events>

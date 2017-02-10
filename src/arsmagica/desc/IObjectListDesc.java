@@ -5,18 +5,17 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObject;
-import arsmagica.xml.IObjectList;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.IObjectList;
 import arsmagica.xml.MethodIntLoader;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
-import arsmagica.xml.PropertyContext;
 
 /**
  * The description of a list. A list definition follows the following
@@ -35,6 +34,9 @@ import arsmagica.xml.PropertyContext;
  * }
  * </pre>
  * 
+ * A list is a lightweight container. Objects added to the list will consider
+ * the parent and the context of the list as their own parent and context.
+ * 
  * @author Elscouta
  */
 public class IObjectListDesc extends IObjectDesc
@@ -49,10 +51,10 @@ public class IObjectListDesc extends IObjectDesc
     }
     
     @Override 
-    public IObjectList create(World w, IObject parent, Context context)
+    public IObjectList create(WorldMgr w, IObject parent, Context context)
             throws Ref.Error
     {
-        IObjectList l = new IObjectList(context);
+        IObjectList l = new IObjectList(parent, context);
         int rCount = count.resolve(context);
         
         for (int i = 0; i < rCount; i++)
@@ -72,8 +74,15 @@ public class IObjectListDesc extends IObjectDesc
         public void fillObjectFromXML(IObjectListDesc obj, Element e) 
                 throws XMLError
         {
-            obj.type = getChild(e, "var", new IObjectDesc.Loader(store));
-            obj.count = getChild(e, "count", new MethodIntLoader(store));
+            IObjectDesc.Loader typeLoader = new IObjectDesc.Loader(store);
+            String member_type = getAttribute(e, "member_type", null);
+            
+            if (member_type != null)
+                obj.type = typeLoader.getLoader(member_type).loadXML(e);
+            else
+                obj.type = getChild(e, "var", new IObjectDesc.Loader(store));
+            
+            obj.count = getAttributeOrChild(e, "count", new MethodIntLoader(store));
         }
     }
 }

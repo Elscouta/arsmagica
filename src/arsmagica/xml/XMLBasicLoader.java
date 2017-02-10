@@ -5,6 +5,10 @@
  */
 package arsmagica.xml;
 
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.IObjectList;
+import arsmagica.model.objects.PropertyContainer;
+import arsmagica.model.objects.IObjectInt;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.xpath.XPath;
@@ -53,10 +57,51 @@ public class XMLBasicLoader
     }
     
     protected String getContent(Element current_node)
+            throws XMLError
     {
+        if (current_node.getElementsByTagName("*").getLength() > 0)
+            throw new XMLError(String.format(
+                    "[line %s] : Unexpected child %s in node %s, "
+                    + "expected leaf node.", 
+                    current_node.getUserData("lineNumber"),
+                    ((Element) current_node.getElementsByTagName("*").item(0)).getTagName(),
+                    current_node.getTagName()));
         return current_node.getTextContent().trim();
     }
-
+    
+    protected <U> U getAttributeOrChild(Element current_node, String key,
+            StringLoader<? extends U> attributeLoader, 
+            XMLDirectLoader<? extends U> childLoader)
+            throws XMLError
+    {
+        String attrStr = getAttribute(current_node, key, null);
+        U childOpt = getChild(current_node, key, childLoader, null);
+        
+        if (childOpt != null && attrStr != null)
+            throw new XMLError(String.format(
+                    "[line %s] : Multiple definition of %s, both"
+                    + "as direct child and as attribute", 
+                    current_node.getUserData("lineNumber"), key));
+        
+        if (childOpt == null && attrStr == null)
+            throw new XMLError(String.format(
+                    "[line %s] : Unable to find %s, not a child"
+                    + "and not an attribute", 
+                    current_node.getUserData("lineNumber"), key));
+        
+        if (childOpt != null)
+            return childOpt;
+        else
+            return attributeLoader.loadString(attrStr);
+    }
+    
+    protected <U> U getAttributeOrChild(Element current_node, String key,
+            XMLStringLoader<U> loader)
+            throws XMLError
+    {
+        return getAttributeOrChild(current_node, key, loader, loader);
+    }
+    
     protected <U> U getChild(Element current_node, String key, 
             XMLDirectLoader<U> l)
             throws XMLError
@@ -65,8 +110,8 @@ public class XMLBasicLoader
 
         if (obj == null)
             throw new XMLError(String.format(
-                               "Unable to find required child %s of node %s",
-                               key, current_node
+                               "[line %s] : Unable to find required child %s of node %s",
+                               current_node.getUserData("lineNumber"), key, current_node.getTagName()
         ));
         
         return obj;
@@ -130,6 +175,11 @@ public class XMLBasicLoader
                 throws XMLError
         {
             final String str = getContent(e);
+            if (!Ref.isValidIdentifier(str))
+                throw new XMLError(String.format(
+                        "[line %s]: Invalid reference identifier: %s",
+                        e.getUserData("lineNumber"), str));
+
             return context -> new Ref.Any(str, context).get();
         }
     }
@@ -147,82 +197,107 @@ public class XMLBasicLoader
                 throws XMLError
         {
             final String str = getContent(e);
+            if (!Ref.isValidIdentifier(str))
+                throw new XMLError(String.format(
+                        "[line %s]: Invalid reference identifier: %s",
+                        e.getUserData("lineNumber"), str));
             return context -> new Ref.Obj(str, context).get();
         }
     }
     
     protected class IObjectIntLoader
-            extends XMLDirectLoader< Expression<IObjectInt> >
+            extends XMLStringLoader< Expression<IObjectInt> >
     {
         public IObjectIntLoader()
         {
-            super(XMLBasicLoader.this.store);
+            super(XMLBasicLoader.this.store, "Expression<IObjectInt>");
         }
         
         @Override
-        public Expression<IObjectInt> loadXML(Element e)
+        public Expression<IObjectInt> loadString(String str)
                 throws XMLError
         {
-            final String str = getContent(e);
+            try {
+                Ref.checkValidIdentifier(str);
+            } catch (Ref.Error ex) {
+                throw new XMLError(ex);
+            }
+
             return context -> new Ref.Int(str, context).get();
         }
     }
         
     protected class IObjectListLoader
-            extends XMLDirectLoader< Expression<IObjectList> >
+            extends XMLStringLoader< Expression<IObjectList> >
     {
         public IObjectListLoader()
         {
-            super(XMLBasicLoader.this.store);
+            super(XMLBasicLoader.this.store, "Expression<IObjectList>");
         }
         
         @Override
-        public Expression<IObjectList> loadXML(Element e)
+        public Expression<IObjectList> loadString(String str)
                 throws XMLError
         {
-            final String str = getContent(e);
+            try {
+                Ref.checkValidIdentifier(str);
+            } catch (Ref.Error ex) {
+                throw new XMLError(ex);
+            }
+            
             return context -> new Ref.List(str, context).get();
         }
     }
     
     protected class ArithmeticLoader 
-            extends XMLDirectLoader< Expression<Integer> >
+            extends XMLStringLoader< Expression<Integer> >
     {
         public ArithmeticLoader() 
         { 
-            super(XMLBasicLoader.this.store); 
+            super(XMLBasicLoader.this.store, "Expression<Integer>"); 
         }
         
-        @Override public Expression<Integer> loadXML(Element e) throws XMLError
+        @Override 
+        public Expression<Integer> loadString(String str)
+                throws XMLError
         {
-            return c -> ArithmeticParser.eval(getContent(e)).resolve(c).intValue();
+            try {
+                Expression<Double> expr = ArithmeticParser.eval(str);
+                return c -> expr.resolve(c).intValue();
+            } catch (ArithmeticParser.ParseException ex) {
+                throw new XMLError("Unable to parse arithmetic expression", ex);
+            }
         }
     }
     
     protected class ArithmeticDoubleLoader 
-            extends XMLDirectLoader< Expression<Double> >
+            extends XMLStringLoader< Expression<Double> >
     {
         public ArithmeticDoubleLoader() 
         { 
-            super(XMLBasicLoader.this.store); 
+            super(XMLBasicLoader.this.store, "Expression<Double>"); 
         }
         
-        @Override public Expression<Double> loadXML(Element e) throws XMLError
+        @Override public Expression<Double> loadString(String str) throws XMLError
         {
-            return ArithmeticParser.eval(getContent(e));
+            try {
+                return ArithmeticParser.eval(str);
+            } catch (ArithmeticParser.ParseException ex) {
+                throw new XMLError("Unable to parse arithmetic expression", ex);
+            }
         }
     }
     
-    protected class ContentLoader extends XMLDirectLoader<String>
+    protected class ContentLoader extends XMLStringLoader<String>
     {
         public ContentLoader()
         {
-            super(XMLBasicLoader.this.store);
+            super(XMLBasicLoader.this.store, "String");
         }
         
-        @Override public String loadXML(Element e) throws XMLError
+        @Override public String loadString(String str) throws XMLError
         {
-            return getContent(e);
+            return str;
         }
     }
 
@@ -230,8 +305,8 @@ public class XMLBasicLoader
     {
         Failure(Element e, String classname, XMLError error)
         {
-            super(String.format("Failed to load %s into a %s", 
-                    e.toString(), classname), 
+            super(String.format("[line %s] : Failed to load node %s into a %s", 
+                  e.getUserData("lineNumber"), e.getTagName(), classname), 
                   error);
         }
     }

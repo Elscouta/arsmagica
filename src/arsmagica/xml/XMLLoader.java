@@ -28,7 +28,8 @@ public abstract class XMLLoader<T>
     }
     
     @Override 
-    public T loadXML(Element e) throws XMLError
+    public T loadXML(Element e) 
+            throws XMLError
     {
         T obj = factory.get();
         

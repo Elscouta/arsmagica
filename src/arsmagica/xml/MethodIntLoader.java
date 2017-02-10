@@ -5,6 +5,7 @@
  */
 package arsmagica.xml;
 
+import arsmagica.model.objects.Context;
 import java.util.concurrent.ThreadLocalRandom;
 import org.w3c.dom.Element;
 
@@ -18,11 +19,12 @@ import org.w3c.dom.Element;
  * 
  * @author Elscouta
  */
-public class MethodIntLoader extends XMLDirectLoader< Expression<Integer> >
+public class MethodIntLoader 
+        extends XMLStringLoader< Expression<Integer> >
 {
     public MethodIntLoader(DataStore store)
     {
-        super(store);
+        super(store, "Expression<Integer>");
     }
 
     /**
@@ -48,8 +50,15 @@ public class MethodIntLoader extends XMLDirectLoader< Expression<Integer> >
     public Expression<Integer> loadXML(Element e) 
             throws XMLError 
     {
-        String method = getAttribute(e, "method");
+        String method = getAttribute(e, "method", "const");
         return getLoader(method).loadXML(e);
+    }
+    
+    @Override
+    public Expression<Integer> loadString(String str)
+            throws XMLError
+    {
+        return (new Const.Loader(store)).loadString(str);
     }
 
     /**
@@ -66,18 +75,20 @@ public class MethodIntLoader extends XMLDirectLoader< Expression<Integer> >
             return v.resolve(c);
         }
 
-        public static class Loader extends XMLLoader<Const> 
+        public static class Loader extends XMLStringLoader<Const> 
         {
             public Loader(DataStore s) 
             {
-                super(s, () -> new Const());
+                super(s, "Const");
             }
 
             @Override
-            public void fillObjectFromXML(Const obj, Element e) 
-                    throws XMLError 
+            public Const loadString(String str)
+                    throws XMLError
             {
-                obj.v = getChild(e, "value", new ArithmeticLoader());
+                Const obj = new Const();
+                obj.v = (new ArithmeticLoader()).loadString(str);
+                return obj;
             }
         }
     }

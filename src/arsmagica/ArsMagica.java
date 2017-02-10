@@ -29,7 +29,7 @@ import arsmagica.model.CovenantOption;
 import arsmagica.model.GameData;
 import arsmagica.model.Variable;
 import arsmagica.model.VirtueFlaw;
-import arsmagica.model.World;
+import arsmagica.control.WorldMgr;
 import arsmagica.xml.DataStore;
 import java.awt.Component;
 import javax.swing.JComponent;
@@ -45,7 +45,7 @@ import org.xml.sax.SAXException;
 public class ArsMagica 
 {
     public DataStore dataStore;
-    public World world;
+    public WorldMgr world;
 
     static TitleScreen titleScreen;
     static SetupScreen setupScreen;
@@ -66,7 +66,7 @@ public class ArsMagica
         dataStore = new DataStore(Settings.GAMEDATA_PATH);
         dataStore.load();
         
-        world = new World(dataStore);
+        world = new WorldMgr(dataStore);
         
         titleScreen = new TitleScreen(this);
         covOpts = new HashSet<>();

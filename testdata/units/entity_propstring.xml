@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<entities>
+    <entity>
+        <type>test_entity</type>
+        
+        <property id='i' type='int'>
+            <init method='const'>
+                10
+            </init>
+        </property>
+        
+        <property id='s1' type='string'>
+            Hello:       $i
+        </property>
+        
+        <property id='s2' type='string'>
+            $s1 
+            is love
+        </property>
+    </entity>
+</entities>

@@ -5,10 +5,10 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
-import arsmagica.xml.IObject;
-import arsmagica.xml.PropertyContainer;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.PropertyContainer;
 import arsmagica.xml.Ref;
 
 /**
@@ -29,6 +29,6 @@ public interface IObjectSupplierDesc
      * @return An object that can be stored in a XML-defined container.
      * @throws Ref.Error The resolution with the context was unsuccessful.
      */ 
-    IObject get(World w, IObject parent, Context context) 
+    IObject get(WorldMgr w, IObject parent, Context context) 
             throws Ref.Error;
 }

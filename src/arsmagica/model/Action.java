@@ -5,13 +5,14 @@
  */
 package arsmagica.model;
 
+import arsmagica.control.WorldMgr;
 import arsmagica.desc.effects.Effect;
 import arsmagica.desc.effects.Requirement;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import java.util.ArrayList;
 import java.util.List;
-import arsmagica.xml.PropertyContext;
+import arsmagica.model.objects.PropertyContext;
 
 /**
  * Represents a possible action, as an effect associated to a set of 
@@ -54,7 +55,7 @@ public class Action
      * @param context The context used to fetch local variables.
      * @throws Ref.Error The effect was misformed.
      */
-    public void execute(World world, PropertyContext context)
+    public void execute(WorldMgr world, PropertyContext context)
             throws Ref.Error
     {
         effect.apply(world, context);
@@ -69,7 +70,7 @@ public class Action
      * @return true if all requirements are fulfilled.
      * @throws Ref.Error The requirements were misformed.
      */
-    public boolean isAvailable(World world, PropertyContext context)
+    public boolean isAvailable(WorldMgr world, PropertyContext context)
             throws Ref.Error
     {
         return true;

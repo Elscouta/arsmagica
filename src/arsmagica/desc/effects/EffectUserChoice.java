@@ -6,9 +6,9 @@
 package arsmagica.desc.effects;
 
 import arsmagica.model.Mail;
-import arsmagica.model.MailMgr;
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.MailMgr;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.XMLBasicLoader;
 import arsmagica.xml.XMLError;
@@ -22,7 +22,7 @@ import org.w3c.dom.Element;
  * 
  * @author Elscouta
  */
-public class EffectUserChoice extends Effect
+public class EffectUserChoice implements Effect
 {
     private boolean blocking;
     
@@ -72,7 +72,7 @@ public class EffectUserChoice extends Effect
     }
     
     @Override
-    public void apply(World w, Context context)
+    public void apply(WorldMgr w, Context context)
     {
         Mail d = w.getMailMgr().createMail(true, text);
         for (OptionDesc o : options)

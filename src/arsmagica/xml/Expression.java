@@ -5,6 +5,8 @@
  */
 package arsmagica.xml;
 
+import arsmagica.model.objects.Context;
+
 /**
  * An expression is any xml content with no markup that may contain references
  * to properties.

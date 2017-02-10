@@ -5,6 +5,13 @@
  */
 package arsmagica.xml;
 
+import arsmagica.model.objects.Context;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.PropertyContext;
+import arsmagica.model.objects.IObjectString;
+import arsmagica.model.objects.IObjectList;
+import arsmagica.model.objects.PropertyContainer;
+import arsmagica.model.objects.IObjectInt;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,10 +54,25 @@ public class Ref<T extends IObject>
     private final static Pattern REGEX_DIRECT = 
             Pattern.compile("^([A-Za-z_][A-Za-z_0-9]*)$");
     private final static Pattern REGEX_INDIRECT = 
-            Pattern.compile("^([A-Za-z_][A-Za-z_0-9]*)[.]([A-Za-z_][A-Za-z_0-9]*)$");
+            Pattern.compile("^([A-Za-z_][A-Za-z_0-9]*)[.]([A-Za-z_][A-Za-z_0-9.]*)$");
     private final static Pattern REGEX_ARRAY =
             Pattern.compile("^([A-Za-z_][A-Za-z_0-9.]*)\\[([A-Za-z_][A-Za-z_0-9.]*)\\]$");
 
+    public static boolean isValidIdentifier(String str)
+    {
+        if (REGEX_DIRECT.matcher(str).matches()) return true;
+        if (REGEX_INDIRECT.matcher(str).matches()) return true;
+        if (REGEX_ARRAY.matcher(str).matches()) return true;
+        
+        return false;
+    }
+    
+    public static void checkValidIdentifier(String str) throws Ref.Error
+    {
+        if (!isValidIdentifier(str))
+            throw new Error("Misformed expression");        
+    }
+    
     private static IObject resolvePart(Context context, String path)
             throws MisformedError, IObject.Mistyped, Context.Unknown
     {

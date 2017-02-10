@@ -5,11 +5,11 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
-import arsmagica.xml.IObject;
-import arsmagica.xml.PropertyContainer;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.PropertyContainer;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLDirectLoader;
 import arsmagica.xml.XMLError;
@@ -36,7 +36,7 @@ public abstract class IObjectDesc
      * @return A concrete property.
      * @throws Ref.Error The XML that generated the description was ill-formed.
      */
-    public abstract IObject create(World w, IObject parent, Context context)
+    public abstract IObject create(WorldMgr w, IObject parent, Context context)
             throws Ref.Error;
     
     /**
@@ -53,22 +53,26 @@ public abstract class IObjectDesc
             super(store);
         }
         
+        public XMLDirectLoader<? extends IObjectDesc> getLoader(String type)
+                throws XMLError
+        {
+            switch (type)
+            {
+                case "int":     return new IObjectIntDesc.Loader(store);      
+                case "string":  return new IObjectStringDesc.Loader(store);   
+                case "list":    return new IObjectListDesc.Loader(store);     
+                case "map":     throw new XMLError("Map type is not supported.");
+                default:        return new IObjectEntityDesc.Loader(store, type); 
+            }            
+        }
+        
         @Override
         public IObjectDesc loadXML(Element e)
                 throws XMLError
         {
             String type = getAttribute(e, "type");
-            XMLLoader<? extends IObjectDesc> l;
-            
-            switch (type)
-            {
-                case "int":     l = new IObjectIntDesc.Loader(store);      break;
-                case "string":  l = new IObjectStringDesc.Loader(store);   break;
-                case "list":    l = new IObjectListDesc.Loader(store);     break;
-                case "map":     throw new XMLError("Map type is not supported.");
-                default:        l = new IObjectEntityDesc.Loader(store, type); 
-            }
-            
+            XMLDirectLoader<? extends IObjectDesc> l = getLoader(type);
+                        
             return l.loadXML(e);
         }
     }    

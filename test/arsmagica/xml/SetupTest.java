@@ -5,42 +5,19 @@
  */
 package arsmagica.xml;
 
-import arsmagica.model.World;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import arsmagica.control.WorldMgr;
 import org.junit.Test;
 
 /**
  *
  * @author Elscouta
  */
-public class SetupTest {
-    
-    public SetupTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
+public class SetupTest 
+{
     @Test
     public void setupWorld() 
     {
-        DataStore store = new DataStore("test/xml/testdata/");
-        World world = new World(store);   
+        DataStore store = new DataStore("testdata/units/");
+        WorldMgr world = new WorldMgr(store);   
     }
 }

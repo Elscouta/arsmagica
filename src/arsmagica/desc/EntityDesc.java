@@ -5,21 +5,21 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.Entity;
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.model.objects.Entity;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
-import arsmagica.xml.IObject;
+import arsmagica.model.objects.IObject;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLFileLoader;
 import arsmagica.xml.XMLLoader;
 import java.util.List;
 import org.w3c.dom.Element;
 import arsmagica.xml.Identifiable;
-import arsmagica.xml.PropertyContainer;
+import arsmagica.model.objects.PropertyContainer;
 import arsmagica.xml.Ref;
 import java.util.ArrayList;
-import arsmagica.xml.PropertyContext;
+import arsmagica.model.objects.PropertyContext;
 
 /**
  *
@@ -41,7 +41,7 @@ public class EntityDesc implements Identifiable
         return type;
     }
         
-    public Entity create(World w, IObject parent, Context context)
+    public Entity create(WorldMgr w, IObject parent, Context context)
             throws Ref.Error
     {
         Entity e = new Entity(w, type, events);
@@ -69,7 +69,7 @@ public class EntityDesc implements Identifiable
         public void fillObjectFromXML(EntityDesc obj, Element e) 
                 throws XMLError
         {
-            obj.type = getChild(e, "type", new ContentLoader());
+            obj.type = getAttributeOrChild(e, "type", new ContentLoader());
             obj.properties = getChildList(e, "property", 
                                           new PropertyDesc.Loader(store));
 

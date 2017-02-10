@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<entities>
+    <entity>
+        <type>nest</type>
+        
+        <property id='population' type='list'>
+            <var type='ant'>
+                <init method='new' />
+            </var>
+            <count method='const'>
+                2
+            </count>
+        </property>
+        
+        <property id='food' type='int'>
+            <init method='const'>
+                0
+            </init>
+        </property>
+        
+        <events>events/events_nest.xml</events>
+    </entity>
+
+    <entity>
+        <type>ant</type>
+        
+        <property id='level' type='int'>
+            <init method='const'>
+                1
+            </init>
+        </property>
+        
+        <events>events/events_ant.xml</events>
+    </entity>
+</entities>

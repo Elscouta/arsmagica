@@ -5,16 +5,16 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
-import arsmagica.xml.IObject;
-import arsmagica.xml.PropertyContainer;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.PropertyContainer;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
-import arsmagica.xml.PropertyContext;
+import arsmagica.model.objects.PropertyContext;
 
 /**
  *
@@ -48,7 +48,7 @@ public class PropertyDesc
      * @return A concrete object.
      * @throws Ref.Error The XML that generated the description was ill-formed.
      */
-    public IObject create(World w, IObject parent, Context context)
+    public IObject create(WorldMgr w, IObject parent, Context context)
             throws Ref.Error
     {
         return obj.create(w, parent, context);

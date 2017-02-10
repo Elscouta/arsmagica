@@ -1,0 +1,10 @@
+Every day, one ant appears (level 1).
+Each day, ants produce an amount of food equal to their level, then gain one level.
+The nest starts with 2 ants and 0 food.
+
+Day 0: 2 ants (1,1)         -- 0 food
+Day 1: 3 ants (2,2,1)       -- 2 food
+Day 2: 4 ants (3,3,2,1)     -- 7 food
+Day 3: 5 ants (4,4,3,2,1)   -- 16 food
+Day 4: 6 ants (5,5,4,3,2,1) -- 30 food
+Day 5: 7 ants (...)         -- 50 food
