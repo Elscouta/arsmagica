@@ -5,19 +5,57 @@
  */
 package arsmagica.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Chaha
  */
-public abstract class IngameScreen extends javax.swing.JFrame {
-
+public class IngameScreen extends javax.swing.JFrame {
+   
     /**
      * Creates new form IngameScreen
      */
     public IngameScreen() {
         initComponents();
+        gameLayer.setSize(inGamePane.getSize());
+        dialogLayer.setSize((int)(inGamePane.getSize().width*0.6f), (int)(inGamePane.getSize().height*0.6f));
+        dialogLayer.setLocation((int)(inGamePane.getSize().width*0.2f), (int)(inGamePane.getSize().height*0.2f));
+        inGamePane.addComponentListener(new ComponentAdapter(){
+            @Override
+            public void componentResized(ComponentEvent e) {
+                gameLayer.setSize(inGamePane.getSize());
+                dialogLayer.setSize((int)(inGamePane.getSize().width*0.6f), (int)(inGamePane.getSize().height*0.6f));
+                dialogLayer.setLocation((int)(inGamePane.getSize().width*0.2f), (int)(inGamePane.getSize().height*0.2f));
+            }
+        });
+        
+        JLabel text_test = new JLabel("Affichage de l'état du jeu");
+        gameLayer.add(text_test);
+        text_test.setAlignmentY(Component.CENTER_ALIGNMENT);
+        gameLayer.add(Box.createVerticalGlue());
+        revalidate();
+        repaint();
     }
-
+    
+    public void popDialog(InDialog d){
+        dialogLayer.add(d);
+        d.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        pack();
+        revalidate();
+        repaint();
+        
+        
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,74 +66,92 @@ public abstract class IngameScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         timeButtonGroup = new javax.swing.ButtonGroup();
-        PauseButton = new javax.swing.JToggleButton();
-        seasonTimeButton = new javax.swing.JRadioButton();
-        monthTimeButton = new javax.swing.JRadioButton();
-        weekTimeButton = new javax.swing.JRadioButton();
+        buttonPanel = new javax.swing.JPanel();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        nextButton = new javax.swing.JButton();
         dayTimeButton = new javax.swing.JRadioButton();
-        hourTimeButton = new javax.swing.JRadioButton();
+        weekTimeButton = new javax.swing.JRadioButton();
+        monthTimeButton = new javax.swing.JRadioButton();
+        seasonTimeButton = new javax.swing.JRadioButton();
+        PauseButton = new javax.swing.JToggleButton();
+        inGamePane = new javax.swing.JLayeredPane();
+        gameLayer = new javax.swing.JPanel();
+        dialogLayer = new javax.swing.JPanel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 32767));
+        statusPanel = new javax.swing.JPanel();
         menuButton = new javax.swing.JButton();
+        filler3 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Ars Magica");
+        setMinimumSize(null);
+        setPreferredSize(new java.awt.Dimension(1500, 900));
+        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
 
-        PauseButton.setText("Pause");
+        buttonPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(51, 255, 51), null));
+        buttonPanel.setLayout(new javax.swing.BoxLayout(buttonPanel, javax.swing.BoxLayout.LINE_AXIS));
+        buttonPanel.add(filler2);
 
-        timeButtonGroup.add(seasonTimeButton);
-        seasonTimeButton.setText("Saison");
+        nextButton.setText("Avancer le temps");
+        buttonPanel.add(nextButton);
 
-        timeButtonGroup.add(monthTimeButton);
-        monthTimeButton.setText("Mois");
+        timeButtonGroup.add(dayTimeButton);
+        dayTimeButton.setSelected(true);
+        dayTimeButton.setText("Jour");
+        buttonPanel.add(dayTimeButton);
 
         timeButtonGroup.add(weekTimeButton);
         weekTimeButton.setText("Semaine");
+        buttonPanel.add(weekTimeButton);
 
-        timeButtonGroup.add(dayTimeButton);
-        dayTimeButton.setText("Jour");
+        timeButtonGroup.add(monthTimeButton);
+        monthTimeButton.setText("Mois");
+        buttonPanel.add(monthTimeButton);
 
-        timeButtonGroup.add(hourTimeButton);
-        hourTimeButton.setSelected(true);
-        hourTimeButton.setText("Heure");
+        timeButtonGroup.add(seasonTimeButton);
+        seasonTimeButton.setText("Saison");
+        buttonPanel.add(seasonTimeButton);
+
+        PauseButton.setText("Pause");
+        buttonPanel.add(PauseButton);
+
+        getContentPane().add(buttonPanel);
+
+        inGamePane.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(255, 0, 51), null));
+        inGamePane.setMaximumSize(null);
+        inGamePane.setMinimumSize(null);
+        inGamePane.setOpaque(true);
+        inGamePane.setPreferredSize(new java.awt.Dimension(1500, 600));
+
+        gameLayer.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(153, 0, 204), null));
+        gameLayer.setName(""); // NOI18N
+        gameLayer.setOpaque(false);
+        gameLayer.setLayout(new javax.swing.BoxLayout(gameLayer, javax.swing.BoxLayout.PAGE_AXIS));
+        inGamePane.setLayer(gameLayer, 5);
+        inGamePane.add(gameLayer);
+        gameLayer.setBounds(0, 0, 4, 4);
+
+        dialogLayer.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 255, 204), null));
+        dialogLayer.setOpaque(false);
+        dialogLayer.setLayout(new javax.swing.BoxLayout(dialogLayer, javax.swing.BoxLayout.PAGE_AXIS));
+
+        filler1.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        dialogLayer.add(filler1);
+
+        inGamePane.setLayer(dialogLayer, 10);
+        inGamePane.add(dialogLayer);
+        dialogLayer.setBounds(0, 0, 4, 4);
+
+        getContentPane().add(inGamePane);
+
+        statusPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 255), null));
+        statusPanel.setLayout(new javax.swing.BoxLayout(statusPanel, javax.swing.BoxLayout.LINE_AXIS));
 
         menuButton.setText("Menu");
+        statusPanel.add(menuButton);
+        statusPanel.add(filler3);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(792, Short.MAX_VALUE)
-                .addComponent(hourTimeButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dayTimeButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(weekTimeButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(monthTimeButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(seasonTimeButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PauseButton)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(menuButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(PauseButton)
-                    .addComponent(seasonTimeButton)
-                    .addComponent(monthTimeButton)
-                    .addComponent(weekTimeButton)
-                    .addComponent(dayTimeButton)
-                    .addComponent(hourTimeButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 674, Short.MAX_VALUE)
-                .addComponent(menuButton)
-                .addContainerGap())
-        );
+        getContentPane().add(statusPanel);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -137,11 +193,19 @@ public abstract class IngameScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton PauseButton;
+    private javax.swing.JPanel buttonPanel;
     private javax.swing.JRadioButton dayTimeButton;
-    private javax.swing.JRadioButton hourTimeButton;
+    private javax.swing.JPanel dialogLayer;
+    private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
+    private javax.swing.Box.Filler filler3;
+    private javax.swing.JPanel gameLayer;
+    private javax.swing.JLayeredPane inGamePane;
     private javax.swing.JButton menuButton;
     private javax.swing.JRadioButton monthTimeButton;
+    private javax.swing.JButton nextButton;
     private javax.swing.JRadioButton seasonTimeButton;
+    private javax.swing.JPanel statusPanel;
     private javax.swing.ButtonGroup timeButtonGroup;
     private javax.swing.JRadioButton weekTimeButton;
     // End of variables declaration//GEN-END:variables
