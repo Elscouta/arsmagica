@@ -9,7 +9,6 @@ import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
 import arsmagica.xml.Ref;
-import arsmagica.xml.StringLoader;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import arsmagica.xml.XMLStringLoader;
@@ -39,7 +38,7 @@ public class RequirementComparison extends Requirement
     
     public static class LoaderXML extends XMLLoader<RequirementComparison>
     {
-        private BiPredicate<Double, Double> comparator;
+        private final BiPredicate<Double, Double> comparator;
         
         public LoaderXML(DataStore store, BiPredicate<Double, Double> comparator)
         {
@@ -65,7 +64,7 @@ public class RequirementComparison extends Requirement
         
         public LoaderString(DataStore store)
         {
-            super(store);
+            super(store, "RequirementComparison");
         }
         
         private BiPredicate<Double, Double> getPredicate(String str)

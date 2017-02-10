@@ -19,15 +19,25 @@ public abstract class XMLStringLoader<T>
         extends XMLDirectLoader<T>
         implements StringLoader<T>
 {
-    public XMLStringLoader(DataStore store)
+    String className;
+    
+    public XMLStringLoader(DataStore store, String className)
     {
         super(store);
+        this.className = className;
     }
     
     @Override
     public T loadXML(Element e)
             throws XMLError
     {
-        return loadString(getContent(e));
+        try
+        {
+            return loadString(getContent(e));
+        }
+        catch (XMLError exception)
+        {
+            throw new Failure(e, className, exception);
+        }
     }
 }

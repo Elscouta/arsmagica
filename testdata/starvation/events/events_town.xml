@@ -10,20 +10,21 @@ and open the template in the editor.
     <event>
         <probability>1</probability>
         
-        <effect type='delta' property='town.food' delta='- $town.population' />
+        <effect type='delta' property='town.food' value='- $town.population' />
     </event>
     
     <event>
         <probability>1</probability>
         
-        <requirement>$town.food < 100</requirement>
-        <requirement>$town.population >= 10</requirement>
+        <requirement>$town.food =lt= 100</requirement>
+        <requirement>$town.food =gt= 0</requirement>
+        <requirement>$town.population =gte= 15</requirement>
         
         <effect type='userchoice'>
             <text>Food is running low...</text>
             <option>
                 <text>Send people away</text>
-                <effect type='delta' property='town.population' value='-10' />
+                <effect type='delta' property='town.population' value='-15' />
             </option>
             <option>
                 <text>Do nothing. Duh!</text>
@@ -34,7 +35,7 @@ and open the template in the editor.
     <event>
         <probability>1</probability>
         
-        <requirement>$town.population <= 0</requirement>
+        <requirement>$town.food =lte= 0</requirement>
         
         <effect type='userchoice'>
             <text>Everyone died. Duh.</text>
@@ -42,5 +43,6 @@ and open the template in the editor.
                 <text>Laugh.</text>
             </option>
         </effect>
+        <effect type='destroy'>town</effect>
     </event>
 </events>

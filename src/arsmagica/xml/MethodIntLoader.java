@@ -24,7 +24,7 @@ public class MethodIntLoader
 {
     public MethodIntLoader(DataStore store)
     {
-        super(store);
+        super(store, "Expression<Integer>");
     }
 
     /**
@@ -79,7 +79,7 @@ public class MethodIntLoader
         {
             public Loader(DataStore s) 
             {
-                super(s);
+                super(s, "Const");
             }
 
             @Override

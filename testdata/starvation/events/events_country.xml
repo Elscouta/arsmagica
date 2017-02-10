@@ -10,7 +10,7 @@ and open the template in the editor.
     <event>
         <probability>1</probability>
 
-        <effect type='delta' property='country.poortown.food' value='10' />
+        <effect type='delta' property='country.poortown.food' value='30' />
         <effect type='delta' property='country.richtown.food' value='50' />
     </event>
 </events>

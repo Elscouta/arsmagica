@@ -50,6 +50,16 @@ public class Mail
     }
     
     /**
+     * Returns the text of the mail
+     * 
+     * @return The text of the mail
+     */
+    public String getText()
+    {
+        return text;
+    }
+    
+    /**
      * Returns a list of options. These options can be accessed (for example
      * executing them), but the list itself should not be modified
      * 

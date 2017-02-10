@@ -58,6 +58,21 @@ public class Ref<T extends IObject>
     private final static Pattern REGEX_ARRAY =
             Pattern.compile("^([A-Za-z_][A-Za-z_0-9.]*)\\[([A-Za-z_][A-Za-z_0-9.]*)\\]$");
 
+    public static boolean isValidIdentifier(String str)
+    {
+        if (REGEX_DIRECT.matcher(str).matches()) return true;
+        if (REGEX_INDIRECT.matcher(str).matches()) return true;
+        if (REGEX_ARRAY.matcher(str).matches()) return true;
+        
+        return false;
+    }
+    
+    public static void checkValidIdentifier(String str) throws Ref.Error
+    {
+        if (!isValidIdentifier(str))
+            throw new Error("Misformed expression");        
+    }
+    
     private static IObject resolvePart(Context context, String path)
             throws MisformedError, IObject.Mistyped, Context.Unknown
     {

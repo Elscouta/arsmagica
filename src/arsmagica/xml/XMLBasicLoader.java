@@ -175,6 +175,11 @@ public class XMLBasicLoader
                 throws XMLError
         {
             final String str = getContent(e);
+            if (!Ref.isValidIdentifier(str))
+                throw new XMLError(String.format(
+                        "[line %s]: Invalid reference identifier: %s",
+                        e.getUserData("lineNumber"), str));
+
             return context -> new Ref.Any(str, context).get();
         }
     }
@@ -192,6 +197,10 @@ public class XMLBasicLoader
                 throws XMLError
         {
             final String str = getContent(e);
+            if (!Ref.isValidIdentifier(str))
+                throw new XMLError(String.format(
+                        "[line %s]: Invalid reference identifier: %s",
+                        e.getUserData("lineNumber"), str));
             return context -> new Ref.Obj(str, context).get();
         }
     }
@@ -201,13 +210,19 @@ public class XMLBasicLoader
     {
         public IObjectIntLoader()
         {
-            super(XMLBasicLoader.this.store);
+            super(XMLBasicLoader.this.store, "Expression<IObjectInt>");
         }
         
         @Override
         public Expression<IObjectInt> loadString(String str)
                 throws XMLError
         {
+            try {
+                Ref.checkValidIdentifier(str);
+            } catch (Ref.Error ex) {
+                throw new XMLError(ex);
+            }
+
             return context -> new Ref.Int(str, context).get();
         }
     }
@@ -217,13 +232,19 @@ public class XMLBasicLoader
     {
         public IObjectListLoader()
         {
-            super(XMLBasicLoader.this.store);
+            super(XMLBasicLoader.this.store, "Expression<IObjectList>");
         }
         
         @Override
         public Expression<IObjectList> loadString(String str)
                 throws XMLError
         {
+            try {
+                Ref.checkValidIdentifier(str);
+            } catch (Ref.Error ex) {
+                throw new XMLError(ex);
+            }
+            
             return context -> new Ref.List(str, context).get();
         }
     }
@@ -233,7 +254,7 @@ public class XMLBasicLoader
     {
         public ArithmeticLoader() 
         { 
-            super(XMLBasicLoader.this.store); 
+            super(XMLBasicLoader.this.store, "Expression<Integer>"); 
         }
         
         @Override 
@@ -254,7 +275,7 @@ public class XMLBasicLoader
     {
         public ArithmeticDoubleLoader() 
         { 
-            super(XMLBasicLoader.this.store); 
+            super(XMLBasicLoader.this.store, "Expression<Double>"); 
         }
         
         @Override public Expression<Double> loadString(String str) throws XMLError
@@ -271,7 +292,7 @@ public class XMLBasicLoader
     {
         public ContentLoader()
         {
-            super(XMLBasicLoader.this.store);
+            super(XMLBasicLoader.this.store, "String");
         }
         
         @Override public String loadString(String str) throws XMLError

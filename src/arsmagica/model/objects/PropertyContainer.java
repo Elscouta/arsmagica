@@ -42,6 +42,9 @@ public abstract class PropertyContainer
      */
     public void destroy()
     {
+        if (owners == null)
+            return;
+        
         Set<IObjectOwner> listeners = owners;
         owners = null;
         
