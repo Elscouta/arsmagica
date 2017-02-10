@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package arsmagica.xml;
+package arsmagica.model.objects;
+
+import arsmagica.xml.Expression;
 
 /**
  * Represents a property of an xml-defined entity. Use getType to determine

@@ -5,7 +5,7 @@
  */
 package arsmagica.xml;
 
-import arsmagica.model.World;
+import arsmagica.control.WorldMgr;
 import org.junit.Test;
 
 /**
@@ -18,6 +18,6 @@ public class SetupTest
     public void setupWorld() 
     {
         DataStore store = new DataStore("testdata/units/");
-        World world = new World(store);   
+        WorldMgr world = new WorldMgr(store);   
     }
 }

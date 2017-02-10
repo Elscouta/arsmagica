@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package arsmagica.xml;
+package arsmagica.model.objects;
 
 /**
  * An interface for objects that can keep references to other

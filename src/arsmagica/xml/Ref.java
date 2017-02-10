@@ -5,6 +5,13 @@
  */
 package arsmagica.xml;
 
+import arsmagica.model.objects.Context;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.PropertyContext;
+import arsmagica.model.objects.IObjectString;
+import arsmagica.model.objects.IObjectList;
+import arsmagica.model.objects.PropertyContainer;
+import arsmagica.model.objects.IObjectInt;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

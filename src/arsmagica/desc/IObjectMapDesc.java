@@ -5,11 +5,11 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.World;
+import arsmagica.control.WorldMgr;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.XMLNullLoader;
-import arsmagica.xml.Context;
-import arsmagica.xml.IObject;
+import arsmagica.model.objects.Context;
+import arsmagica.model.objects.IObject;
 
 /**
  *
@@ -24,7 +24,7 @@ public class IObjectMapDesc extends IObjectDesc
     }
     
     @Override 
-    public IObject create(World w, IObject parent, Context context)
+    public IObject create(WorldMgr w, IObject parent, Context context)
     {
         return null;
     }

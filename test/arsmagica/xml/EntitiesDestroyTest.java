@@ -7,8 +7,8 @@ package arsmagica.xml;
 
 import arsmagica.desc.EntityDesc;
 import arsmagica.desc.effects.Effect;
-import arsmagica.model.Entity;
-import arsmagica.model.World;
+import arsmagica.model.objects.Entity;
+import arsmagica.control.WorldMgr;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,12 +19,12 @@ import org.junit.rules.Timeout;
  *
  * @author Elscouta
  */
-public class DestructEntitiesTest
+public class EntitiesDestroyTest
 {    
     private XMLFileLoader<EntityDesc> entityLoader;
     private XMLFileLoader<Effect> effectLoader;
     private Effect destroy;
-    private World world;
+    private WorldMgr world;
     private DataStore store;
     
     @Rule
@@ -41,7 +41,7 @@ public class DestructEntitiesTest
                 new EntityDesc.Loader(store));
         
         destroy = effectLoader.loadXML("effect_destroy.xml").get(0);
-        world = new World(store);
+        world = new WorldMgr(store);
     }
     
     @Test

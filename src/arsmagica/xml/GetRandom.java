@@ -5,12 +5,15 @@
  */
 package arsmagica.xml;
 
+import arsmagica.model.objects.Context;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.IObjectList;
 import arsmagica.desc.IObjectSupplierDesc;
-import arsmagica.model.World;
+import arsmagica.control.WorldMgr;
 import org.w3c.dom.Element;
 
 /**
- * FIXME: Remove Entity cast
+ * A method that allows to pick a random element from a list.
  */
 class GetRandom implements IObjectSupplierDesc
 {
@@ -23,7 +26,7 @@ class GetRandom implements IObjectSupplierDesc
     }
     
     @Override
-    public IObject get(World w, IObject parent, Context context) 
+    public IObject get(WorldMgr w, IObject parent, Context context) 
             throws Ref.Error 
     {
         if (container == null) 

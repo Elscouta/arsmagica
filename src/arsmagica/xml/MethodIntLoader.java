@@ -5,6 +5,7 @@
  */
 package arsmagica.xml;
 
+import arsmagica.model.objects.Context;
 import java.util.concurrent.ThreadLocalRandom;
 import org.w3c.dom.Element;
 

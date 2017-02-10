@@ -3,24 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package arsmagica.model;
+package arsmagica.control;
 
+import arsmagica.model.objects.Entity;
 import arsmagica.xml.DataStore;
-import arsmagica.xml.PropertyContext;
+import arsmagica.model.objects.PropertyContext;
 import arsmagica.xml.Ref;
 
 /**
  *
  * @author Elscouta
  */
-public class World 
+public class WorldMgr 
 {
     private final EntityMgr entityMgr;
     private final MailMgr mailMgr;
     private final TimeMgr timeMgr;
     private final EventMgr eventMgr;
     
-    public World(DataStore store)
+    public WorldMgr(DataStore store)
     {
         eventMgr = new EventMgr(this);
         entityMgr = new EntityMgr(store, eventMgr, this);

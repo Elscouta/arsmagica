@@ -6,17 +6,17 @@
 package arsmagica.desc;
 
 import arsmagica.desc.effects.Effect;
-import arsmagica.model.Entity;
-import arsmagica.model.World;
+import arsmagica.model.objects.Entity;
+import arsmagica.control.WorldMgr;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObject;
+import arsmagica.model.objects.IObject;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import java.util.List;
 import org.w3c.dom.Element;
-import arsmagica.xml.PropertyContext;
+import arsmagica.model.objects.PropertyContext;
 
 /**
  * The description of an event, loaded from an event file. An event description
@@ -42,13 +42,13 @@ public class EventDesc
     private Expression<Double> probability;
     private List<Effect> effects;
             
-    public double getProbability(World world, IObject source)
+    public double getProbability(WorldMgr world, IObject source)
             throws Ref.Error
     {
         return probability.resolve(PropertyContext.createWrapper("source", source));
     }
     
-    public void execute(World world, Entity source)
+    public void execute(WorldMgr world, Entity source)
             throws Ref.Error
     {
         PropertyContext eventContext = PropertyContext.create();

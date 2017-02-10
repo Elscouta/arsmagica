@@ -5,17 +5,17 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
-import arsmagica.xml.IObject;
+import arsmagica.model.objects.IObject;
 import arsmagica.xml.MethodEntityLoader;
-import arsmagica.xml.PropertyContainer;
+import arsmagica.model.objects.PropertyContainer;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
-import arsmagica.xml.PropertyContext;
+import arsmagica.model.objects.PropertyContext;
 
 /**
  *
@@ -33,7 +33,7 @@ public class IObjectEntityDesc extends IObjectDesc
     }
     
     @Override 
-    public IObject create(World w, IObject parent, Context context)
+    public IObject create(WorldMgr w, IObject parent, Context context)
             throws Ref.Error
     {
         return initializer.get(w, parent, context);

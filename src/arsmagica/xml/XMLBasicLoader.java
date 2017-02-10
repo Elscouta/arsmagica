@@ -5,6 +5,10 @@
  */
 package arsmagica.xml;
 
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.IObjectList;
+import arsmagica.model.objects.PropertyContainer;
+import arsmagica.model.objects.IObjectInt;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.xpath.XPath;

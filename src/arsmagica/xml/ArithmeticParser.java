@@ -5,6 +5,8 @@
  */
 package arsmagica.xml;
 
+import arsmagica.model.objects.Context;
+
 /**
  *
  * @author Boann @ StackOverflow

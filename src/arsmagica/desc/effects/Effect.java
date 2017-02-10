@@ -5,8 +5,8 @@
  */
 package arsmagica.desc.effects;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLDirectLoader;
@@ -18,7 +18,8 @@ import org.w3c.dom.Element;
  * 
  * @author Elscouta
  */
-public abstract class Effect 
+@FunctionalInterface
+public interface Effect 
 {
     /**
      * Applies the effect inside a given context.
@@ -28,7 +29,7 @@ public abstract class Effect
      * @throws Ref.Error The description of the effect was incorrect, most 
      * likely because of an unbound or mistyped variable.
      */
-    public abstract void apply(World world, Context context) 
+    public abstract void apply(WorldMgr world, Context context) 
             throws Ref.Error;
     
     public static class Loader extends XMLDirectLoader<Effect>

@@ -5,12 +5,12 @@
  */
 package arsmagica.desc.effects;
 
-import arsmagica.model.Entity;
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.model.objects.Entity;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObjectList;
+import arsmagica.model.objects.IObjectList;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
@@ -20,13 +20,13 @@ import org.w3c.dom.Element;
  *
  * @author Admin
  */
-public class EffectCreate extends Effect {
-
+public class EffectCreate implements Effect 
+{
     String type;
     Expression<IObjectList> destination;
     
     @Override
-    public void apply(World world, Context context)
+    public void apply(WorldMgr world, Context context)
         throws Ref.Error
         {
             IObjectList destinationList = destination.resolve(context);

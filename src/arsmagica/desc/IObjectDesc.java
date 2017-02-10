@@ -5,11 +5,11 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
-import arsmagica.xml.IObject;
-import arsmagica.xml.PropertyContainer;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.PropertyContainer;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLDirectLoader;
 import arsmagica.xml.XMLError;
@@ -36,7 +36,7 @@ public abstract class IObjectDesc
      * @return A concrete property.
      * @throws Ref.Error The XML that generated the description was ill-formed.
      */
-    public abstract IObject create(World w, IObject parent, Context context)
+    public abstract IObject create(WorldMgr w, IObject parent, Context context)
             throws Ref.Error;
     
     /**

@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package arsmagica.model;
+package arsmagica.model.objects;
 
 import arsmagica.desc.EventDesc;
-import arsmagica.xml.PropertyContainer;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.PropertyContainer;
 import arsmagica.xml.Ref;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -23,7 +24,7 @@ public class Entity extends PropertyContainer
     @Override public String getType() { return type; }
     
     private final String type;
-    private final World world;
+    private final WorldMgr world;
     private final List<EventDesc> events;
     
     /**
@@ -35,7 +36,7 @@ public class Entity extends PropertyContainer
      * @param type The type of entity
      * @param events The list of events that are associated to this entity
      */
-    public Entity(World w, String type, List<EventDesc> events)
+    public Entity(WorldMgr w, String type, List<EventDesc> events)
     {
         super();
         this.world = w;

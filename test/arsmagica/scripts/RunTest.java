@@ -5,8 +5,8 @@
  */
 package arsmagica.scripts;
 
-import arsmagica.model.Entity;
-import arsmagica.model.World;
+import arsmagica.model.objects.Entity;
+import arsmagica.control.WorldMgr;
 import arsmagica.xml.DataStore;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -22,7 +22,7 @@ public class RunTest
     {
         DataStore store = new DataStore("testdata/ants/");
         store.load();
-        World world = new World(store);
+        WorldMgr world = new WorldMgr(store);
         Entity e = world.createEntity("nest");
         
         assertEquals(0, e.get("food").asInt().getValue());
@@ -43,7 +43,7 @@ public class RunTest
     {
         DataStore store = new DataStore("testdata/ants_short/");
         store.load();
-        World world = new World(store);
+        WorldMgr world = new WorldMgr(store);
         Entity e = world.createEntity("nest");
         
         assertEquals(0, e.get("food").asInt().getValue());

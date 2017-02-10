@@ -8,8 +8,8 @@ package arsmagica.xml;
 import arsmagica.desc.EntityDesc;
 import arsmagica.desc.EventDesc;
 import arsmagica.desc.effects.Requirement;
-import arsmagica.model.Entity;
-import arsmagica.model.World;
+import arsmagica.model.objects.Entity;
+import arsmagica.control.WorldMgr;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class RequirementsTest
     private XMLFileLoader<EntityDesc> entityLoader;
     private XMLFileLoader<Requirement> requirementLoader;
     private DataStore store;
-    private World world;
+    private WorldMgr world;
     private Entity testEntity;
 
 
@@ -32,7 +32,7 @@ public class RequirementsTest
     public void setUp() throws Exception
     {
         store = new DataStore("testdata/units/");
-        world = new World(store);
+        world = new WorldMgr(store);
         requirementLoader = new XMLFileLoader<>(store, "requirement",
                 new Requirement.Loader(store));
         

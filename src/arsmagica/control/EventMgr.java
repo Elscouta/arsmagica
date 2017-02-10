@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package arsmagica.model;
+package arsmagica.control;
 
-import arsmagica.xml.IObject;
-import arsmagica.xml.IObjectOwner;
+import arsmagica.model.objects.Entity;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.IObjectOwner;
 import arsmagica.xml.Ref;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,10 +22,10 @@ import java.util.Set;
 public class EventMgr 
         implements TimeMgr.Listener, IObjectOwner
 {
-    private final World world;
+    private final WorldMgr world;
     private final Set<Entity> entities;
         
-    public EventMgr(World w)
+    public EventMgr(WorldMgr w)
     {
         world = w;
         entities = new HashSet<>();

@@ -5,7 +5,7 @@
  */
 package arsmagica.desc.effects;
 
-import arsmagica.xml.Context;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLDirectLoader;

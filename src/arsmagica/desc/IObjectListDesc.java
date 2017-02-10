@@ -5,12 +5,12 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObject;
-import arsmagica.xml.IObjectList;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.IObjectList;
 import arsmagica.xml.MethodIntLoader;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
@@ -51,7 +51,7 @@ public class IObjectListDesc extends IObjectDesc
     }
     
     @Override 
-    public IObjectList create(World w, IObject parent, Context context)
+    public IObjectList create(WorldMgr w, IObject parent, Context context)
             throws Ref.Error
     {
         IObjectList l = new IObjectList(parent, context);

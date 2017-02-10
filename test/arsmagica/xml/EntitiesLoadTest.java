@@ -18,11 +18,11 @@ import static org.junit.Assert.*;
  *
  * @author Elscouta
  */
-public class LoadEntitiesTest 
+public class EntitiesLoadTest 
 {
     private XMLFileLoader<EntityDesc> loader;
     
-    public LoadEntitiesTest() 
+    public EntitiesLoadTest() 
     {
     }
     

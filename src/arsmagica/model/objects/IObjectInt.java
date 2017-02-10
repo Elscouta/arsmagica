@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package arsmagica.xml;
+package arsmagica.model.objects;
 
 import arsmagica.desc.IObjectIntDesc;
+import arsmagica.xml.Expression;
+import arsmagica.xml.Ref;
 import java.util.List;
 
 /**

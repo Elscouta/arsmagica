@@ -5,11 +5,10 @@
  */
 package arsmagica.desc.effects;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.Ref;
 import java.util.List;
-import arsmagica.xml.PropertyContext;
 
 /**
  * Represents a list of effects. Applying such an effect will simply 
@@ -17,7 +16,7 @@ import arsmagica.xml.PropertyContext;
  * 
  * @author Elscouta
  */
-public class EffectList extends Effect
+public class EffectList implements Effect
 {
     private List<Effect> effects;
     
@@ -31,7 +30,7 @@ public class EffectList extends Effect
     }
     
     @Override
-    public void apply(World world, Context context)
+    public void apply(WorldMgr world, Context context)
             throws Ref.Error
     {
         for (Effect e : effects)

@@ -5,16 +5,16 @@
  */
 package arsmagica.desc;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObject;
-import arsmagica.xml.IObjectString;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.IObjectString;
 import arsmagica.xml.StringParser;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
-import arsmagica.xml.PropertyContext;
+import arsmagica.model.objects.PropertyContext;
 import arsmagica.xml.XMLError;
 
 /**
@@ -32,7 +32,7 @@ public class IObjectStringDesc extends IObjectDesc
     }
     
     @Override 
-    public IObjectString create(World w, IObject parent, Context context)
+    public IObjectString create(WorldMgr w, IObject parent, Context context)
     {
         return new IObjectString(context, str);
     }

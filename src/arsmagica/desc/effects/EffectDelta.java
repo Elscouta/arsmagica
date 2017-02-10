@@ -5,29 +5,29 @@
  */
 package arsmagica.desc.effects;
 
-import arsmagica.model.World;
-import arsmagica.xml.Context;
+import arsmagica.control.WorldMgr;
+import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.xml.IObjectInt;
+import arsmagica.model.objects.IObjectInt;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
-import arsmagica.xml.PropertyContext;
+import arsmagica.model.objects.PropertyContext;
 
 /**
  * Represents an effect that modifies an (integer) variable by adding delta.
  * 
  * @author Elscouta
  */
-public class EffectDelta extends Effect
+public class EffectDelta implements Effect
 {
     private Expression<Integer> value;
     private Expression<IObjectInt> affectedObject;
     
     @Override
-    public void apply(World world, Context context)
+    public void apply(WorldMgr world, Context context)
             throws Ref.Error
     {
         IObjectInt obj = affectedObject.resolve(context);

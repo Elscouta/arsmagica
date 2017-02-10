@@ -5,8 +5,10 @@
  */
 package arsmagica.xml;
 
-import arsmagica.model.Entity;
-import arsmagica.model.World;
+import arsmagica.model.objects.Context;
+import arsmagica.model.objects.IObject;
+import arsmagica.model.objects.Entity;
+import arsmagica.control.WorldMgr;
 import org.w3c.dom.Element;
 import arsmagica.desc.IObjectSupplierDesc;
 
@@ -20,7 +22,7 @@ public class MethodEntityLoader extends XMLDirectLoader< IObjectSupplierDesc >
     
     private class New implements IObjectSupplierDesc
     {
-        @Override public Entity get(World w, IObject parent, Context context)
+        @Override public Entity get(WorldMgr w, IObject parent, Context context)
                 throws Ref.Error
         {
             return w.getEntityMgr().createNew(type, parent, context);

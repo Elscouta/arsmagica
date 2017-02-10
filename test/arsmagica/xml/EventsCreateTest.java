@@ -7,8 +7,8 @@ package arsmagica.xml;
 
 import arsmagica.desc.EntityDesc;
 import arsmagica.desc.EventDesc;
-import arsmagica.model.Entity;
-import arsmagica.model.World;
+import arsmagica.model.objects.Entity;
+import arsmagica.control.WorldMgr;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,12 +17,12 @@ import org.junit.Test;
  *
  * @author Elscouta
  */
-public class CreateEventsTest 
+public class EventsCreateTest 
 {
     private XMLFileLoader<EntityDesc> entityLoader;
     private XMLFileLoader<EventDesc> eventLoader;
     private DataStore store;
-    private World world;
+    private WorldMgr world;
     private Entity testEntity;
 
 
@@ -30,7 +30,7 @@ public class CreateEventsTest
     public void setUp() throws Exception
     {
         store = new DataStore("testdata/units/");
-        world = new World(store);
+        world = new WorldMgr(store);
         eventLoader = new XMLFileLoader<>(store, "event", 
                   new EventDesc.Loader(store));
         
