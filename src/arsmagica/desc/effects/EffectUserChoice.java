@@ -74,21 +74,25 @@ public class EffectUserChoice implements Effect
     @Override
     public void apply(WorldMgr w, Context context)
     {
-        Mail d = w.getMailMgr().createMail(true, text);
-        for (OptionDesc o : options)
+        MailMgr mailMgr = w.getMailMgr();
+        synchronized (mailMgr)
         {
-            Mail.EnabledOracle oracle = () -> {
-                for (Requirement r : o.requirements)
-                {
-                    if (!true)
-                        return false;
-                }
-                return true;
-            };
+            Mail d = w.getMailMgr().createMail(true, text);
+            for (OptionDesc o : options)
+            {
+                Mail.EnabledOracle oracle = () -> {
+                    for (Requirement r : o.requirements)
+                    {
+                        if (!true)
+                            return false;
+                    }
+                    return true;
+                };
             
-            EffectList effect = new EffectList(o.effects);
+                EffectList effect = new EffectList(o.effects);
             
-            d.addOption(o.text, effect, context, oracle);
+                d.addOption(o.text, effect, context, oracle);
+            }
         }
     }
 

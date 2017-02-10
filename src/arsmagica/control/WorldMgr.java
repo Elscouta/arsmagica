@@ -42,20 +42,14 @@ public class WorldMgr
         return mailMgr;
     }
     
+    public TimeMgr getTimeMgr()
+    {
+        return timeMgr;
+    }
+    
     public Entity createEntity(String type)
             throws Ref.Error
     {
         return entityMgr.createNew(type, null, PropertyContext.create());
-    }
-    
-    /**
-     * Moves the game to the next day.
-     * 
-     * @throws TimeMgr.NotReady One of the submodules was not ready.
-     */
-    public void nextDay()
-            throws TimeMgr.NotReady
-    {
-        timeMgr.nextDay();
     }
 }

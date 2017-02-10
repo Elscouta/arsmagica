@@ -28,15 +28,15 @@ public class RunTest
         Entity e = world.createEntity("nest");
         
         assertEquals(0, e.get("food").asInt().getValue());
-        world.nextDay();
+        world.getTimeMgr().nextDay();
         assertEquals(2, e.get("food").asInt().getValue());
-        world.nextDay();
+        world.getTimeMgr().nextDay();
         assertEquals(7, e.get("food").asInt().getValue());
-        world.nextDay();
+        world.getTimeMgr().nextDay();
         assertEquals(16, e.get("food").asInt().getValue());
-        world.nextDay();
+        world.getTimeMgr().nextDay();
         assertEquals(30, e.get("food").asInt().getValue());
-        world.nextDay();
+        world.getTimeMgr().nextDay();
         assertEquals(50, e.get("food").asInt().getValue());        
     }
     
@@ -49,15 +49,15 @@ public class RunTest
         Entity e = world.createEntity("nest");
         
         assertEquals(0, e.get("food").asInt().getValue());
-        world.nextDay();
+        world.getTimeMgr().nextDay();
         assertEquals(2, e.get("food").asInt().getValue());
-        world.nextDay();
+        world.getTimeMgr().nextDay();
         assertEquals(7, e.get("food").asInt().getValue());
-        world.nextDay();
+        world.getTimeMgr().nextDay();
         assertEquals(16, e.get("food").asInt().getValue());
-        world.nextDay();
+        world.getTimeMgr().nextDay();
         assertEquals(30, e.get("food").asInt().getValue());
-        world.nextDay();
+        world.getTimeMgr().nextDay();
         assertEquals(50, e.get("food").asInt().getValue());        
     }
     
@@ -73,7 +73,7 @@ public class RunTest
         assertEquals(0, mailMgr.getPendingMails().size());
         
         while (mailMgr.getPendingMails().isEmpty())
-            world.nextDay();
+            world.getTimeMgr().nextDay();
         
         assertEquals("Food is running low...", mailMgr.getPendingMails().get(0).getText());
         assertEquals(1, mailMgr.getPendingMails().size());
@@ -84,7 +84,7 @@ public class RunTest
             assertEquals("Do nothing. Duh!", stupidOption.getText());
             
             stupidOption.execute(world);
-            world.nextDay();
+            world.getTimeMgr().nextDay();
             
             assertEquals(1, mailMgr.getPendingMails().size());
         }
@@ -94,7 +94,7 @@ public class RunTest
         
         for (int i = 0; i < 150; i++)
         {
-            world.nextDay();
+            world.getTimeMgr().nextDay();
             assertEquals(0, mailMgr.getPendingMails().size());
         }
     }
@@ -111,7 +111,7 @@ public class RunTest
         assertEquals(0, mailMgr.getPendingMails().size());
         
         while (mailMgr.getPendingMails().isEmpty())
-            world.nextDay();
+            world.getTimeMgr().nextDay();
                         
         while (mailMgr.getPendingMails().isEmpty() == false)
         {
@@ -124,13 +124,13 @@ public class RunTest
             assertEquals("Send people away", smartOption.getText());
             
             smartOption.execute(world);
-            world.nextDay();
+            world.getTimeMgr().nextDay();
         }
                 
         for (int i = 0; i < 150; i++)
         {
             assertEquals(0, mailMgr.getPendingMails().size());
-            world.nextDay();
+            world.getTimeMgr().nextDay();
         }
     }
 }

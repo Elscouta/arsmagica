@@ -35,7 +35,25 @@ public class TimeMgr
     }
     
     /**
+     * Asks every listener whether they are ready to move towards the next
+     * day.
+     * 
+     * @return true if all listeners are ready.
+     */
+    public boolean isReadyForNextDay()
+    {
+        for (Listener l : listeners)
+        {
+            if (!l.isReady())
+                return false;
+        }
+        
+        return true;
+    }
+    
+    /**
      * Sends the game into the next day.
+     * 
      * @throws NotReady one subscribed object wasn't ready for the day change.
      */
     public void nextDay()
@@ -57,7 +75,15 @@ public class TimeMgr
     public interface Listener
     {
         /**
+         * Objects can implement this to be prevent moving towards next day.
+         * 
+         * @return false if the listener wishes to stay in current day.
+         */
+        default boolean isReady() { return true; }
+        
+        /**
          * Called when a day is about to end.
+         * 
          * @throws NotReady The day should not have ended: the module is not
          * ready for a day change.
          */

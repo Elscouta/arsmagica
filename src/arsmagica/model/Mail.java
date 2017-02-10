@@ -73,8 +73,12 @@ public class Mail
     /**
      * Destroys this mail. This should only be done by an option being picked.
      */
-    private void destroy() throws Mail.InvalidOption
+    private void destroy() 
+            throws Mail.InvalidOption
     {
+        if (resolved)
+            throw new Mail.InvalidOption("This mail has already been handled");
+
         resolved = true;
         mgr.destroyMail(this);
     }
@@ -136,6 +140,34 @@ public class Mail
         public InvalidOption(String msg) { super(msg); }
     }
     
+    /**
+     * Interface to be used by objects that wish to be informed about changes
+     * to this mail. Messages sent through that interface are forced into 
+     * the event dispatch thread.
+     */
+    @FunctionalInterface
+    public interface Listener 
+    {
+        /**
+         * The content of the mail box changed.
+         */
+        public void onChange();
+    }
+    
+    /**
+     * Use this to register a listener to the mail manager.
+     * 
+     * @param l The listener to add.
+     */
+    public void addListener(Listener l)
+    {
+        listeners.add(l);
+    }
+    
+    private final List<Mail> pendingMails = new ArrayList<>();
+    private final List<Mail> blockingMails = new ArrayList<>();
+    private final List<Listener> listeners = new ArrayList<>();
+    
     private final MailMgr mgr;
     private final String text;
     private final List<Option> options;
@@ -176,6 +208,9 @@ public class Mail
         @Override
         public void execute(WorldMgr world) throws Ref.Error, InvalidOption
         {
+            if (!isAvailable())
+                throw new InvalidOption("This option is not available.");
+            
             effect.apply(world, context);
             destroy();
         }
