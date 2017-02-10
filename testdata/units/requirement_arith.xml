@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<requirements>
+    <requirement>10 =gt= 9</requirement>
+    <requirement>9 =lt= $test_property</requirement>
+    <requirement>$test_property =gte= 10</requirement>
+    <requirement>$test_property =lte= $test_property + 1</requirement>
+    <requirement>10 == 5 + 5</requirement>
+    <requirement>10 =lt= 10</requirement>
+    <requirement>9 =gt= $test_property</requirement>
+    <requirement>$test_property =lte= 9</requirement>
+    <requirement>$test_property =gte= 11</requirement>
+    <requirement>10 == 11</requirement>
+    <requirement type='gt' left='10' right='9' />
+    <requirement type='lt' left='9' right='$test_property' />
+    <requirement type='gte' left='$test_property' right='10' />
+    <requirement type='lte' left='$test_property' right='$test_property+1' />
+    <requirement type='==' left='10' right='5+5' />
+    <requirement type='lower' left='10' right='10' />
+    <requirement type='greater' left='9' right='$test_property' />
+    <requirement type='lower-or-equal' left='$test_property' right='9' />
+    <requirement type='greater-or-equal' left='$test_property' right='11' />
+    <requirement type='equal' left='10' right='11' />
+</requirements>

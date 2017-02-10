@@ -246,21 +246,20 @@ public class XMLBasicLoader
     }
     
     protected class ArithmeticDoubleLoader 
-            extends XMLDirectLoader< Expression<Double> >
+            extends XMLStringLoader< Expression<Double> >
     {
         public ArithmeticDoubleLoader() 
         { 
             super(XMLBasicLoader.this.store); 
         }
         
-        @Override public Expression<Double> loadXML(Element e) throws XMLError
+        @Override public Expression<Double> loadString(String str) throws XMLError
         {
             try {
-                return ArithmeticParser.eval(getContent(e));
+                return ArithmeticParser.eval(str);
             } catch (ArithmeticParser.ParseException ex) {
                 throw new XMLError("Unable to parse arithmetic expression", ex);
             }
-  
         }
     }
     

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<entities>
+    <entity type='country'>
+        <property id='poortown' type='town' />
+        <property id='richtown' type='town' />
+        
+        <events>events/events_country.xml</events>
+    </entity>
+    
+    <entity type='town'>
+        <property id='population' type='int' init='50' />
+        <property id='food' type='int' init='1000' />
+        
+        <events>events/events_town.xml</events>
+    </entity>
+</entities>
