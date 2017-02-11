@@ -62,6 +62,18 @@ public class IObjectListDesc extends IObjectDesc
             
         return l;
     }
+    
+    @Override
+    public IObjectDesc overwrite(String key, IObjectDesc other)
+            throws Mistyped
+    {
+        if (!(other instanceof IObjectListDesc))
+            throw new IObjectDesc.Mistyped(String.format(
+                    "Attempting to overwrite list with type %s", 
+                    other.getType()));
+        
+        return other;
+    }
 
     public static class Loader extends XMLLoader<IObjectListDesc>
     {

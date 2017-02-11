@@ -39,6 +39,18 @@ public class IObjectEntityDesc extends IObjectDesc
         return initializer.get(w, parent, context);
     }
     
+    @Override
+    public IObjectDesc overwrite(String key, IObjectDesc other)
+            throws Mistyped
+    {
+        if (!(other instanceof IObjectEntityDesc))
+            throw new IObjectDesc.Mistyped(String.format(
+                    "Attempting to overwrite entity with type %s", 
+                    other.getType()));
+        
+        return other;
+    }
+            
     public static class Loader extends XMLLoader<IObjectEntityDesc>
     {
         private final String type;

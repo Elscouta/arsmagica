@@ -29,6 +29,18 @@ public class IObjectMapDesc extends IObjectDesc
         return null;
     }
     
+    @Override
+    public IObjectListDesc overwrite(String key, IObjectDesc other)
+            throws Mistyped
+    {
+        if (!(other instanceof IObjectListDesc))
+            throw new IObjectDesc.Mistyped(String.format(
+                    "Attempting to overwrite list with type %s", 
+                    other.getType()));
+        
+        return (IObjectListDesc) other;
+    }
+    
     public static class Loader extends XMLNullLoader<IObjectMapDesc>
     {
         public Loader(DataStore store)

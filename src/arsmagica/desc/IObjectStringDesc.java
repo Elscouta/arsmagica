@@ -29,17 +29,33 @@ public class IObjectStringDesc extends IObjectDesc
     {
         return "string";
     }
-    
-    @Override
-    public Expression<IObjectString> getInitializer()
-    {
-        return c -> new IObjectString(c, str);
-    }
-    
+        
     @Override 
     public IObjectString create(WorldMgr w, IObject parent, Context context)
     {
         return new IObjectString(context, str);
+    }
+    
+    @Override
+    public IObjectStringDesc overwrite(String key, IObjectDesc other)
+            throws Mistyped
+    {
+        if (!(other instanceof IObjectStringDesc))
+            throw new Mistyped(String.format(
+                    "Attempting overwrite of string with %s",
+                    other.getType()));
+        
+        IObjectStringDesc otherObj = (IObjectStringDesc) other;
+        IObjectStringDesc retObj = new IObjectStringDesc();
+
+        retObj.str = (Context c) -> {
+            String strV = str.resolve(c);
+            IObjectString objV = new IObjectString(c, dummy -> strV);
+            Context nc = Context.createWrapper(key, objV, c);
+            return otherObj.str.resolve(nc);            
+        };
+               
+        return retObj;
     }
     
     public static class Loader extends XMLLoader<IObjectStringDesc>

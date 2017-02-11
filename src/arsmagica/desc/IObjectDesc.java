@@ -41,19 +41,36 @@ public abstract class IObjectDesc
             throws Ref.Error;
     
     /**
-     * Returns the initializer of the object. This is only necessary to be
-     * implemented for integer and string properties.
+     * Overwrites the description of the object by a new one. The two
+     * description must have the same implementation. They can be of
+     * different entity types (as long as this doesn't alter contracts*). Some
+     * content of the original object can be retained if it is not redefined.
      * 
-     * @return the initializer
+     * * CONTRACTS TO BE IMPLEMENTED SOON
+     * 
+     * @param key For object desc that can use the old initial value, the
+     * key that should store that value.
+     * @param other The new description.
+     * @return A new object, representing the merged description.
+     * @throws Mistyped The provided overwriter is not sharing the same
+     * implementation.
      */
-    public Expression<? extends IObject> getInitializer()
+    public abstract IObjectDesc overwrite(String key, IObjectDesc other)
+            throws Mistyped;
+    
+    /**
+     * Exception thrown when an IObjectDesc is expected to be of a given
+     * type but this is not the case.
+     */
+    public static class Mistyped extends Exception
     {
-        throw new RuntimeException("no initializer available.");
+        public Mistyped(String msg) { super(msg); }
     }
     
     /**
      * Returns the type of the object description. This must be the same
      * type as the one of the object created by the create method.
+     * 
      * @return The type of created objects.
      */
     public abstract String getType();

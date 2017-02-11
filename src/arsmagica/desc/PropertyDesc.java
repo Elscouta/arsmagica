@@ -9,7 +9,6 @@ import arsmagica.control.WorldMgr;
 import arsmagica.model.objects.Context;
 import arsmagica.model.objects.IObject;
 import arsmagica.xml.DataStore;
-import arsmagica.xml.Expression;
 import arsmagica.xml.Identifiable;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
@@ -39,16 +38,6 @@ public class PropertyDesc implements Identifiable
     }
     
     /**
-     * Returns the initializer of the property. 
-     * 
-     * @return The initializer
-     */
-    public Expression<? extends IObject> getInitializer()
-    {
-        return obj.getInitializer();
-    }
-    
-    /**
      * Returns the type of the property.
      * 
      * @return The type
@@ -56,6 +45,28 @@ public class PropertyDesc implements Identifiable
     public String getType()
     {
         return obj.getType();
+    }
+    
+    /**
+     * Overwrites the property with another.
+     * 
+     * @param other The property that should be overwritting this property.
+     * @return a new object, representing the new property
+     * @throws XMLError The type of the properties don't match.
+     */
+    public PropertyDesc overwrite(PropertyDesc other)
+            throws XMLError
+    {
+        PropertyDesc ret = new PropertyDesc();
+        assert(id.equals(other.id));
+        ret.id = other.id;
+        
+        try {
+            ret.obj = obj.overwrite(other.id, other.obj);
+        } catch (IObjectDesc.Mistyped e) {
+            throw new XMLError("Failed to overwrite: mismatched types", e);
+        }
+        return ret;
     }
     
     /**

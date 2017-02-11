@@ -58,7 +58,6 @@ public class PatchesTest
         assertEquals(5, patchedEntity.get("list_property").asList().getSize());
         assertEquals(3, (new Ref.Int("member_property.value", patchedEntity)).get().getValue());
         assertEquals(2, patchedEntity.getEvents().size());   
-
     }
     
     @Test
@@ -71,6 +70,18 @@ public class PatchesTest
         assertEquals(5, patchedEntity.get("list_property").asList().getSize());
         assertEquals(3, (new Ref.Int("member_property.value", patchedEntity)).get().getValue());
         assertEquals(2, patchedEntity.getEvents().size());
+    }
+
+    @Test
+    public void overwriteEntity() throws Exception
+    {
+        Entity patchedEntity = loadPatch("patch_overwriteentity.xml");
+        assertEquals(5, patchedEntity.get("int_property").asInt().getValue());
+        assertEquals(10, patchedEntity.get("int_property2").asInt().getValue());
+        assertEquals("hello", patchedEntity.get("string_property").toString());
+        assertEquals(6, patchedEntity.get("list_property").asList().getSize());
+        assertEquals(3, (new Ref.Int("member_property.value", patchedEntity)).get().getValue());
+        assertEquals(2, patchedEntity.getEvents().size());   
     }
     
     @Test
@@ -120,5 +131,16 @@ public class PatchesTest
         assertEquals(3, (new Ref.Int("member_property.value", patchedEntity)).get().getValue());
         assertEquals(4, patchedEntity.getEvents().size());        
     }
+    
+    @Test (expected = XMLError.class)
+    public void wrongType() throws Exception
+    {
+        loadPatch("patch_wrongtype.xml");
+    }
            
+    @Test (expected = XMLError.class)
+    public void wrongType2() throws Exception
+    {
+        loadPatch("patch_wrongtype2.xml");
+    }
 }

@@ -10,7 +10,6 @@ import arsmagica.model.objects.Context;
 import arsmagica.model.objects.Entity;
 import arsmagica.model.objects.IObject;
 import arsmagica.xml.DataStore;
-import arsmagica.xml.Expression;
 import arsmagica.xml.Identifiable;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
@@ -43,11 +42,9 @@ public class EntityDesc implements Identifiable
         return type;
     }
     
-    private Entity create(WorldMgr w, IObject parent, 
-                          Context parentContext, 
-                          Map<String, Expression<? extends IObject>> oldValues)
+    public Entity create(WorldMgr w, IObject parent, Context context)
             throws Ref.Error
-    {        
+    {
         Entity e = new Entity(w, type, events, actions);
         
         if (parent != null)
@@ -59,24 +56,10 @@ public class EntityDesc implements Identifiable
         for (PropertyDesc p : properties.values())
         {
             String key = p.getIdentifier();
-            Context pContext = e;
-            if (oldValues.containsKey(key))
-            {
-                IObject oldValue = oldValues.get(key).resolve(pContext);
-                pContext = Context.createWrapper(key, oldValue, e);
-            }
-
-            e.addProperty(p.getIdentifier(), p.create(w, e, pContext));
+            e.addProperty(p.getIdentifier(), p.create(w, e, e));
         }
         
-        return e;
-    }
-    
-    public Entity create(WorldMgr w, IObject parent, Context context)
-            throws Ref.Error
-    {
-        return create(w, parent, context, new HashMap<>());
-    }
+        return e;    }
     
     public static class Loader extends XMLLoader<EntityDesc>
     {
@@ -119,11 +102,11 @@ public class EntityDesc implements Identifiable
          * 
          * @param base The base description
          * @return The modified description
+         * @throws XMLError Impossible to apply patch due to mismatched types.
          */
         public EntityDesc apply(EntityDesc base)
-        {
-            final Map<String, Expression<? extends IObject>> oldValues = new HashMap<>();
-            
+                throws XMLError
+        {            
             EntityDesc modified = new EntityDesc() 
             {                                
                 @Override 
@@ -133,7 +116,7 @@ public class EntityDesc implements Identifiable
                 public Entity create(WorldMgr w, IObject parent, Context parentContext)
                     throws Ref.Error
                 {
-                    return super.create(w, parent, parentContext, oldValues);
+                    return super.create(w, parent, parentContext);
                 }
             };
                     
@@ -146,16 +129,12 @@ public class EntityDesc implements Identifiable
                 
                 if (modified.properties.containsKey(id))
                 {
-                    PropertyDesc modProperty = modified.properties.get(id);
-
-                    if (modProperty.getType().equals("string") ||
-                        modProperty.getType().equals("int")) {
-                            oldValues.put(patchedProperty.getIdentifier(),
-                                          modProperty.getInitializer());
-                    }
+                    PropertyDesc oldValue = modified.properties.get(id);
+                    PropertyDesc newValue = oldValue.overwrite(patchedProperty);
+                    modified.properties.put(id, newValue);
                 }
-                        
-                modified.properties.put(id, patchedProperty);
+                else 
+                    modified.properties.put(id, patchedProperty);
             }
             
             modified.events = new ArrayList<>(base.events);

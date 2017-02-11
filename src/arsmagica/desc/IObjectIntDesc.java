@@ -63,9 +63,27 @@ public class IObjectIntDesc extends IObjectDesc
     private List<RelationDesc> relations;
     
     @Override
-    public Expression<IObjectInt> getInitializer()
+    public IObjectIntDesc overwrite(String key, IObjectDesc other)
+            throws Mistyped
     {
-        return c -> new IObjectInt(c, initializer.resolve(c));
+        if (!(other instanceof IObjectIntDesc))
+            throw new Mistyped(String.format(
+                    "Attempting overwrite of int with %s",
+                    other.getType()));
+        
+        IObjectIntDesc otherObj = (IObjectIntDesc) other;
+        IObjectIntDesc retObj = new IObjectIntDesc();
+
+        retObj.initializer = (Context c) -> {
+            int iV = initializer.resolve(c);
+            IObjectInt objV = new IObjectInt(c, iV);
+            Context nc = Context.createWrapper(key, objV, c);
+            return otherObj.initializer.resolve(nc);            
+        };
+        
+        retObj.relations = otherObj.relations;
+        
+        return retObj;
     }
     
     public int getInitialValue(Context c)
