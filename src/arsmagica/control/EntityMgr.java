@@ -43,6 +43,12 @@ public class EntityMgr
         return e;
     }
     
+    public Entity createNew(String type)
+            throws Ref.Error
+    {
+        return createNew(type, null, Context.create());
+    }
+    
     public Entity getRandom(String type)
     {
         return null;

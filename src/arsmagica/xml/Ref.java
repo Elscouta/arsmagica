@@ -10,7 +10,7 @@ import arsmagica.model.objects.IObject;
 import arsmagica.model.objects.PropertyContext;
 import arsmagica.model.objects.IObjectString;
 import arsmagica.model.objects.IObjectList;
-import arsmagica.model.objects.PropertyContainer;
+import arsmagica.model.objects.Entity;
 import arsmagica.model.objects.IObjectInt;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -85,7 +85,7 @@ public class Ref<T extends IObject>
         Matcher m2 = REGEX_INDIRECT.matcher(path);
         if (m2.matches())
         {
-            PropertyContext subcontext = resolvePart(context, m2.group(1)).asObject();
+            PropertyContext subcontext = resolvePart(context, m2.group(1)).asEntity();
             return resolvePart(subcontext, m2.group(2));
         }
 
@@ -135,11 +135,11 @@ public class Ref<T extends IObject>
         }
     }
     
-    public static class Obj extends Ref<PropertyContainer>
+    public static class Ent extends Ref<Entity>
     {
-        public Obj(String path, Context context)
+        public Ent(String path, Context context)
         {
-            super(path, context, p -> p.asObject());
+            super(path, context, p -> p.asEntity());
         }
     }
     

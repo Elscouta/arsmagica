@@ -22,7 +22,6 @@ public abstract class PropertyContainer
         implements IObject, IObjectOwner
 {
     @Override public PropertyContext getContext() { return this; }
-    @Override public PropertyContainer asObject() { return this; }
 
     private Set<IObjectOwner> owners;
     

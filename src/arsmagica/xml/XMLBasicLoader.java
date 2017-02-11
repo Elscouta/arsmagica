@@ -5,6 +5,7 @@
  */
 package arsmagica.xml;
 
+import arsmagica.model.objects.Entity;
 import arsmagica.model.objects.IObject;
 import arsmagica.model.objects.IObjectList;
 import arsmagica.model.objects.PropertyContainer;
@@ -184,16 +185,16 @@ public class XMLBasicLoader
         }
     }
     
-    protected class PropertyContainerLoader
-            extends XMLDirectLoader< Expression<PropertyContainer> >
+    protected class EntityRefLoader
+            extends XMLDirectLoader< Expression<Entity> >
     {
-        public PropertyContainerLoader()
+        public EntityRefLoader()
         {
             super(XMLBasicLoader.this.store);
         }
         
         @Override
-        public Expression<PropertyContainer> loadXML(Element e)
+        public Expression<Entity> loadXML(Element e)
                 throws XMLError
         {
             final String str = getContent(e);
@@ -201,7 +202,7 @@ public class XMLBasicLoader
                 throw new XMLError(String.format(
                         "[line %s]: Invalid reference identifier: %s",
                         e.getUserData("lineNumber"), str));
-            return context -> new Ref.Obj(str, context).get();
+            return context -> new Ref.Ent(str, context).get();
         }
     }
     

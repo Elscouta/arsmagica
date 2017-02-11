@@ -8,6 +8,7 @@ package arsmagica.model.objects;
 import arsmagica.desc.IObjectIntDesc;
 import arsmagica.xml.Expression;
 import arsmagica.xml.Ref;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +34,6 @@ public final class IObjectInt implements IObject
     }
     
     private final Context context;
-    private final IObjectIntDesc desc;
     private int value;
     private final List<Relation> relations;
 
@@ -41,9 +41,15 @@ public final class IObjectInt implements IObject
             throws Ref.Error
     {
         this.context = c;
-        this.desc = desc;
         this.value = desc.getInitialValue(c);
         this.relations = desc.getRelations(c);
+    }
+    
+    public IObjectInt(Context c, int value)
+    {
+        this.context = c;
+        this.value = value;
+        this.relations = new ArrayList<>();
     }
     
     public int getValue()

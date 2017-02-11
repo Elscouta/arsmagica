@@ -15,6 +15,7 @@ import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
 import arsmagica.model.objects.PropertyContext;
+import arsmagica.xml.Expression;
 
 /**
  *
@@ -34,6 +35,26 @@ public class PropertyDesc
     public String getID()
     {
         return id;
+    }
+    
+    /**
+     * Returns the initializer of the property. 
+     * 
+     * @return The initializer
+     */
+    public Expression<? extends IObject> getInitializer()
+    {
+        return obj.getInitializer();
+    }
+    
+    /**
+     * Returns the type of the property.
+     * 
+     * @return The type
+     */
+    public String getType()
+    {
+        return obj.getType();
     }
     
     /**

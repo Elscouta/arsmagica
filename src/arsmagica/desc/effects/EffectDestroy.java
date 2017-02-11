@@ -7,14 +7,13 @@ package arsmagica.desc.effects;
 
 import arsmagica.control.WorldMgr;
 import arsmagica.model.objects.Context;
+import arsmagica.model.objects.Entity;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
-import arsmagica.model.objects.PropertyContainer;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
-import arsmagica.model.objects.PropertyContext;
 
 /**
  * This effect destroys a property container (usually an entity). Note that
@@ -25,7 +24,7 @@ import arsmagica.model.objects.PropertyContext;
  */
 public class EffectDestroy implements Effect
 {
-    Expression<PropertyContainer> ref;
+    Expression<Entity> ref;
     
     @Override
     public void apply(WorldMgr world, Context context) 
@@ -45,7 +44,7 @@ public class EffectDestroy implements Effect
         public void fillObjectFromXML(EffectDestroy obj, Element e)
                 throws XMLError
         {
-            obj.ref = (new PropertyContainerLoader()).loadXML(e);
+            obj.ref = (new EntityRefLoader()).loadXML(e);
         }
     }
 }

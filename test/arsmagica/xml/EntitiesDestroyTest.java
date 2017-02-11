@@ -52,15 +52,15 @@ public class EntitiesDestroyTest
         Entity parent = world.createEntity("test_parent");
         
         assertEquals(5, parent.get("test_list").asList().getSize());
-        parent.get("test_list").asList().getRandom().asObject().destroy();
+        parent.get("test_list").asList().getRandom().asEntity().destroy();
         assertEquals(4, parent.get("test_list").asList().getSize());
-        parent.get("test_list").asList().getRandom().asObject().destroy();
+        parent.get("test_list").asList().getRandom().asEntity().destroy();
         assertEquals(3, parent.get("test_list").asList().getSize());
-        parent.get("test_list").asList().getRandom().asObject().destroy();
+        parent.get("test_list").asList().getRandom().asEntity().destroy();
         assertEquals(2, parent.get("test_list").asList().getSize());
-        parent.get("test_list").asList().getRandom().asObject().destroy();
+        parent.get("test_list").asList().getRandom().asEntity().destroy();
         assertEquals(1, parent.get("test_list").asList().getSize());
-        parent.get("test_list").asList().getRandom().asObject().destroy();
+        parent.get("test_list").asList().getRandom().asEntity().destroy();
         assertEquals(0, parent.get("test_list").asList().getSize());
     }
     
@@ -75,9 +75,9 @@ public class EntitiesDestroyTest
         parent.get("test_list")
               .asList()
               .getRandom()
-              .asObject()
+              .asEntity()
               .get("test_child")
-              .asObject()
+              .asEntity()
               .destroy();
         assertEquals(4, parent.get("test_list").asList().getSize());        
     }
@@ -93,7 +93,7 @@ public class EntitiesDestroyTest
         destroy.apply(world, parent.get("test_list")
                                    .asList()
                                    .getRandom()
-                                   .asObject());
+                                   .asEntity());
         assertEquals(4, parent.get("test_list").asList().getSize());                
     }
 }

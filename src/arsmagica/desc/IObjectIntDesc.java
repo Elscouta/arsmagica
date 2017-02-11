@@ -62,6 +62,12 @@ public class IObjectIntDesc extends IObjectDesc
     private Expression<Integer> initializer;
     private List<RelationDesc> relations;
     
+    @Override
+    public Expression<IObjectInt> getInitializer()
+    {
+        return c -> new IObjectInt(c, initializer.resolve(c));
+    }
+    
     public int getInitialValue(Context c)
             throws Ref.Error
     {

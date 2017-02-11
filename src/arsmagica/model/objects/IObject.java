@@ -72,20 +72,19 @@ public interface IObject
      */
     default IObjectList asList() throws Mistyped
     {
-        throw new Mistyped("string", this);
+        throw new Mistyped("list", this);
     }
     
     /**
-     * Returns the implementation of the property, as an object (usually an 
-     * entity, exposed only as its ability to store properties). This can only 
-     * be used if the property is of an object type.
+     * Returns the implementation of the property, as an entity. This can only 
+     * be used if the property is of an entity.
      * 
-     * @return The real implementation of the property
+     * @return The real implementation of the entity.
      * @throws Mistyped The property was not an object
      */
-    default PropertyContainer asObject() throws Mistyped
+    default Entity asEntity() throws Mistyped
     {
-        throw new Mistyped("object", this);
+        throw new Mistyped("__entity__", this);
     }
 
     /**

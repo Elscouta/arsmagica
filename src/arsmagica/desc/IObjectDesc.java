@@ -10,6 +10,7 @@ import arsmagica.model.objects.Context;
 import arsmagica.xml.DataStore;
 import arsmagica.model.objects.IObject;
 import arsmagica.model.objects.PropertyContainer;
+import arsmagica.xml.Expression;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLDirectLoader;
 import arsmagica.xml.XMLError;
@@ -38,6 +39,17 @@ public abstract class IObjectDesc
      */
     public abstract IObject create(WorldMgr w, IObject parent, Context context)
             throws Ref.Error;
+    
+    /**
+     * Returns the initializer of the object. This is only necessary to be
+     * implemented for integer and string properties.
+     * 
+     * @return the initializer
+     */
+    public Expression<? extends IObject> getInitializer()
+    {
+        throw new RuntimeException("no initializer available.");
+    }
     
     /**
      * Returns the type of the object description. This must be the same

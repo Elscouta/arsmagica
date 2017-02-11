@@ -31,6 +31,12 @@ public class IObjectStringDesc extends IObjectDesc
         return "string";
     }
     
+    @Override
+    public Expression<IObjectString> getInitializer()
+    {
+        return c -> new IObjectString(c, str);
+    }
+    
     @Override 
     public IObjectString create(WorldMgr w, IObject parent, Context context)
     {
@@ -48,7 +54,16 @@ public class IObjectStringDesc extends IObjectDesc
         public void fillObjectFromXML(IObjectStringDesc obj, Element e)
                 throws XMLError
         {
-            obj.str = StringParser.eval(getContent(e));
+            String initAttr = getAttribute(e, "init", null);
+            if (initAttr != null) {
+                if (getContent(e).equals("") == false)
+                    throw new XMLError("init attribute specified in string : "
+                            + "content must be empty.");
+                
+                obj.str = StringParser.eval(initAttr);
+            }
+            else
+                obj.str = StringParser.eval(getContent(e));
         }
     }
 }

@@ -22,7 +22,7 @@ public class PropertyContext implements Context
         properties = new HashMap<>();
     }
     
-    public static PropertyContext createWrapper(String key, IObject value)
+    public static Context createWrapper(String key, IObject value)
     {
         PropertyContext c = create();
         c.addProperty(key, value);
@@ -31,8 +31,7 @@ public class PropertyContext implements Context
     
     public static PropertyContext create() 
     {
-        return new PropertyContext();
-        
+        return new PropertyContext();        
     }
 
     public void addProperty(String key, IObject obj)
