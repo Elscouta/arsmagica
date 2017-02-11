@@ -9,12 +9,10 @@ import arsmagica.control.WorldMgr;
 import arsmagica.model.objects.Context;
 import arsmagica.model.objects.Entity;
 import arsmagica.model.objects.IObject;
-import arsmagica.model.objects.PropertyContext;
 import arsmagica.xml.DataStore;
 import arsmagica.xml.Expression;
 import arsmagica.xml.Identifiable;
 import arsmagica.xml.Ref;
-import arsmagica.xml.XMLBasicLoader;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLFileLoader;
 import arsmagica.xml.XMLLoader;
@@ -31,7 +29,7 @@ import org.w3c.dom.Element;
 public class EntityDesc implements Identifiable
 {
     private String type;
-    private List<PropertyDesc> properties;
+    private Map<String, PropertyDesc> properties;
     private List<EventDesc> events;
     private List<Action> actions;
         
@@ -58,9 +56,9 @@ public class EntityDesc implements Identifiable
             e.addProperty(parent.getType(), parent);
         }
             
-        for (PropertyDesc p : properties)
+        for (PropertyDesc p : properties.values())
         {
-            String key = p.getID();
+            String key = p.getIdentifier();
             Context pContext = e;
             if (oldValues.containsKey(key))
             {
@@ -68,7 +66,7 @@ public class EntityDesc implements Identifiable
                 pContext = Context.createWrapper(key, oldValue, e);
             }
 
-            e.addProperty(p.getID(), p.create(w, e, pContext));
+            e.addProperty(p.getIdentifier(), p.create(w, e, pContext));
         }
         
         return e;
@@ -92,8 +90,8 @@ public class EntityDesc implements Identifiable
                 throws XMLError
         {
             obj.type = getAttributeOrChild(e, "type", new ContentLoader());
-            obj.properties = getChildList(e, "property", 
-                                          new PropertyDesc.Loader(store));
+            obj.properties = getChildMap(e, "property", 
+                                         new PropertyDesc.Loader(store));
 
             XMLLoader<EventDesc> eventLoader = new EventDesc.Loader(store);
             
@@ -112,7 +110,7 @@ public class EntityDesc implements Identifiable
      */
     public static class Patch 
     {
-        private List<PropertyDesc> properties;
+        private Map<String, PropertyDesc> properties;
         private List<EventDesc> events;
         private List<Action> actions;
         
@@ -139,33 +137,25 @@ public class EntityDesc implements Identifiable
                 }
             };
                     
-            modified.properties = new ArrayList<>(base.properties);
+            modified.properties = new HashMap<>(base.properties);
             int size = modified.properties.size();
             
-            for (PropertyDesc patchedProperty : properties)
+            for (PropertyDesc patchedProperty : properties.values())
             {
-                boolean overwritten = false;
+                String id = patchedProperty.getIdentifier();
                 
-                for (int i = 0; i < size; i++)
+                if (modified.properties.containsKey(id))
                 {
-                    PropertyDesc modProperty = modified.properties.get(i);
-                    if (modProperty.getID().equals(patchedProperty.getID()))
-                    {
-                        modified.properties.set(i, patchedProperty);
-                        
-                        if (modProperty.getType().equals("string") ||
-                            modProperty.getType().equals("int")) {
-                            oldValues.put(patchedProperty.getID(),
+                    PropertyDesc modProperty = modified.properties.get(id);
+
+                    if (modProperty.getType().equals("string") ||
+                        modProperty.getType().equals("int")) {
+                            oldValues.put(patchedProperty.getIdentifier(),
                                           modProperty.getInitializer());
-                        }
-                        
-                        overwritten = true;
-                        break;
-                    }                        
+                    }
                 }
-                
-                if (!overwritten)
-                    modified.properties.add(patchedProperty);
+                        
+                modified.properties.put(id, patchedProperty);
             }
             
             modified.events = new ArrayList<>(base.events);
@@ -190,8 +180,8 @@ public class EntityDesc implements Identifiable
             public void fillObjectFromXML(Patch obj, Element e) 
                     throws XMLError
             {
-                obj.properties = getChildList(e, "property", 
-                                          new PropertyDesc.Loader(store));
+                obj.properties = getChildMap(e, "property", 
+                                             new PropertyDesc.Loader(store));
 
                 XMLLoader<EventDesc> eventLoader = new EventDesc.Loader(store);
             

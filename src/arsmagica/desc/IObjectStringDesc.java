@@ -7,15 +7,14 @@ package arsmagica.desc;
 
 import arsmagica.control.WorldMgr;
 import arsmagica.model.objects.Context;
-import arsmagica.xml.DataStore;
-import arsmagica.xml.Expression;
 import arsmagica.model.objects.IObject;
 import arsmagica.model.objects.IObjectString;
+import arsmagica.xml.DataStore;
+import arsmagica.xml.Expression;
 import arsmagica.xml.StringParser;
+import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
 import org.w3c.dom.Element;
-import arsmagica.model.objects.PropertyContext;
-import arsmagica.xml.XMLError;
 
 /**
  *

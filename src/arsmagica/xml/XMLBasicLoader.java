@@ -8,14 +8,17 @@ package arsmagica.xml;
 import arsmagica.model.objects.Entity;
 import arsmagica.model.objects.IObject;
 import arsmagica.model.objects.IObjectList;
-import arsmagica.model.objects.PropertyContainer;
 import arsmagica.model.objects.IObjectInt;
+
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -161,6 +164,44 @@ public class XMLBasicLoader
         {
             throw new XMLError(e);
         }
+    }
+    
+    /**
+     * Loads all nodes matching the provided key, and provides a mapping
+     * from the the nodes identifier to the loaded objects. If two nodes
+     * attempt to define the object for the same identifier, an exception
+     * will be raised.
+     * 
+     * Iterating the map is guaranteed to match the order of the nodes in 
+     * the file.
+     * 
+     * @param <U> The type of loaded object. Must implement Identifiable.
+     * @param current_node The node that must be taken as origin of the path
+     * @param key An XPath expression describing the nodes that must be
+     * considered
+     * @param l The loader associated to U.
+     * @return A map from the object identifiers to the object themselves.
+     * @throws XMLError Failure while attempting to load a node, or duplicate
+     * node found.
+     */
+    protected <U extends Identifiable> Map<String, U> getChildMap(
+            Element current_node, String key, XMLDirectLoader<U> l)
+            throws XMLError
+    {
+        List<U> childList = getChildList(current_node, key, l);
+        Map<String, U> childMap = new LinkedHashMap<>();
+        
+        for (U c : childList)
+        {
+            if (childMap.containsKey(c.getIdentifier()))
+                throw new XMLError(String.format(
+                        "Double definition of node %s with identifier %s",
+                        key, c.getIdentifier()));
+            
+            childMap.put(c.getIdentifier(), c);
+        }
+        
+        return childMap;
     }
     
     protected class IObjectLoader

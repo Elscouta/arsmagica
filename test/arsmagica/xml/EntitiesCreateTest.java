@@ -24,9 +24,6 @@ public class EntitiesCreateTest
     private XMLFileLoader<EntityDesc> loader;
     private WorldMgr world;
     private DataStore store;
-    
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10);
 
     @Before
     public void setUp() 

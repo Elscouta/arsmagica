@@ -78,6 +78,12 @@ public class EntitiesLoadTest
     }
     
     @Test (expected=XMLError.class)
+    public void loadEntityPropDoubleDef() throws XMLError
+    {
+        loader.loadXML("entity_prop_doubledef.xml");
+    }
+    
+    @Test (expected=XMLError.class)
     public void loadEntityPropNoType() throws XMLError
     {
         loader.loadXML("entity_prop_notype.xml");

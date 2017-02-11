@@ -72,7 +72,8 @@ public class EventDesc
         }
         
         for (PropertyDesc p : properties)
-            eventContext.addProperty(p.getID(), p.create(world, null, eventContext));
+            eventContext.addProperty(p.getIdentifier(), 
+                                     p.create(world, null, eventContext));
         
         for (Effect effect : effects)
             effect.apply(world, eventContext);

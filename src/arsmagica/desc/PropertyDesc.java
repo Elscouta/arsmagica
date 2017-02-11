@@ -7,21 +7,21 @@ package arsmagica.desc;
 
 import arsmagica.control.WorldMgr;
 import arsmagica.model.objects.Context;
-import arsmagica.xml.DataStore;
 import arsmagica.model.objects.IObject;
-import arsmagica.model.objects.PropertyContainer;
+import arsmagica.xml.DataStore;
+import arsmagica.xml.Expression;
+import arsmagica.xml.Identifiable;
 import arsmagica.xml.Ref;
 import arsmagica.xml.XMLError;
 import arsmagica.xml.XMLLoader;
+
 import org.w3c.dom.Element;
-import arsmagica.model.objects.PropertyContext;
-import arsmagica.xml.Expression;
 
 /**
  *
  * @author Elscouta
  */
-public class PropertyDesc 
+public class PropertyDesc implements Identifiable
 {
     private String id;
     private IObjectDesc obj;
@@ -32,7 +32,8 @@ public class PropertyDesc
      * 
      * @return The identifier
      */
-    public String getID()
+    @Override
+    public String getIdentifier()
     {
         return id;
     }
